@@ -154,6 +154,52 @@ h1 { font-size: 1.4rem; font-weight: 600; }
   color: #fff;
 }
 
+.template-banner {
+  max-width: 1280px;
+  margin: 0.5rem auto 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  width: calc(100% - 2rem);
+}
+
+.template-banner.template-changed {
+  border-color: var(--speculative);
+  background: #2a2418;
+  color: #fbbf24;
+}
+
+.template-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.template-warn {
+  font-size: 0.75rem;
+  color: var(--speculative);
+  margin-bottom: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  background: #2a2418;
+  border-radius: 6px;
+}
+
+.legacy-tag {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.stat-era-note {
+  font-size: 0.62rem;
+  margin-top: 0.2rem;
+}
+
 /* --- Viz controls --- */
 .viz-controls {
   max-width: 1280px;
