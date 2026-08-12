@@ -1,7 +1,33 @@
 {
   "civilizations": [
-    { "id": "china", "file": "china.json", "name": "中国", "color": "#b22222" },
-    { "id": "egypt", "file": "egypt.json", "name": "埃及", "color": "#d4a017" },
-    { "id": "rome", "file": "rome.json", "name": "罗马", "color": "#7b2d8e" }
+    {
+      "id": "china",
+      "file": "china.json",
+      "name": "中国",
+      "color": "#b22222",
+      "presence": [
+        { "start": -2100, "end": 1950, "label": "中华文明连续区" }
+      ]
+    },
+    {
+      "id": "egypt",
+      "file": "egypt.json",
+      "name": "埃及",
+      "color": "#d4a017",
+      "presence": [
+        { "start": -3100, "end": -30, "label": "法老时代" },
+        { "start": -30, "end": 641, "label": "希腊-罗马-拜占庭统治" }
+      ]
+    },
+    {
+      "id": "rome",
+      "file": "rome.json",
+      "name": "罗马",
+      "color": "#7b2d8e",
+      "presence": [
+        { "start": -753, "end": 476, "label": "古典罗马" },
+        { "start": 476, "end": 1453, "label": "东罗马/中世纪影响" }
+      ]
+    }
   ]
 }

@@ -99,6 +99,72 @@ const CivNav = (() => {
     );
   }
 
+  function overlaps(presence, yearMin, yearMax) {
+    return presence.start <= yearMax && presence.end >= yearMin;
+  }
+
+  function getPresenceInPeriod(civ, period) {
+    const presenceList = civ.presence || civ.data?.meta?.presence || [];
+    return presenceList.find((p) => overlaps(p, period.yearMin, period.yearMax)) ?? null;
+  }
+
+  function timelinesInPeriod(civilizations, period) {
+    return civilizations
+      .map((civ) => {
+        const markers = snapshotsInPeriod(civ.data.snapshots, period);
+        const presence = getPresenceInPeriod(civ, period);
+        return {
+          id: civ.id,
+          name: civ.name,
+          color: civ.color,
+          civId: civ.id,
+          markers,
+          span: markers.length
+            ? { start: Math.min(...markers.map((m) => m.year)), end: Math.max(...markers.map((m) => m.year)) }
+            : null,
+          presence,
+          isDynasty: false,
+        };
+      })
+      .filter((t) => t.markers.length > 0 || t.presence);
+  }
+
+  function timelinesByDynasty(civ, period) {
+    const markers = snapshotsInPeriod(civ.data.snapshots, period);
+    const groups = new Map();
+    for (const m of markers) {
+      const key = m.group || m.dynasty || m.eraLabel;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(m);
+    }
+    return [...groups.entries()].map(([label, ms]) => ({
+      id: `${civ.id}:${label}`,
+      label,
+      name: label,
+      color: civ.color,
+      civId: civ.id,
+      groupId: label,
+      markers: ms.sort((a, b) => a.year - b.year),
+      span: { start: Math.min(...ms.map((m) => m.year)), end: Math.max(...ms.map((m) => m.year)) },
+      presence: null,
+      isDynasty: true,
+    }));
+  }
+
+  function getSwimlaneRows(civilizations, period, { viewTab, primaryCivId }) {
+    if (!period) return [];
+
+    if (viewTab === 'profile') {
+      const primary = civilizations.find((c) => c.id === primaryCivId);
+      if (primary) {
+        const dynastyLanes = timelinesByDynasty(primary, period);
+        if (dynastyLanes.length > 1) return dynastyLanes;
+      }
+    }
+
+    return timelinesInPeriod(civilizations, period);
+  }
+
   return {
     ERA_PERIODS,
     getPeriod,
@@ -112,5 +178,9 @@ const CivNav = (() => {
     defaultYearForPeriod,
     formatPeriodRange,
     periodsWithData,
+    overlaps,
+    timelinesInPeriod,
+    timelinesByDynasty,
+    getSwimlaneRows,
   };
 })();
