@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "title": "中国历史 · 十维探索",
+    "subtitle": "科学方法驱动的定性历史重建",
+    "country": "中国",
+    "countryId": "china",
+    "color": "#b22222",
+    "yearMin": -2100,
+    "yearMax": 1950,
+    "yearStep": 50,
+    "methodology": {
+      "principles": [
+        "以考古发现与文献记载为首要依据，推断须标注并说明逻辑链",
+        "禁止以现代发展水平反推古代等级（避免「以今证古」）",
+        "承认断裂与不确定性：亡國、改朝、殖民、灾害造成的非连续性",
+        "等级 1–5 为同一文明内部的相对概括，非跨文明精确排名",
+        "无充分证据的维度标记为 absent，不强行填充"
+      ],
+      "confidenceLevels": {
+        "documented": "有据 — 考古实物或 contemporaneous 文献支持",
+        "inferred": "推断 — 基于相邻证据的合理推论，存在其他解释",
+        "speculative": "猜测 — 假说性判断，待新证据检验",
+        "absent": "未记录 — 证据不足，本快照不做判断"
+      }
+    }
+  },
+  "dimensions": [
+    { "id": "geography", "label": "地理气候", "short": "地理" },
+    { "id": "resources", "label": "资源能源", "short": "资源" },
+    { "id": "technology", "label": "技术能力", "short": "技术" },
+    { "id": "production", "label": "生产组织", "short": "生产" },
+    { "id": "economy", "label": "经济交换", "short": "经济" },
+    { "id": "politics", "label": "政治制度", "short": "政治" },
+    { "id": "military", "label": "军事国力", "short": "军事" },
+    { "id": "culture", "label": "社会文化", "short": "文化" },
+    { "id": "daily_life", "label": "日常生活", "short": "日常" },
+    { "id": "historical_memory", "label": "历史记忆", "short": "记忆" }
+  ],
+  "confidenceLabels": {
+    "documented": "有据",
+    "inferred": "推断",
+    "speculative": "猜测",
+    "absent": "未记录"
+  },
+  "snapshots": [
+    {
+      "year": -2000,
+      "eraLabel": "青铜时代早期 · 二里头文化",
+      "worldContext": "与古埃及中王国、两河巴比伦同期；中原青铜礼器体系萌芽",
+      "evidenceNote": "主要依据二里头遗址考古与陶器、青铜器类型学",
+      "sources": ["二里头遗址发掘报告", "《中国考古学·夏商卷》"],
+      "dimensions": {
+        "geography": { "level": 3, "summary": "黄河中游洛阳盆地，伊洛河冲积平原，暖湿气候较今略暖", "confidence": "documented" },
+        "resources": { "level": 3, "summary": "黄土、黄河水、铜锡矿料来源尚在厘清，农业用地扩张", "confidence": "inferred" },
+        "technology": { "level": 3, "summary": "青铜礼器与工具、陶鬲、可能已有早期文字符号", "confidence": "documented" },
+        "production": { "level": 3, "summary": "粟黍农业、家畜饲养，出现中心聚落与手工业分工", "confidence": "documented" },
+        "economy": { "level": 2, "summary": "区域交换网络初现，尚未见成熟货币", "confidence": "inferred" },
+        "politics": { "level": 3, "summary": "都邑性聚落，等级分化明显，是否属「王朝」仍有学术争议", "confidence": "speculative" },
+        "military": { "level": 2, "summary": "青铜兵器已有，组织化战争证据有限", "confidence": "inferred" },
+        "culture": { "level": 3, "summary": "礼器组合暗示祭祀等级秩序，祖先崇拜迹象", "confidence": "documented" },
+        "daily_life": { "level": 2, "summary": "粟黍为主粮，陶器炊饮；医药体系尚无文献可考", "confidence": "inferred" },
+        "historical_memory": { "level": 1, "summary": "无 contemporaneous 文字史书；后世夏代叙述为追溯性建构", "confidence": "documented" }
+      }
+    },
+    {
+      "year": -1000,
+      "eraLabel": "西周早期",
+      "worldContext": "周人克商；地中海腓尼基人活跃；亚述帝国崛起",
+      "evidenceNote": "甲骨文后段、金文、考古丰镐遗址、《尚书》部分篇章",
+      "sources": ["殷周金文集成", "丰镐遗址考古", "《史记·周本纪》需审慎使用"],
+      "dimensions": {
+        "geography": { "level": 4, "summary": "关中平原为政治核心，分封诸侯遍布黄河中下游", "confidence": "documented" },
+        "resources": { "level": 3, "summary": "关中农业、王畿林矿；诸侯国各自资源禀赋差异大", "confidence": "documented" },
+        "technology": { "level": 3, "summary": "青铜礼乐体系成熟，战车作战，甲骨文后发展为金文", "confidence": "documented" },
+        "production": { "level": 3, "summary": "井田制传说反映土地集体与贵族占有，手工业由「百工」管理", "confidence": "inferred" },
+        "economy": { "level": 3, "summary": "贡赋体系、海贝作货币痕迹，诸侯间物资交换", "confidence": "documented" },
+        "politics": { "level": 4, "summary": "分封制、宗法制、礼乐秩序，天子—诸侯—卿大夫等级森严", "confidence": "documented" },
+        "military": { "level": 4, "summary": "车战为核心，王师与诸侯军，牧野之战奠定周政", "confidence": "documented" },
+        "culture": { "level": 4, "summary": "礼乐文明、诗经源头、天命观与德治思想", "confidence": "documented" },
+        "daily_life": { "level": 3, "summary": "黍稷稻麦、饮酒礼俗；已有简单医药与针灸传说（证据薄弱）", "confidence": "inferred" },
+        "historical_memory": { "level": 3, "summary": "口述与早期文献并用，《尚书》部分篇章保存周初政治话语", "confidence": "documented" }
+      }
+    },
+    {
+      "year": -500,
+      "eraLabel": "春秋末期",
+      "worldContext": "孔子活跃；波斯帝国、希腊城邦战争；印度十六国时代",
+      "evidenceNote": "《左传》《论语》、诸侯墓葬考古、铁器普及考古证据",
+      "sources": ["《左传》", "曾侯乙墓考古", "侯马盟书"],
+      "dimensions": {
+        "geography": { "level": 4, "summary": "华夏核心在黄河中下游，向江淮扩展，吴越纳入华夏文化圈", "confidence": "documented" },
+        "resources": { "level": 4, "summary": "铁料、盐、铜、水利资源开发加剧，土地兼并开始", "confidence": "documented" },
+        "technology": { "level": 4, "summary": "铁器与牛耕推广，筑城技术、弩、舟车交通发达", "confidence": "documented" },
+        "production": { "level": 4, "summary": "小农经济兴起，手工业城镇，私学培养技术人才", "confidence": "documented" },
+        "economy": { "level": 4, "summary": "金属货币流通、商贾阶层活跃、关税与市场管理", "confidence": "documented" },
+        "politics": { "level": 3, "summary": "周天子名存实亡，诸侯争霸，卿大夫专权，变法酝酿", "confidence": "documented" },
+        "military": { "level": 4, "summary": "步兵与骑兵重要性上升，连年争霸战争，兵法思想成熟", "confidence": "documented" },
+        "culture": { "level": 5, "summary": "诸子百家酝酿，礼乐崩坏与思想争鸣，私学兴盛", "confidence": "documented" },
+        "daily_life": { "level": 3, "summary": "五谷饮食、醪酒、针灸与草药疗法，《黄帝内经》传统形成期", "confidence": "inferred" },
+        "historical_memory": { "level": 4, "summary": "《春秋》编年体史书，史官传统，尊王攘夷话语", "confidence": "documented" }
+      }
+    },
+    {
+      "year": -221,
+      "eraLabel": "秦统一",
+      "worldContext": "秦始皇统一六国；罗马共和国扩张；印度孔雀王朝",
+      "evidenceNote": "秦简、兵马俑、度量衡实物、统一道路遗迹",
+      "sources": ["睡虎地秦简", "兵马俑考古", "《史记·秦始皇本纪》"],
+      "dimensions": {
+        "geography": { "level": 5, "summary": "首次统一中原与岭南部分区域，南北方气候带差异显著", "confidence": "documented" },
+        "resources": { "level": 4, "summary": "全国征发劳役开发驰道、灵渠、长城；盐铁官营", "confidence": "documented" },
+        "technology": { "level": 4, "summary": "标准化度量衡、车轨、兵器；水利与大型土木工程", "confidence": "documented" },
+        "production": { "level": 4, "summary": "国家控制盐铁，大规模徭役，小农为税收基础", "confidence": "documented" },
+        "economy": { "level": 4, "summary": "统一货币与度量衡，重农抑商政策，全国性市场雏形", "confidence": "documented" },
+        "politics": { "level": 5, "summary": "皇帝制度、郡县制取代分封，三公九卿中央集权", "confidence": "documented" },
+        "military": { "level": 5, "summary": "横扫六国后北击匈奴、南征百越，常备军与长城防御", "confidence": "documented" },
+        "culture": { "level": 3, "summary": "焚书坑儒，法家主导，文化统制严厉", "confidence": "documented" },
+        "daily_life": { "level": 3, "summary": "赋役沉重，民间饮食因地域差异大；秦律涉及医疗与卫生条款", "confidence": "documented" },
+        "historical_memory": { "level": 4, "summary": "以法家功业观记录统一，后世儒生对秦多有批判性叙述", "confidence": "documented" }
+      }
+    },
+    {
+      "year": 100,
+      "eraLabel": "东汉中期",
+      "worldContext": "罗马帝国图拉真时代；丝绸之路贸易繁荣",
+      "evidenceNote": "汉简、画像石、考古遗址、班固《汉书》",
+      "sources": ["居延汉简", "《汉书》", "汉代画像石考古"],
+      "dimensions": {
+        "geography": { "level": 5, "summary": "西域都护府开通，河西走廊为丝路枢纽，南方开发加速", "confidence": "documented" },
+        "resources": { "level": 4, "summary": "铁、盐、铜、水利灌区；人口约六千万（估算有争议）", "confidence": "inferred" },
+        "technology": { "level": 4, "summary": "造纸术改进、冶铁鼓风、水排、天文历法精密化", "confidence": "documented" },
+        "production": { "level": 4, "summary": "豪强庄园与佃农并存，手工业作坊与官营并存", "confidence": "documented" },
+        "economy": { "level": 4, "summary": "铜钱经济、市集繁荣、丝路国际贸易", "confidence": "documented" },
+        "politics": { "level": 3, "summary": "外戚宦官交替专权，察举制选官，中央权威时强时弱", "confidence": "documented" },
+        "military": { "level": 4, "summary": "北击匈奴后边防压力转向羌乱与西域，骑兵与边防体系", "confidence": "documented" },
+        "culture": { "level": 4, "summary": "儒学独尊后经学化，佛教开始传入，神仙方术流行", "confidence": "documented" },
+        "daily_life": { "level": 4, "summary": "面食推广、豆腐传说、张仲景《伤寒杂病论》成书前后", "confidence": "documented" },
+        "historical_memory": { "level": 5, "summary": "纪传体史书成熟，《汉书》确立正统史学范式", "confidence": "documented" }
+      }
+    },
+    {
+      "year": 1000,
+      "eraLabel": "北宋中期",
+      "worldContext": "伊斯兰黄金时代；拜占庭；日本平安时代晚期",
+      "evidenceNote": "《宋史》、清明上河图、考古窑址、科举档案",
+      "sources": ["《宋史》", "开封考古", "敦煌文献"],
+      "dimensions": {
+        "geography": { "level": 4, "summary": "疆域较唐缩小，中原与江南为经济核心，北方边防压力大", "confidence": "documented" },
+        "resources": { "level": 4, "summary": "煤炭开采、铁器产量世界领先，江南水稻主产区", "confidence": "documented" },
+        "technology": { "level": 5, "summary": "活字印刷、指南针、火药应用、水运仪象台、瓷器名窑", "confidence": "documented" },
+        "production": { "level": 5, "summary": "商品化农业、手工业市镇、雇佣劳动萌芽", "confidence": "documented" },
+        "economy": { "level": 5, "summary": "纸币交子、商业革命、海上贸易与市舶司", "confidence": "documented" },
+        "politics": { "level": 4, "summary": "重文轻武、科举取士、枢密院与三衙分权", "confidence": "documented" },
+        "military": { "level": 2, "summary": "对辽夏战争屡有失利，岁币换和平，军力偏弱", "confidence": "documented" },
+        "culture": { "level": 5, "summary": "理学兴起、词赋繁荣、市民文化、书院教育", "confidence": "documented" },
+        "daily_life": { "level": 4, "summary": "茶馆酒肆、外卖与夜市，《太平圣惠方》等医学方书", "confidence": "documented" },
+        "historical_memory": { "level": 5, "summary": "正史与类书体系完备，士大夫自觉的历史编纂传统", "confidence": "documented" }
+      }
+    },
+    {
+      "year": 1800,
+      "eraLabel": "清嘉庆年间",
+      "worldContext": "工业革命进行中；拿破仑战争；英国殖民扩张",
+      "evidenceNote": "清宫档案、地方志、传教士记载、人口学研究成果",
+      "sources": ["《清实录》", "何炳棣人口研究", "马戛尔尼使团记录"],
+      "dimensions": {
+        "geography": { "level": 5, "summary": "版图达传统帝国巅峰，囊括满洲、蒙古、新疆、西藏", "confidence": "documented" },
+        "resources": { "level": 4, "summary": "人口突破三亿压力显现，耕地接近生态上限，银铜经济", "confidence": "documented" },
+        "technology": { "level": 2, "summary": "传统农业技术精耕细作达峰，与西方工业技术差距拉大", "confidence": "documented" },
+        "production": { "level": 4, "summary": "小农经济为主，手工业发达但未工业化，行会组织", "confidence": "documented" },
+        "economy": { "level": 3, "summary": "白银流入减少，土地兼并严重，商品经济活跃但缺乏工业资本", "confidence": "documented" },
+        "politics": { "level": 4, "summary": "皇帝集权、军机处、八旗制度衰落，官僚腐败加剧", "confidence": "documented" },
+        "military": { "level": 2, "summary": "平定白莲教耗损国力，海防薄弱，火器落后于欧洲列强", "confidence": "documented" },
+        "culture": { "level": 4, "summary": "考据学兴盛、理学僵化、民间宗教与秘密会社", "confidence": "documented" },
+        "daily_life": { "level": 4, "summary": "玉米番薯普及救荒，《本草纲目》传统医学体系成熟", "confidence": "documented" },
+        "historical_memory": { "level": 5, "summary": "官方修纂正史与方略，同时出现考据学对经典的重新审视", "confidence": "documented" }
+      }
+    },
+    {
+      "year": 1950,
+      "eraLabel": "中华人民共和国初期",
+      "worldContext": "冷战格局形成；二战结束；殖民地独立浪潮",
+      "evidenceNote": "建国档案、统计年鉴、考古与史学当代研究（非倒推）",
+      "sources": ["第一次全国人口普查", "土地改革档案", "当代史学共识"],
+      "dimensions": {
+        "geography": { "level": 5, "summary": "现代主权国家版图确立，西部与边疆治理纳入国家体系", "confidence": "documented" },
+        "resources": { "level": 3, "summary": "战后恢复，工业基础薄弱，煤炭铁矿开发起步", "confidence": "documented" },
+        "technology": { "level": 2, "summary": "工业化起步，苏联援助156项，科技水平整体落后", "confidence": "documented" },
+        "production": { "level": 3, "summary": "土地改革后合作社酝酿，国营工业体系建立", "confidence": "documented" },
+        "economy": { "level": 2, "summary": "统一财经，通胀治理，计划经济体制确立", "confidence": "documented" },
+        "politics": { "level": 5, "summary": "人民共和国成立，政协体制、土改、镇压反革命", "confidence": "documented" },
+        "military": { "level": 4, "summary": "解放军现代化，抗美援朝前夕，国防工业重建", "confidence": "documented" },
+        "culture": { "level": 4, "summary": "思想改造运动、扫盲、新旧文化交替剧烈", "confidence": "documented" },
+        "daily_life": { "level": 3, "summary": "人均寿命约35岁提升至改善中，公共卫生运动开展", "confidence": "documented" },
+        "historical_memory": { "level": 4, "summary": "唯物史观主导的历史叙述体系正在建立", "confidence": "documented" }
+      }
+    }
+  ]
+}
