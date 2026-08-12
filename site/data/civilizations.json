@@ -1,0 +1,7 @@
+{
+  "civilizations": [
+    { "id": "china", "file": "china.json", "name": "中国", "color": "#b22222" },
+    { "id": "egypt", "file": "egypt.json", "name": "埃及", "color": "#d4a017" },
+    { "id": "rome", "file": "rome.json", "name": "罗马", "color": "#7b2d8e" }
+  ]
+}
