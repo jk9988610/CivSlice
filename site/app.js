@@ -1,7 +1,8 @@
-const SNAP_TOLERANCE = 350;
 const MAX_COMPARE = 3;
 
 const state = {
+  selectedPeriodId: null,
+  selectedGroupId: null,
   currentYear: -500,
   civilizations: [],
   civIndex: [],
@@ -23,10 +24,42 @@ function resolveSnap(raw) {
   return CivTemplates.resolveSnapshot(raw);
 }
 
+function resolveSnapForPeriod(raw) {
+  const snap = resolveSnap(raw);
+  const period = getPeriod();
+  if (snap && period) return { ...snap, eraTemplate: period.eraTemplate };
+  return snap;
+}
+
+function getPeriod() {
+  return state.selectedPeriodId ? CivNav.getPeriod(state.selectedPeriodId) : null;
+}
+
+function getSnapTolerance() {
+  const period = getPeriod();
+  return period ? CivNav.getSnapTolerance(period) : 350;
+}
+
 function getResolvedSnap(civ, year) {
-  const raw = findNearestSnapshot(civ.data.snapshots, year);
+  const period = getPeriod();
+  if (!period) return null;
+  const raw = findNearestSnapshotInPeriod(civ.data.snapshots, year, period);
   if (!isSnapInRange(raw, year)) return null;
-  return resolveSnap(raw);
+  return resolveSnapForPeriod(raw);
+}
+
+function findNearestSnapshotInPeriod(snapshots, year, period) {
+  const inPeriod = CivNav.snapshotsInPeriod(snapshots, period);
+  if (!inPeriod.length) return null;
+  return inPeriod.reduce((best, snap) =>
+    Math.abs(snap.year - year) < Math.abs(best.year - year) ? snap : best
+  );
+}
+
+function findNearestSnapshotForAvg(snapshots, year) {
+  const period = getPeriod();
+  if (!period) return null;
+  return findNearestSnapshotInPeriod(snapshots, year, period);
 }
 
 async function init() {
@@ -41,21 +74,20 @@ async function init() {
     })
   );
 
-  const primary = getCiv(state.primaryCivId);
-  const { yearMin, yearMax, yearStep } = primary.data.meta;
-  const slider = $('#year-slider');
-  slider.min = yearMin;
-  slider.max = yearMax;
-  slider.step = yearStep;
-  state.currentYear = primary.data.snapshots[Math.floor(primary.data.snapshots.length / 2)].year;
-  slider.value = state.currentYear;
+  const defaultPeriod = CivNav.findDefaultPeriod(state.civilizations);
+  state.selectedPeriodId = defaultPeriod.id;
+
+  const primary = getPrimaryCiv();
+  state.currentYear = CivNav.defaultYearForPeriod(primary, defaultPeriod, null);
 
   const initSnap = getResolvedSnap(primary, state.currentYear);
-  state.lastEraTemplate = initSnap?.eraTemplate || CivTemplates.inferTemplate(state.currentYear);
+  state.lastEraTemplate = initSnap?.eraTemplate || defaultPeriod.eraTemplate;
 
   $('#page-subtitle').textContent = primary.data.meta.subtitle;
-  buildCivSelector();
-  buildTimelineTicks(yearMin, yearMax);
+  buildEraPeriodTabs();
+  applyPeriodToSlider(defaultPeriod);
+  buildEntityChips();
+  buildTimelineTicks(defaultPeriod.yearMin, defaultPeriod.yearMax);
   buildSnapshotMarkers();
   buildMethodology(primary);
   bindEvents();
@@ -75,17 +107,190 @@ function getProfileAxes(eraTemplate) {
   return CivTemplates.getTemplateAxes(eraTemplate);
 }
 
-function buildCivSelector() {
-  const multi = state.viewTab === 'compare';
-  $('#civ-selector').innerHTML = state.civIndex.map((entry) => {
+function applyPeriodToSlider(period) {
+  const slider = $('#year-slider');
+  const step = CivNav.getYearStep(period.yearMin, period.yearMax);
+  slider.min = period.yearMin;
+  slider.max = period.yearMax;
+  slider.step = step;
+  slider.value = state.currentYear;
+  $('#period-range').textContent = CivNav.formatPeriodRange(period, formatYear);
+}
+
+function buildEraPeriodTabs() {
+  const periods = CivNav.periodsWithData(state.civilizations);
+  $('#era-period-tabs').innerHTML = periods.map((p) => {
+    const tpl = CivNav.getPeriod(p.id) || p;
+    const label = tpl.shortLabel || tpl.label;
+    return `<button type="button" class="era-tab ${p.id === state.selectedPeriodId ? 'active' : ''}" data-period="${p.id}" role="tab" aria-selected="${p.id === state.selectedPeriodId}">${label}</button>`;
+  }).join('');
+}
+
+function updateEntityContext() {
+  const period = getPeriod();
+  const civ = getPrimaryCiv();
+  if (!period || !civ) {
+    $('#entity-context').textContent = '';
+    return;
+  }
+  $('#entity-context').textContent = `${civ.data.meta.country} · ${period.label}`;
+}
+
+function buildEntityChips() {
+  const period = getPeriod();
+  const el = $('#entity-chips');
+  updateEntityContext();
+
+  if (!period) {
+    el.innerHTML = '';
+    return;
+  }
+
+  if (state.viewTab === 'profile') {
+    buildProfileEntityChips(period, el);
+  } else {
+    buildCompareEntityChips(period, el);
+  }
+}
+
+function buildProfileEntityChips(period, el) {
+  const available = CivNav.civilizationsInPeriod(state.civilizations, period);
+  const primary = getPrimaryCiv();
+
+  if (!available.length) {
+    el.innerHTML = '<p class="muted empty-period">该时段暂无记录，欢迎贡献数据</p>';
+    return;
+  }
+
+  if (!available.find((c) => c.id === state.primaryCivId)) {
+    state.primaryCivId = available[0].id;
+    state.selectedCivIds = [state.primaryCivId];
+    $('#page-subtitle').textContent = getPrimaryCiv().data.meta.subtitle;
+    buildMethodology(getPrimaryCiv());
+  }
+
+  const chips = CivNav.getGroupChips(getPrimaryCiv(), period);
+  if (!chips.length) {
+    el.innerHTML = '<p class="muted empty-period">该时段暂无记录，欢迎贡献数据</p>';
+    return;
+  }
+
+  if (!state.selectedGroupId || !chips.find((c) => c.id === state.selectedGroupId)) {
+    state.selectedGroupId = chips[0].id;
+    state.currentYear = CivNav.defaultYearForPeriod(getPrimaryCiv(), period, state.selectedGroupId);
+    $('#year-slider').value = state.currentYear;
+  }
+
+  const civSwitch = available.length > 1
+    ? available.map((entry) => {
+      const active = entry.id === state.primaryCivId;
+      return `<button type="button" class="entity-chip civ-switch ${active ? 'selected' : ''}" data-civ="${entry.id}"><span class="civ-dot" style="background:${entry.color}"></span>${entry.name}</button>`;
+    }).join('')
+    : '';
+
+  const groupChips = chips.map((c) =>
+    `<button type="button" class="entity-chip ${c.id === state.selectedGroupId ? 'selected' : ''}" data-group="${c.id}">${c.label}</button>`
+  ).join('');
+
+  el.innerHTML = `${civSwitch}${groupChips}`;
+}
+
+function buildCompareEntityChips(period, el) {
+  const available = CivNav.civilizationsInPeriod(state.civilizations, period);
+
+  if (!available.length) {
+    el.innerHTML = '<p class="muted empty-period">该时段暂无可对比文明</p>';
+    return;
+  }
+
+  state.selectedCivIds = state.selectedCivIds.filter((id) => available.some((c) => c.id === id));
+  if (!state.selectedCivIds.length) {
+    state.selectedCivIds = [available[0].id];
+    state.primaryCivId = available[0].id;
+  }
+  if (!state.selectedCivIds.includes(state.primaryCivId)) {
+    state.primaryCivId = state.selectedCivIds[0];
+  }
+
+  el.innerHTML = available.map((entry) => {
     const checked = state.selectedCivIds.includes(entry.id);
+    const primary = entry.id === state.primaryCivId;
     return `
-      <label class="civ-chip ${checked ? 'selected' : ''}" data-civ="${entry.id}">
-        <input type="${multi ? 'checkbox' : 'radio'}" name="civ-select" value="${entry.id}" ${checked ? 'checked' : ''}>
+      <label class="entity-chip civ-chip ${checked ? 'selected' : ''} ${primary ? 'primary' : ''}" data-civ="${entry.id}">
+        <input type="checkbox" name="entity-civ" value="${entry.id}" ${checked ? 'checked' : ''}>
         <span class="civ-dot" style="background:${entry.color}"></span>
         <span>${entry.name}</span>
       </label>`;
   }).join('');
+}
+
+function onPeriodChange(periodId) {
+  if (periodId === state.selectedPeriodId) return;
+
+  state.selectedPeriodId = periodId;
+  state.selectedGroupId = null;
+  state.expandedCards.clear();
+  state.highlightedId = null;
+
+  const period = getPeriod();
+  const available = CivNav.civilizationsInPeriod(state.civilizations, period);
+
+  if (state.viewTab === 'compare') {
+    state.selectedCivIds = state.selectedCivIds.filter((id) => available.some((c) => c.id === id));
+    if (!state.selectedCivIds.length && available.length) {
+      state.selectedCivIds = [available[0].id];
+    }
+  } else if (!available.find((c) => c.id === state.primaryCivId) && available.length) {
+    state.primaryCivId = available[0].id;
+    state.selectedCivIds = [state.primaryCivId];
+    $('#page-subtitle').textContent = getPrimaryCiv().data.meta.subtitle;
+    buildMethodology(getPrimaryCiv());
+  }
+
+  const primary = getPrimaryCiv();
+  state.currentYear = CivNav.defaultYearForPeriod(primary, period, null);
+  state.lastEraTemplate = period.eraTemplate;
+
+  applyPeriodToSlider(period);
+  buildEraPeriodTabs();
+  buildEntityChips();
+  buildTimelineTicks(period.yearMin, period.yearMax);
+  buildSnapshotMarkers();
+  render();
+}
+
+function onGroupSelect(groupId) {
+  if (groupId === state.selectedGroupId) return;
+  state.selectedGroupId = groupId;
+  state.expandedCards.clear();
+  state.highlightedId = null;
+
+  const period = getPeriod();
+  const primary = getPrimaryCiv();
+  state.currentYear = CivNav.defaultYearForPeriod(primary, period, groupId);
+  $('#year-slider').value = state.currentYear;
+  buildEntityChips();
+  buildSnapshotMarkers();
+  render();
+}
+
+function onProfileCivSwitch(civId) {
+  if (civId === state.primaryCivId) return;
+  state.primaryCivId = civId;
+  state.selectedCivIds = [civId];
+  state.selectedGroupId = null;
+  state.expandedCards.clear();
+  state.highlightedId = null;
+
+  const civ = getPrimaryCiv();
+  const period = getPeriod();
+  $('#page-subtitle').textContent = civ.data.meta.subtitle;
+  buildMethodology(civ);
+  state.currentYear = CivNav.defaultYearForPeriod(civ, period, null);
+  $('#year-slider').value = state.currentYear;
+  buildEntityChips();
+  buildSnapshotMarkers();
+  render();
 }
 
 function buildTimelineTicks(min, max) {
@@ -97,15 +302,21 @@ function buildTimelineTicks(min, max) {
 }
 
 function buildSnapshotMarkers() {
+  const period = getPeriod();
   const primary = getPrimaryCiv();
-  const { yearMin, yearMax } = primary.data.meta;
-  const range = yearMax - yearMin;
-  $('#snapshot-markers').innerHTML = primary.data.snapshots.map((snap) => {
-    const pct = ((snap.year - yearMin) / range) * 100;
-    const tpl = snap.eraTemplate || CivTemplates.inferTemplate(snap.year);
-    const tplLabel = CivTemplates.getTemplate(tpl).label;
-    return `<button class="snap-marker" style="left:${pct}%" title="${formatYear(snap.year)} · ${snap.eraLabel} · ${tplLabel}" data-year="${snap.year}"></button>`;
+  if (!period || !primary) return;
+
+  const snaps = CivNav.snapshotsInPeriod(primary.data.snapshots, period);
+  const range = period.yearMax - period.yearMin;
+  if (!range) return;
+
+  $('#snapshot-markers').innerHTML = snaps.map((snap) => {
+    const pct = ((snap.year - period.yearMin) / range) * 100;
+    const tplLabel = CivTemplates.getTemplate(period.eraTemplate).label;
+    const groupLabel = snap.group || snap.eraLabel;
+    return `<button type="button" class="snap-marker" style="left:${pct}%" title="${formatYear(snap.year)} · ${groupLabel} · ${tplLabel}" data-year="${snap.year}"></button>`;
   }).join('');
+
   $$('.snap-marker').forEach((btn) => {
     btn.addEventListener('click', () => {
       state.currentYear = Number(btn.dataset.year);
@@ -133,7 +344,51 @@ function buildMethodology(civ) {
 }
 
 function bindEvents() {
-  $('#year-slider').addEventListener('input', (e) => { state.currentYear = Number(e.target.value); render(); });
+  $('#era-period-tabs').addEventListener('click', (e) => {
+    const btn = e.target.closest('.era-tab');
+    if (!btn) return;
+    onPeriodChange(btn.dataset.period);
+  });
+
+  $('#entity-chips').addEventListener('click', (e) => {
+    const groupBtn = e.target.closest('[data-group]');
+    if (groupBtn) {
+      onGroupSelect(groupBtn.dataset.group);
+      return;
+    }
+    const civBtn = e.target.closest('.civ-switch');
+    if (civBtn) {
+      onProfileCivSwitch(civBtn.dataset.civ);
+    }
+  });
+
+  $('#entity-chips').addEventListener('change', (e) => {
+    const target = e.target;
+    if (!target.matches('input[name="entity-civ"]')) return;
+
+    const checked = [...document.querySelectorAll('input[name="entity-civ"]:checked')].map((el) => el.value);
+    if (checked.length > MAX_COMPARE) {
+      target.checked = false;
+      flashHint(`对比视图最多选择 ${MAX_COMPARE} 个文明`);
+      return;
+    }
+    if (checked.length === 0) {
+      target.checked = true;
+      return;
+    }
+
+    state.selectedCivIds = checked;
+    state.primaryCivId = checked[0];
+    state.expandedCards.clear();
+    buildEntityChips();
+    buildSnapshotMarkers();
+    render();
+  });
+
+  $('#year-slider').addEventListener('input', (e) => {
+    state.currentYear = Number(e.target.value);
+    render();
+  });
   $('#btn-prev').addEventListener('click', () => stepYear(-1));
   $('#btn-next').addEventListener('click', () => stepYear(1));
 
@@ -145,6 +400,8 @@ function bindEvents() {
     state.viewTab = view;
     state.highlightedId = null;
     state.expandedCards.clear();
+    state.selectedGroupId = null;
+
     if (view === 'profile') {
       state.selectedCivIds = [state.primaryCivId];
       state.showAverage = false;
@@ -155,8 +412,10 @@ function bindEvents() {
       $('#profile-toggles').hidden = true;
       $('#compare-toggles').hidden = false;
     }
+
     $$('.view-tab').forEach((t) => t.classList.toggle('active', t.dataset.view === view));
-    buildCivSelector();
+    buildEntityChips();
+    buildSnapshotMarkers();
     render();
   });
 
@@ -167,32 +426,6 @@ function bindEvents() {
 
   $('#toggle-average').addEventListener('change', (e) => {
     state.showAverage = e.target.checked;
-    render();
-  });
-
-  $('#civ-selector').addEventListener('change', (e) => {
-    const target = e.target;
-    if (!target.matches('input[name="civ-select"]')) return;
-
-    if (state.viewTab === 'compare') {
-      const checked = [...document.querySelectorAll('input[name="civ-select"]:checked')].map((el) => el.value);
-      if (checked.length > MAX_COMPARE) {
-        target.checked = false;
-        flashHint(`对比视图最多选择 ${MAX_COMPARE} 个文明`);
-        return;
-      }
-      if (checked.length === 0) { target.checked = true; return; }
-      state.selectedCivIds = checked;
-      state.primaryCivId = checked[0];
-    } else {
-      state.primaryCivId = target.value;
-      state.selectedCivIds = [target.value];
-      const civ = getPrimaryCiv();
-      $('#page-subtitle').textContent = civ.data.meta.subtitle;
-      buildMethodology(civ);
-      buildSnapshotMarkers();
-    }
-    buildCivSelector();
     render();
   });
 
@@ -219,8 +452,10 @@ function flashHint(msg) {
 }
 
 function stepYear(dir) {
-  const { yearStep, yearMin, yearMax } = getPrimaryCiv().data.meta;
-  state.currentYear = Math.max(yearMin, Math.min(yearMax, state.currentYear + dir * yearStep));
+  const period = getPeriod();
+  if (!period) return;
+  const step = CivNav.getYearStep(period.yearMin, period.yearMax);
+  state.currentYear = Math.max(period.yearMin, Math.min(period.yearMax, state.currentYear + dir * step));
   $('#year-slider').value = state.currentYear;
   render();
 }
@@ -231,27 +466,27 @@ function formatYear(year) {
   return `公元 ${year} 年`;
 }
 
-function findNearestSnapshot(snapshots, year) {
-  return snapshots.reduce((best, snap) =>
-    Math.abs(snap.year - year) < Math.abs(best.year - year) ? snap : best
-  );
-}
-
 function isSnapInRange(snap, year) {
-  return snap && Math.abs(snap.year - year) <= SNAP_TOLERANCE;
+  const period = getPeriod();
+  if (!period || !snap) return false;
+  if (!CivNav.snapshotInPeriod(snap, period)) return false;
+  return Math.abs(snap.year - year) <= getSnapTolerance();
 }
 
 function updateTemplateBanner(snap) {
   const banner = $('#template-banner');
-  if (!snap) {
+  const period = getPeriod();
+  const eraTemplate = period?.eraTemplate || snap?.eraTemplate;
+
+  if (!eraTemplate) {
     banner.hidden = true;
     return;
   }
 
-  const tpl = CivTemplates.getTemplate(snap.eraTemplate);
-  const legacyNote = snap._fromLegacy ? ' <span class="legacy-tag">（旧十维映射）</span>' : '';
+  const tpl = CivTemplates.getTemplate(eraTemplate);
+  const legacyNote = snap?._fromLegacy ? ' <span class="legacy-tag">（旧十维映射）</span>' : '';
 
-  if (state.lastEraTemplate && state.lastEraTemplate !== snap.eraTemplate) {
+  if (state.lastEraTemplate && state.lastEraTemplate !== eraTemplate) {
     const prev = CivTemplates.getTemplate(state.lastEraTemplate);
     banner.hidden = false;
     banner.className = 'template-banner template-changed';
@@ -262,15 +497,16 @@ function updateTemplateBanner(snap) {
     banner.innerHTML = `时代模板：<strong>${tpl.label}</strong>${legacyNote}`;
   }
 
-  state.lastEraTemplate = snap.eraTemplate;
+  state.lastEraTemplate = eraTemplate;
 }
 
 function checkCompareTemplateMismatch() {
   if (state.viewTab !== 'compare' || state.selectedCivIds.length < 2) return '';
 
+  const period = getPeriod();
   const templates = getSelectedCivs().map((civ) => {
     const snap = getResolvedSnap(civ, state.currentYear);
-    return snap?.eraTemplate;
+    return snap?.eraTemplate || period?.eraTemplate;
   }).filter(Boolean);
 
   const unique = [...new Set(templates)];
@@ -299,16 +535,24 @@ function renderSourceItem(src) {
 }
 
 function render() {
+  const period = getPeriod();
   const primary = getPrimaryCiv();
-  const raw = findNearestSnapshot(primary.data.snapshots, state.currentYear);
+  const raw = period
+    ? findNearestSnapshotInPeriod(primary.data.snapshots, state.currentYear, period)
+    : null;
   const inRange = isSnapInRange(raw, state.currentYear);
-  const snap = inRange ? resolveSnap(raw) : null;
+  const snap = inRange ? getResolvedSnap(primary, state.currentYear) : null;
 
   $('#year-display').textContent = formatYear(state.currentYear);
-  $('#era-label').textContent = inRange ? raw.eraLabel : '该时段无快照';
-  $('#world-context').textContent = inRange && raw.worldContext
+  $('#era-label').textContent = inRange && raw
+    ? (raw.group ? `${raw.group}（${raw.eraLabel}）` : raw.eraLabel)
+    : '该时段无快照';
+
+  $('#world-context').textContent = inRange && raw?.worldContext
     ? `世界背景：${raw.worldContext}`
-    : `当前选择 ${formatYear(state.currentYear)}，最近快照为 ${formatYear(raw.year)}（${raw.eraLabel}），点击时间轴圆点可跳转。`;
+    : raw
+      ? `当前选择 ${formatYear(state.currentYear)}，最近快照为 ${formatYear(raw.year)}（${raw.group || raw.eraLabel}），点击时间轴圆点可跳转。`
+      : '该时段暂无记录，请选择其他时代段或朝代。';
 
   const isProfile = state.viewTab === 'profile';
   $('#radar-legend-profile').hidden = !isProfile;
@@ -327,15 +571,19 @@ function render() {
 
 function updateAverageToggle() {
   if (state.viewTab !== 'compare') return;
+  const tolerance = getSnapTolerance();
   const avgInfo = CivStats.periodAverageAllStats(
-    state.currentYear, state.civilizations, SNAP_TOLERANCE, findNearestSnapshot, isSnapInRange, resolveSnap
+    state.currentYear, state.civilizations, tolerance, findNearestSnapshotForAvg, isSnapInRange, resolveSnapForPeriod
   );
   const wrap = $('#avg-toggle-wrap');
   const checkbox = $('#toggle-average');
   if (!avgInfo) {
     wrap.classList.add('disabled');
     checkbox.disabled = true;
-    if (state.showAverage) { state.showAverage = false; checkbox.checked = false; }
+    if (state.showAverage) {
+      state.showAverage = false;
+      checkbox.checked = false;
+    }
   } else {
     wrap.classList.remove('disabled');
     checkbox.disabled = false;
@@ -345,20 +593,24 @@ function updateAverageToggle() {
 function renderSnapshotInfo(snap, raw, inRange) {
   const el = $('#snapshot-info');
   const civ = getPrimaryCiv();
+  const period = getPeriod();
+
   if (!inRange || !snap) {
-    el.innerHTML = `<h3>暂无精确快照</h3><p class="muted">请拖动滑块至时间轴圆点附近。</p><p class="muted">最近记录：<strong>${raw.eraLabel}</strong>（${formatYear(raw.year)}）</p>`;
+    el.innerHTML = `<h3>暂无精确快照</h3><p class="muted">请拖动滑块至时间轴圆点附近，或选择其他朝代。</p>${raw ? `<p class="muted">最近记录：<strong>${raw.group || raw.eraLabel}</strong>（${formatYear(raw.year)}）</p>` : ''}`;
     return;
   }
 
-  const tpl = CivTemplates.getTemplate(snap.eraTemplate);
+  const tpl = CivTemplates.getTemplate(period.eraTemplate);
   const compareNote = state.viewTab === 'compare' && state.selectedCivIds.length > 1
     ? `<p class="compare-note muted">对比中：${getSelectedCivs().map((c) => c.name).join('、')}</p>` : '';
   const templateMismatch = checkCompareTemplateMismatch();
   const statsBlock = state.viewTab === 'compare' ? renderStatsSummary(snap) : '';
+  const dynastyLine = raw.dynasty ? `<p class="dynasty-badge muted">朝代：${raw.dynasty}</p>` : '';
 
   el.innerHTML = `
     <h3 style="color:${civ.color}">${civ.data.meta.country}</h3>
-    <p class="era-badge">${raw.eraLabel}</p>
+    <p class="era-badge">${raw.group || raw.eraLabel}</p>
+    ${dynastyLine}
     <p class="template-badge">时代模板：${tpl.label}</p>
     ${compareNote}
     ${templateMismatch}
@@ -456,18 +708,18 @@ function renderStatCard(stat, snap) {
 function renderStatCompareRow(stat) {
   const expanded = state.expandedCards.has(stat.id);
   const entries = getSelectedCivs().map((civ) => {
-    const snap = getResolvedSnap(civ, state.currentYear);
-    if (!snap) {
+    const s = getResolvedSnap(civ, state.currentYear);
+    if (!s) {
       return `<div class="compare-entry" style="--civ-color:${civ.color}"><span class="compare-civ">${civ.name}</span><span class="muted">无快照</span></div>`;
     }
-    const stats = CivStats.computeAllStats(snap, snap.eraTemplate);
+    const stats = CivStats.computeAllStats(s, s.eraTemplate);
     const value = stats[stat.id];
     const grade = CivStats.getGrade(value);
-    const dimMap = getDimensionMap(snap.eraTemplate);
-    const formula = CivStats.formatBreakdown(CivStats.getStatBreakdown(snap, stat.id, dimMap, snap.eraTemplate));
+    const dimMap = getDimensionMap(s.eraTemplate);
+    const formula = CivStats.formatBreakdown(CivStats.getStatBreakdown(s, stat.id, dimMap, s.eraTemplate));
     return `
       <div class="compare-entry" style="--civ-color:${civ.color}">
-        <span class="compare-civ">${civ.name} <span class="muted">(${CivTemplates.getTemplate(snap.eraTemplate).label})</span></span>
+        <span class="compare-civ">${civ.name} <span class="muted">(${CivTemplates.getTemplate(s.eraTemplate).label})</span></span>
         <span class="compare-meta"><span class="stat-value-inline">${value ?? 'N/A'}</span> <span class="stat-grade grade-${grade}">${grade}</span></span>
         ${expanded ? `<span class="stat-formula">${formula}</span>` : ''}
       </div>`;
@@ -510,8 +762,8 @@ function renderAuxLabels() {
   if (state.viewTab === 'compare' && state.selectedCivIds.length > 1) {
     legend.hidden = false;
     legend.innerHTML = getSelectedCivs().map((civ, i) => {
-      const snap = getResolvedSnap(civ, state.currentYear);
-      const era = snap ? snap.eraLabel || CivTemplates.getTemplate(snap.eraTemplate).label : '无快照';
+      const s = getResolvedSnap(civ, state.currentYear);
+      const era = s ? s.eraLabel || CivTemplates.getTemplate(s.eraTemplate).label : '无快照';
       return `<span class="legend-item"><span class="civ-dot" style="background:${civ.color}"></span>${civ.name} · ${era}${i === 0 ? '（主）' : ''}</span>`;
     }).join('');
   } else {
@@ -519,7 +771,10 @@ function renderAuxLabels() {
   }
 
   if (state.viewTab === 'compare' && state.showAverage) {
-    const avg = CivStats.periodAverageAllStats(state.currentYear, state.civilizations, SNAP_TOLERANCE, findNearestSnapshot, isSnapInRange, resolveSnap);
+    const tolerance = getSnapTolerance();
+    const avg = CivStats.periodAverageAllStats(
+      state.currentYear, state.civilizations, tolerance, findNearestSnapshotForAvg, isSnapInRange, resolveSnapForPeriod
+    );
     if (avg) {
       aux.hidden = false;
       aux.textContent = `同期派生均值（n=${avg.civCount} 文明，非加权）`;
@@ -540,10 +795,11 @@ function drawRadar() {
   const canvas = $('#radar-canvas');
   const ctx = canvas.getContext('2d');
   const primary = getPrimaryCiv();
+  const period = getPeriod();
   const snap = getResolvedSnap(primary, state.currentYear);
 
   if (state.viewTab === 'profile') {
-    const eraTemplate = snap?.eraTemplate || CivTemplates.inferTemplate(state.currentYear);
+    const eraTemplate = period?.eraTemplate || snap?.eraTemplate || CivTemplates.inferTemplate(state.currentYear);
     const axes = getProfileAxes(eraTemplate).map((d) => ({ id: d.id, short: d.short }));
     const layout = CivRadar.buildLayout(canvas, axes, 5);
     state.radarLayout = layout;
@@ -574,7 +830,10 @@ function drawRadar() {
 
     let avgStats = null;
     if (state.showAverage) {
-      const avg = CivStats.periodAverageAllStats(state.currentYear, state.civilizations, SNAP_TOLERANCE, findNearestSnapshot, isSnapInRange, resolveSnap);
+      const tolerance = getSnapTolerance();
+      const avg = CivStats.periodAverageAllStats(
+        state.currentYear, state.civilizations, tolerance, findNearestSnapshotForAvg, isSnapInRange, resolveSnapForPeriod
+      );
       avgStats = avg?.stats;
     }
 
@@ -589,7 +848,9 @@ function drawRadar() {
 }
 
 function updateMarkerHighlight(snap) {
-  $$('.snap-marker').forEach((m) => m.classList.toggle('active', Number(m.dataset.year) === snap.year));
+  $$('.snap-marker').forEach((m) => {
+    m.classList.toggle('active', snap && Number(m.dataset.year) === snap.year);
+  });
 }
 
 function onRadarMouseMove(e) {

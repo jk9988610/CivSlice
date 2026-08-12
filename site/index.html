@@ -21,6 +21,15 @@
     </div>
   </header>
 
+  <section class="nav-section">
+    <div class="era-period-tabs" id="era-period-tabs" role="tablist" aria-label="时代段"></div>
+    <p class="period-range" id="period-range"></p>
+    <div class="entity-chips-wrap">
+      <span class="entity-context" id="entity-context"></span>
+      <div class="entity-chips" id="entity-chips"></div>
+    </div>
+  </section>
+
   <section class="timeline-section">
     <div class="timeline-controls">
       <button id="btn-prev" class="btn-icon" title="向前">◀</button>
@@ -40,7 +49,6 @@
   <div class="template-banner" id="template-banner" hidden></div>
 
   <section class="viz-controls" id="viz-controls">
-    <div class="civ-selector" id="civ-selector"></div>
     <div class="mode-toggles" id="profile-toggles">
       <label class="toggle-label">
         <input type="checkbox" id="toggle-speculative">
@@ -99,6 +107,7 @@
   </footer>
 
   <script src="js/templates.js"></script>
+  <script src="js/navigation.js"></script>
   <script src="js/stats.js"></script>
   <script src="js/radar.js"></script>
   <script src="app.js"></script>
