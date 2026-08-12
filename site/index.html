@@ -32,16 +32,23 @@
     <p id="world-context" class="world-context"></p>
   </section>
 
+  <nav class="view-tabs" id="view-tabs">
+    <button class="view-tab active" data-view="profile">剖面</button>
+    <button class="view-tab" data-view="compare">对比</button>
+  </nav>
+
   <section class="viz-controls" id="viz-controls">
     <div class="civ-selector" id="civ-selector"></div>
-    <div class="mode-toggles">
+    <div class="mode-toggles" id="profile-toggles">
+      <label class="toggle-label">
+        <input type="checkbox" id="toggle-speculative">
+        <span>含猜测轮廓</span>
+      </label>
+    </div>
+    <div class="mode-toggles" id="compare-toggles" hidden>
       <label class="toggle-label" id="avg-toggle-wrap">
         <input type="checkbox" id="toggle-average">
         <span>显示同期均值</span>
-      </label>
-      <label class="toggle-label">
-        <input type="checkbox" id="toggle-compare">
-        <span>对比模式</span>
       </label>
     </div>
   </section>
@@ -50,19 +57,22 @@
     <section class="viz-section">
       <div class="viz-core">
         <div class="radar-wrap">
-          <canvas id="radar-canvas" width="280" height="280" aria-label="十维雷达图"></canvas>
-          <p class="radar-legend-mini">
+          <canvas id="radar-canvas" width="280" height="280" aria-label="雷达图"></canvas>
+          <p class="radar-legend-mini" id="radar-legend-profile">
             <span class="dot documented"></span>有据
             <span class="dot inferred"></span>推断
             <span class="dot speculative"></span>猜测
+          </p>
+          <p class="radar-legend-mini" id="radar-legend-compare" hidden>
+            <span class="grade-sample">S–E</span> 档位 · 0–100
           </p>
           <p class="radar-aux-label" id="radar-aux-label" hidden></p>
           <div class="compare-legend" id="compare-legend" hidden></div>
         </div>
         <div class="cards-wrap">
           <div class="cards-header">
-            <h2 class="panel-title">维度详情</h2>
-            <p class="cards-hint muted">悬停联动 · 点击展开摘要</p>
+            <h2 class="panel-title" id="cards-title">维度详情</h2>
+            <p class="cards-hint muted" id="cards-hint">悬停联动 · 点击展开</p>
           </div>
           <div class="dimension-grid" id="dimension-grid"></div>
         </div>
@@ -83,9 +93,11 @@
   </main>
 
   <footer class="footer">
-    <p>等级 1–5 为文明内部相对概括，非精确统计。详见 <a href="https://github.com/jk9988610/CivSlice">CivSlice 仓库</a>。</p>
+    <p>剖面为十维史料层；对比为派生指标（运行时计算，非 JSON 存储）。详见 <a href="https://github.com/jk9988610/CivSlice">CivSlice</a>。</p>
   </footer>
 
+  <script src="js/stats.js"></script>
+  <script src="js/radar.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
