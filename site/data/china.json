@@ -49,6 +49,57 @@
         "refutedBy": "学界多认为不能简单等同，年代与文献夏代仍有差距",
         "confidence": "documented"
       }
+    ],
+    "eraPeriods": [
+      {
+        "id": "paleolithic",
+        "label": "石器时代",
+        "yearMin": -12000,
+        "yearMax": -10000,
+        "eraTemplate": "paleolithic"
+      },
+      {
+        "id": "neolithic",
+        "label": "新石器",
+        "yearMin": -10000,
+        "yearMax": -4000,
+        "eraTemplate": "neolithic"
+      },
+      {
+        "id": "bronze",
+        "label": "青铜时代",
+        "yearMin": -4000,
+        "yearMax": -1000,
+        "eraTemplate": "bronze"
+      },
+      {
+        "id": "iron_imperial",
+        "label": "铁器与帝国",
+        "yearMin": -1000,
+        "yearMax": 1500,
+        "eraTemplate": "iron_imperial"
+      },
+      {
+        "id": "early_modern",
+        "label": "近代早期",
+        "yearMin": 1500,
+        "yearMax": 1800,
+        "eraTemplate": "early_modern"
+      },
+      {
+        "id": "industrial",
+        "label": "工业时代",
+        "yearMin": 1800,
+        "yearMax": 1945,
+        "eraTemplate": "industrial"
+      },
+      {
+        "id": "contemporary",
+        "label": "当代",
+        "yearMin": 1945,
+        "yearMax": 2024,
+        "eraTemplate": "contemporary"
+      }
     ]
   },
   "dimensions": [
@@ -195,7 +246,10 @@
         }
       },
       "eraTemplate": "bronze",
-      "_migrated": true
+      "_migrated": true,
+      "dynasty": "夏商",
+      "group": "二里头",
+      "periodId": "bronze"
     },
     {
       "year": -1000,
@@ -284,7 +338,10 @@
           "note": "记录的是当时及稍后的历史意识，不等于完全信史"
         }
       },
-      "eraTemplate": "bronze"
+      "eraTemplate": "bronze",
+      "dynasty": "周",
+      "group": "西周",
+      "periodId": "bronze"
     },
     {
       "year": -500,
@@ -375,7 +432,10 @@
         }
       },
       "eraTemplate": "iron_imperial",
-      "_migrated": true
+      "_migrated": true,
+      "dynasty": "东周",
+      "group": "春秋战国",
+      "periodId": "iron_imperial"
     },
     {
       "year": -221,
@@ -465,7 +525,10 @@
         }
       },
       "eraTemplate": "iron_imperial",
-      "_migrated": true
+      "_migrated": true,
+      "dynasty": "秦",
+      "group": "秦",
+      "periodId": "iron_imperial"
     },
     {
       "year": 100,
@@ -549,7 +612,10 @@
           "note": "记录的是汉代士人的历史意识与正统观念"
         }
       },
-      "eraTemplate": "iron_imperial"
+      "eraTemplate": "iron_imperial",
+      "dynasty": "汉",
+      "group": "东汉",
+      "periodId": "iron_imperial"
     },
     {
       "year": 1000,
@@ -638,7 +704,10 @@
           "note": "记录的是宋代士大夫的历史意识与正统叙事"
         }
       },
-      "eraTemplate": "iron_imperial"
+      "eraTemplate": "iron_imperial",
+      "dynasty": "宋",
+      "group": "北宋",
+      "periodId": "iron_imperial"
     },
     {
       "year": 1800,
@@ -721,7 +790,10 @@
           "note": "记录的是清代官方与士人的历史叙述，含满汉正统话语"
         }
       },
-      "eraTemplate": "early_modern"
+      "eraTemplate": "early_modern",
+      "dynasty": "清",
+      "group": "清嘉庆",
+      "periodId": "early_modern"
     },
     {
       "year": 1950,
@@ -801,7 +873,10 @@
         }
       },
       "eraTemplate": "contemporary",
-      "_migrated": true
+      "_migrated": true,
+      "dynasty": "中华人民共和国",
+      "group": "共和国初期",
+      "periodId": "contemporary"
     }
   ]
 }

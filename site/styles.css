@@ -55,10 +55,111 @@ h1 { font-size: 1.4rem; font-weight: 600; }
 .era-label { font-size: 0.85rem; color: var(--text-muted); display: block; }
 .year-display { font-size: 1.2rem; font-weight: 600; color: var(--accent); }
 
+.nav-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem 0;
+}
+
+.era-period-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.era-tab {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.era-tab:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.era-tab.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(212, 160, 23, 0.08);
+}
+
+.period-range {
+  margin: 0.5rem 0 0.35rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.entity-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.entity-context {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.entity-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.entity-chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.entity-chip:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.entity-chip.selected {
+  border-color: var(--text-muted);
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.entity-chip.civ-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.entity-chip.civ-chip input { display: none; }
+
+.entity-chip.civ-chip.primary.selected {
+  border-width: 2px;
+}
+
+.empty-period {
+  font-size: 0.8rem;
+  margin: 0;
+}
+
 .timeline-section {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1.25rem 1rem 0.5rem;
+  padding: 0.75rem 1rem 0.5rem;
 }
 
 .timeline-controls {
@@ -717,6 +818,11 @@ h1 { font-size: 1.4rem; font-weight: 600; }
   border-radius: 6px;
   font-size: 0.78rem;
   margin-bottom: 0.6rem;
+}
+
+.dynasty-badge {
+  font-size: 0.78rem;
+  margin-top: 0.15rem;
 }
 
 .compare-note { margin-bottom: 0.4rem; }
