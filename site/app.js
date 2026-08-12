@@ -87,6 +87,7 @@ async function init() {
   buildEraPeriodTabs();
   applyPeriodToSlider(defaultPeriod);
   buildEntityChips();
+  buildSwimlanes();
   buildTimelineTicks(defaultPeriod.yearMin, defaultPeriod.yearMax);
   buildSnapshotMarkers();
   buildMethodology(primary);
@@ -254,6 +255,7 @@ function onPeriodChange(periodId) {
   applyPeriodToSlider(period);
   buildEraPeriodTabs();
   buildEntityChips();
+  buildSwimlanes();
   buildTimelineTicks(period.yearMin, period.yearMax);
   buildSnapshotMarkers();
   render();
@@ -271,6 +273,7 @@ function onGroupSelect(groupId) {
   $('#year-slider').value = state.currentYear;
   buildEntityChips();
   buildSnapshotMarkers();
+  buildSwimlanes();
   render();
 }
 
@@ -290,6 +293,7 @@ function onProfileCivSwitch(civId) {
   $('#year-slider').value = state.currentYear;
   buildEntityChips();
   buildSnapshotMarkers();
+  buildSwimlanes();
   render();
 }
 
@@ -323,6 +327,169 @@ function buildSnapshotMarkers() {
       $('#year-slider').value = state.currentYear;
       render();
     });
+  });
+}
+
+function onSwimlaneMarkerClick(civId, year, groupId) {
+  const period = getPeriod();
+  if (!period) return;
+
+  if (state.viewTab === 'profile') {
+    state.primaryCivId = civId;
+    state.selectedCivIds = [civId];
+    if (groupId) state.selectedGroupId = groupId;
+    const civ = getCiv(civId);
+    $('#page-subtitle').textContent = civ.data.meta.subtitle;
+    buildMethodology(civ);
+  } else {
+    if (!state.selectedCivIds.includes(civId)) {
+      if (state.selectedCivIds.length >= MAX_COMPARE) {
+        flashHint(`对比视图最多选择 ${MAX_COMPARE} 个文明`);
+        return;
+      }
+      state.selectedCivIds = [...state.selectedCivIds, civId];
+    }
+    state.primaryCivId = civId;
+  }
+
+  state.currentYear = year;
+  state.expandedCards.clear();
+  state.highlightedId = null;
+  $('#year-slider').value = year;
+  buildEntityChips();
+  buildSnapshotMarkers();
+  buildSwimlanes();
+  render();
+}
+
+function onSwimlaneRowClick(civId, groupId) {
+  const period = getPeriod();
+  const civ = getCiv(civId);
+  if (!period || !civ) return;
+
+  if (state.viewTab === 'profile') {
+    state.primaryCivId = civId;
+    state.selectedCivIds = [civId];
+    state.selectedGroupId = groupId || null;
+    $('#page-subtitle').textContent = civ.data.meta.subtitle;
+    buildMethodology(civ);
+  } else {
+    if (!state.selectedCivIds.includes(civId)) {
+      if (state.selectedCivIds.length >= MAX_COMPARE) {
+        flashHint(`对比视图最多选择 ${MAX_COMPARE} 个文明`);
+        return;
+      }
+      state.selectedCivIds = [...state.selectedCivIds, civId];
+    }
+    state.primaryCivId = civId;
+  }
+
+  state.currentYear = CivNav.defaultYearForPeriod(civ, period, groupId || null);
+  state.expandedCards.clear();
+  state.highlightedId = null;
+  $('#year-slider').value = state.currentYear;
+  buildEntityChips();
+  buildSnapshotMarkers();
+  buildSwimlanes();
+  render();
+}
+
+function buildSwimlanes() {
+  const period = getPeriod();
+  const section = $('#swimlane-section');
+  if (!period) {
+    section.hidden = true;
+    return;
+  }
+
+  const rows = CivNav.getSwimlaneRows(state.civilizations, period, {
+    viewTab: state.viewTab,
+    primaryCivId: state.primaryCivId,
+  });
+
+  if (!rows.length) {
+    section.hidden = true;
+    return;
+  }
+
+  section.hidden = false;
+  const range = period.yearMax - period.yearMin;
+  const tickCount = 5;
+  const tickStep = range / (tickCount - 1);
+
+  $('#swimlane-axis').innerHTML = Array.from({ length: tickCount }, (_, i) => {
+    const year = Math.round(period.yearMin + tickStep * i);
+    const pct = (i / (tickCount - 1)) * 100;
+    return `<span class="swimlane-axis-tick" style="left:${pct}%">${formatYearShort(year)}</span>`;
+  }).join('');
+
+  $('#swimlane-lanes').innerHTML = rows.map((row) => renderSwimlaneRow(row, period, range)).join('');
+}
+
+function formatYearShort(year) {
+  if (year < 0) return `前${Math.abs(year)}`;
+  return `${year}`;
+}
+
+function renderSwimlaneRow(row, period, range) {
+  const isHighlighted = state.viewTab === 'compare'
+    ? state.selectedCivIds.includes(row.civId)
+    : row.civId === state.primaryCivId;
+  const isPrimary = row.civId === state.primaryCivId;
+  const dynastyAttr = row.isDynasty ? ' data-dynasty="true"' : '';
+
+  let presenceHtml = '';
+  if (row.presence) {
+    const start = Math.max(row.presence.start, period.yearMin);
+    const end = Math.min(row.presence.end, period.yearMax);
+    const left = ((start - period.yearMin) / range) * 100;
+    const width = ((end - start) / range) * 100;
+    presenceHtml = `<span class="swimlane-presence" style="left:${left}%;width:${width}%" title="${row.presence.label}"></span>`;
+  }
+
+  const markersHtml = row.markers.map((snap) => {
+    const pct = ((snap.year - period.yearMin) / range) * 100;
+    const label = snap.group || snap.eraLabel;
+    const groupAttr = row.groupId || snap.group || snap.dynasty || snap.eraLabel;
+    const title = `${label} · ${formatYear(snap.year)}`;
+    const active = snap.year === state.currentYear
+      && row.civId === state.primaryCivId
+      && (!row.groupId || row.groupId === (state.selectedGroupId || label));
+    return `<button type="button" class="swimlane-marker ${active ? 'active' : ''}" style="left:${pct}%" data-civ="${row.civId}" data-year="${snap.year}" data-group="${groupAttr}" title="${title}" aria-label="${title}"></button>`;
+  }).join('');
+
+  return `
+    <div class="swimlane-row ${isHighlighted ? 'highlighted' : ''} ${isPrimary ? 'primary' : ''}" style="--lane-color:${row.color}" data-civ="${row.civId}" data-group="${row.groupId || ''}"${dynastyAttr}>
+      <span class="swimlane-label" title="${row.name}">${row.name}</span>
+      <div class="swimlane-track">
+        ${presenceHtml}
+        ${markersHtml}
+      </div>
+    </div>`;
+}
+
+function updateSwimlaneHighlights() {
+  const period = getPeriod();
+  if (!period || $('#swimlane-section').hidden) return;
+
+  $$('.swimlane-row').forEach((row) => {
+    const civId = row.dataset.civ;
+    const isHighlighted = state.viewTab === 'compare'
+      ? state.selectedCivIds.includes(civId)
+      : civId === state.primaryCivId;
+    row.classList.toggle('highlighted', isHighlighted);
+    row.classList.toggle('primary', civId === state.primaryCivId);
+  });
+
+  $$('.swimlane-marker').forEach((m) => {
+    const year = Number(m.dataset.year);
+    const civId = m.dataset.civ;
+    const groupId = m.dataset.group || null;
+    let active = year === state.currentYear && civId === state.primaryCivId;
+    if (active && groupId && state.selectedGroupId) {
+      active = groupId === state.selectedGroupId;
+    }
+    m.classList.toggle('active', active);
   });
 }
 
@@ -382,7 +549,21 @@ function bindEvents() {
     state.expandedCards.clear();
     buildEntityChips();
     buildSnapshotMarkers();
+    buildSwimlanes();
     render();
+  });
+
+  $('#swimlane-lanes').addEventListener('click', (e) => {
+    const marker = e.target.closest('.swimlane-marker');
+    if (marker) {
+      e.stopPropagation();
+      onSwimlaneMarkerClick(marker.dataset.civ, Number(marker.dataset.year), marker.dataset.group || null);
+      return;
+    }
+    const row = e.target.closest('.swimlane-row');
+    if (row) {
+      onSwimlaneRowClick(row.dataset.civ, row.dataset.group || null);
+    }
   });
 
   $('#year-slider').addEventListener('input', (e) => {
@@ -416,6 +597,7 @@ function bindEvents() {
     $$('.view-tab').forEach((t) => t.classList.toggle('active', t.dataset.view === view));
     buildEntityChips();
     buildSnapshotMarkers();
+    buildSwimlanes();
     render();
   });
 
@@ -566,6 +748,7 @@ function render() {
   renderCards(inRange, snap);
   drawRadar();
   updateMarkerHighlight(raw);
+  updateSwimlaneHighlights();
   renderAuxLabels();
 }
 
