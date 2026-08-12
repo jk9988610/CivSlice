@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>中国历史 · 十维探索 · CivSlice</title>
+  <title>文明历史 · 十维探索 · CivSlice</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <div class="header-inner">
       <div>
         <p class="eyebrow">CivSlice · 文明切片</p>
-        <h1 id="page-title">中国历史 · 十维探索</h1>
+        <h1 id="page-title">文明历史 · 十维探索</h1>
         <p class="subtitle" id="page-subtitle"></p>
       </div>
       <div class="header-meta">
@@ -32,22 +32,40 @@
     <p id="world-context" class="world-context"></p>
   </section>
 
+  <section class="viz-controls" id="viz-controls">
+    <div class="civ-selector" id="civ-selector"></div>
+    <div class="mode-toggles">
+      <label class="toggle-label" id="avg-toggle-wrap">
+        <input type="checkbox" id="toggle-average">
+        <span>显示同期均值</span>
+      </label>
+      <label class="toggle-label">
+        <input type="checkbox" id="toggle-compare">
+        <span>对比模式</span>
+      </label>
+    </div>
+  </section>
+
   <main class="main-layout">
     <section class="viz-section">
-      <div class="radar-panel">
-        <h2 class="panel-title">十维雷达</h2>
-        <canvas id="radar-canvas" width="380" height="380"></canvas>
-        <p class="radar-legend">
-          <span class="dot documented"></span>有据
-          <span class="dot inferred"></span>推断
-          <span class="dot speculative"></span>猜测
-          <span class="dot absent"></span>未记录
-        </p>
-      </div>
-
-      <div class="cards-panel">
-        <h2 class="panel-title">维度详情</h2>
-        <div class="dimension-grid" id="dimension-grid"></div>
+      <div class="viz-core">
+        <div class="radar-wrap">
+          <canvas id="radar-canvas" width="280" height="280" aria-label="十维雷达图"></canvas>
+          <p class="radar-legend-mini">
+            <span class="dot documented"></span>有据
+            <span class="dot inferred"></span>推断
+            <span class="dot speculative"></span>猜测
+          </p>
+          <p class="radar-aux-label" id="radar-aux-label" hidden></p>
+          <div class="compare-legend" id="compare-legend" hidden></div>
+        </div>
+        <div class="cards-wrap">
+          <div class="cards-header">
+            <h2 class="panel-title">维度详情</h2>
+            <p class="cards-hint muted">悬停联动 · 点击展开摘要</p>
+          </div>
+          <div class="dimension-grid" id="dimension-grid"></div>
+        </div>
       </div>
     </section>
 

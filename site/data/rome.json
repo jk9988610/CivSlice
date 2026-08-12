@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "罗马历史 · 十维探索",
+    "subtitle": "科学方法驱动的定性历史重建",
+    "country": "罗马",
+    "countryId": "rome",
+    "color": "#7b2d8e",
+    "yearMin": -2100,
+    "yearMax": 1950,
+    "yearStep": 50
+  },
+  "dimensions": [
+    { "id": "geography", "label": "地理气候", "short": "地理" },
+    { "id": "resources", "label": "资源能源", "short": "资源" },
+    { "id": "technology", "label": "技术能力", "short": "技术" },
+    { "id": "production", "label": "生产组织", "short": "生产" },
+    { "id": "economy", "label": "经济交换", "short": "经济" },
+    { "id": "politics", "label": "政治制度", "short": "政治" },
+    { "id": "military", "label": "军事国力", "short": "军事" },
+    { "id": "culture", "label": "社会文化", "short": "文化" },
+    { "id": "daily_life", "label": "日常生活", "short": "日常" },
+    { "id": "historical_memory", "label": "历史记忆", "short": "记忆" }
+  ],
+  "confidenceLabels": {
+    "documented": "有据",
+    "inferred": "推断",
+    "speculative": "猜测",
+    "absent": "未记录"
+  },
+  "snapshots": [
+    {
+      "year": -500,
+      "eraLabel": "罗马共和国早期",
+      "evidenceTypes": ["literature", "archaeology"],
+      "worldContext": "与春秋末期中国同期；希腊城邦鼎盛",
+      "evidenceNote": "李维等史家追述、考古遗址、铭文",
+      "sources": [
+        { "type": "literature", "ref": "李维《罗马史》", "note": "后世追述，须审慎" },
+        { "type": "archaeology", "ref": "罗马广场考古", "note": "早期城市遗迹" }
+      ],
+      "dimensions": {
+        "geography": { "level": 3, "summary": "台伯河沿岸拉丁聚落，意大利半岛中部", "confidence": "documented" },
+        "resources": { "level": 3, "summary": "农业用地扩张，盐场与铁矿", "confidence": "inferred" },
+        "technology": { "level": 3, "summary": "铁器、筑城、吸收伊特鲁里亚技术", "confidence": "documented" },
+        "production": { "level": 3, "summary": "小农与贵族庄园并存，手工业发展", "confidence": "documented" },
+        "economy": { "level": 3, "summary": "农业为主，区域贸易与铸币萌芽", "confidence": "inferred" },
+        "politics": { "level": 3, "summary": "共和制雏形，元老院与执政官", "confidence": "documented" },
+        "military": { "level": 3, "summary": "公民兵制，与周边部族战争", "confidence": "documented" },
+        "culture": { "level": 3, "summary": "吸收希腊文化影响，宗教与氏族传统", "confidence": "documented" },
+        "daily_life": { "level": 2, "summary": "谷物与橄榄油饮食，医药知识有限", "confidence": "inferred" },
+        "historical_memory": { "level": 3, "summary": "口述与早期编年史，罗慕路斯传说", "confidence": "inferred", "note": "后世史学建构成分较多" }
+      }
+    },
+    {
+      "year": -221,
+      "eraLabel": "第二次布匿战争前夕",
+      "evidenceTypes": ["literature", "archaeology"],
+      "worldContext": "与秦统一同期；汉尼拔即将入侵意大利",
+      "evidenceNote": "波利比乌斯史学、考古与铭文",
+      "sources": [
+        { "type": "literature", "ref": "波利比乌斯《历史》", "note": "希腊裔史家 contemporaneous 记录" },
+        { "type": "archaeology", "ref": "意大利半岛考古", "note": "道路与聚落" }
+      ],
+      "dimensions": {
+        "geography": { "level": 4, "summary": "控制意大利半岛，向地中海扩张", "confidence": "documented" },
+        "resources": { "level": 4, "summary": "农业、铁矿、人力动员能力强", "confidence": "documented" },
+        "technology": { "level": 3, "summary": "工程与筑路，海军建设加强", "confidence": "documented" },
+        "production": { "level": 4, "summary": "大地产与奴隶劳动扩张", "confidence": "documented" },
+        "economy": { "level": 4, "summary": "银币流通，地中海贸易网络", "confidence": "documented" },
+        "politics": { "level": 4, "summary": "共和制成熟，元老院与公民大会", "confidence": "documented" },
+        "military": { "level": 5, "summary": "军团制成熟，即将面临汉尼拔考验", "confidence": "documented" },
+        "culture": { "level": 4, "summary": "希腊化文化影响加深，宗教与哲学", "confidence": "documented" },
+        "daily_life": { "level": 3, "summary": "城乡差异，公共浴场与市集", "confidence": "inferred" },
+        "historical_memory": { "level": 4, "summary": "编年史与家族史，强调罗马美德", "confidence": "documented", "note": "政治叙事色彩浓厚" }
+      }
+    },
+    {
+      "year": 100,
+      "eraLabel": "罗马帝国图拉真时代",
+      "evidenceTypes": ["literature", "archaeology"],
+      "worldContext": "与东汉中期同期；帝国疆域最大时期之一",
+      "evidenceNote": "铭文、考古遗址、塔西佗等史家",
+      "sources": [
+        { "type": "literature", "ref": "塔西佗《编年史》", "note": "帝国初期史学" },
+        { "type": "archaeology", "ref": "罗马道路与公共建筑", "note": "工程遗迹" },
+        { "type": "archaeology", "ref": "庞贝遗址", "note": "城市生活考古" }
+      ],
+      "dimensions": {
+        "geography": { "level": 5, "summary": "地中海为中心，欧亚非三大洲通道", "confidence": "documented" },
+        "resources": { "level": 5, "summary": "各行省资源汇聚，粮食与矿产", "confidence": "documented" },
+        "technology": { "level": 4, "summary": "道路、水道、拱券建筑、工程技术", "confidence": "documented" },
+        "production": { "level": 4, "summary": "大地产奴隶制与自由民手工业并存", "confidence": "documented" },
+        "economy": { "level": 5, "summary": "统一货币、长途贸易、城市商业", "confidence": "documented" },
+        "politics": { "level": 5, "summary": "帝制成熟，元老院与皇帝共治名义", "confidence": "documented" },
+        "military": { "level": 5, "summary": "常备军团边防，达契亚等征服战争", "confidence": "documented" },
+        "culture": { "level": 5, "summary": "希腊罗马文化融合，法律与哲学", "confidence": "documented" },
+        "daily_life": { "level": 4, "summary": "浴场、面包配给、城市公共设施", "confidence": "documented" },
+        "historical_memory": { "level": 5, "summary": "官方史学与凯旋式纪念，共和怀旧", "confidence": "documented", "note": "帝国叙事与共和传统并存" }
+      }
+    },
+    {
+      "year": 1000,
+      "eraLabel": "中世纪早期（东罗马影响）",
+      "evidenceTypes": ["literature", "archaeology"],
+      "worldContext": "与北宋中期同期；西欧封建分裂",
+      "evidenceNote": "教会文献、城市考古、拜占庭史料",
+      "sources": [
+        { "type": "literature", "ref": "教会编年史", "note": "中世纪史学" },
+        { "type": "archaeology", "ref": "罗马古城考古", "note": "古代遗迹在中世纪的使用" }
+      ],
+      "controversies": [
+        "「罗马」在中世纪是否仍作为连续政治实体存在，学界有分歧"
+      ],
+      "dimensions": {
+        "geography": { "level": 2, "summary": "古罗马城及周边，意大利半岛分裂", "confidence": "documented" },
+        "resources": { "level": 2, "summary": "农业为主，古代工程遗产闲置", "confidence": "inferred" },
+        "technology": { "level": 2, "summary": "古代技术大量失传，中世纪技术缓慢恢复", "confidence": "documented" },
+        "production": { "level": 2, "summary": "封建庄园经济，城市商业初兴", "confidence": "documented" },
+        "economy": { "level": 2, "summary": "以物易物与货币并用，长途贸易萎缩", "confidence": "inferred" },
+        "politics": { "level": 2, "summary": "教皇国与地方贵族，神圣罗马帝国名义", "confidence": "documented" },
+        "military": { "level": 2, "summary": "骑士封建军，防御性城堡", "confidence": "documented" },
+        "culture": { "level": 3, "summary": "基督教主导，古典传统通过教会保存", "confidence": "documented" },
+        "daily_life": { "level": 2, "summary": "农业饮食为主，医疗倚重教会与草药", "confidence": "inferred" },
+        "historical_memory": {
+          "level": 4,
+          "summary": "「罗马」作为帝国记忆与教皇合法性来源",
+          "confidence": "documented",
+          "note": "断裂：古代罗马帝国与中世纪罗马城非同一政治实体"
+        }
+      }
+    }
+  ]
+}
