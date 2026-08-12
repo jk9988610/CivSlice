@@ -1,27 +1,22 @@
 const SNAP_TOLERANCE = 350;
 const MAX_COMPARE = 3;
-const CONFIDENCE_COLORS = {
-  documented: '#4ade80',
-  inferred: '#60a5fa',
-  speculative: '#fbbf24',
-  absent: '#4b5563',
-};
-const COMPARE_DASH = [6, 4];
 
 const state = {
   currentYear: -500,
   civilizations: [],
   civIndex: [],
+  viewTab: 'profile',
   primaryCivId: 'china',
-  compareMode: false,
   selectedCivIds: ['china'],
   showAverage: false,
-  highlightedDimId: null,
+  showSpeculative: false,
+  highlightedId: null,
   expandedCards: new Set(),
   radarLayout: null,
 };
 
 const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => document.querySelectorAll(sel);
 
 async function init() {
   const indexRes = await fetch('data/civilizations.json');
@@ -31,8 +26,7 @@ async function init() {
   state.civilizations = await Promise.all(
     state.civIndex.map(async (entry) => {
       const res = await fetch(`data/${entry.file}`);
-      const json = await res.json();
-      return { ...entry, data: json };
+      return { ...entry, data: await res.json() };
     })
   );
 
@@ -51,32 +45,27 @@ async function init() {
   buildSnapshotMarkers();
   buildMethodology(primary);
   bindEvents();
-  resizeRadarCanvas();
+  CivRadar.resizeCanvas($('#radar-canvas'));
   render();
 }
 
-function getCiv(id) {
-  return state.civilizations.find((c) => c.id === id);
-}
+function getCiv(id) { return state.civilizations.find((c) => c.id === id); }
+function getPrimaryCiv() { return getCiv(state.primaryCivId); }
+function getSelectedCivs() { return state.selectedCivIds.map((id) => getCiv(id)).filter(Boolean); }
 
-function getPrimaryCiv() {
-  return getCiv(state.primaryCivId);
-}
-
-function getSelectedCivs() {
-  return state.selectedCivIds.map((id) => getCiv(id)).filter(Boolean);
+function getDimensionMap(civ) {
+  const map = {};
+  civ.data.dimensions.forEach((d) => { map[d.id] = d.label; });
+  return map;
 }
 
 function buildCivSelector() {
-  const container = $('#civ-selector');
-  container.innerHTML = state.civIndex.map((entry) => {
+  const multi = state.viewTab === 'compare';
+  $('#civ-selector').innerHTML = state.civIndex.map((entry) => {
     const checked = state.selectedCivIds.includes(entry.id);
-    const isPrimary = entry.id === state.primaryCivId;
     return `
-      <label class="civ-chip ${checked ? 'selected' : ''} ${isPrimary ? 'primary' : ''}" data-civ="${entry.id}">
-        <input type="${state.compareMode ? 'checkbox' : 'radio'}" name="civ-select"
-          value="${entry.id}" ${checked ? 'checked' : ''}
-          ${state.compareMode ? '' : (isPrimary ? 'checked' : '')}>
+      <label class="civ-chip ${checked ? 'selected' : ''}" data-civ="${entry.id}">
+        <input type="${multi ? 'checkbox' : 'radio'}" name="civ-select" value="${entry.id}" ${checked ? 'checked' : ''}>
         <span class="civ-dot" style="background:${entry.color}"></span>
         <span>${entry.name}</span>
       </label>`;
@@ -84,29 +73,22 @@ function buildCivSelector() {
 }
 
 function buildTimelineTicks(min, max) {
-  const ticks = $('#timeline-ticks');
   const count = 6;
   const step = (max - min) / (count - 1);
-  ticks.innerHTML = Array.from({ length: count }, (_, i) => {
-    const y = Math.round(min + step * i);
-    return `<span>${formatYear(y)}</span>`;
-  }).join('');
+  $('#timeline-ticks').innerHTML = Array.from({ length: count }, (_, i) =>
+    `<span>${formatYear(Math.round(min + step * i))}</span>`
+  ).join('');
 }
 
 function buildSnapshotMarkers() {
   const primary = getPrimaryCiv();
   const { yearMin, yearMax } = primary.data.meta;
   const range = yearMax - yearMin;
-  const container = $('#snapshot-markers');
-
-  container.innerHTML = primary.data.snapshots.map((snap) => {
+  $('#snapshot-markers').innerHTML = primary.data.snapshots.map((snap) => {
     const pct = ((snap.year - yearMin) / range) * 100;
-    return `<button class="snap-marker" style="left:${pct}%"
-      title="${formatYear(snap.year)} · ${snap.eraLabel}"
-      data-year="${snap.year}"></button>`;
+    return `<button class="snap-marker" style="left:${pct}%" title="${formatYear(snap.year)} · ${snap.eraLabel}" data-year="${snap.year}"></button>`;
   }).join('');
-
-  container.querySelectorAll('.snap-marker').forEach((btn) => {
+  $$('.snap-marker').forEach((btn) => {
     btn.addEventListener('click', () => {
       state.currentYear = Number(btn.dataset.year);
       $('#year-slider').value = state.currentYear;
@@ -119,57 +101,54 @@ function buildMethodology(civ) {
   const source = civ.data.meta.methodology ? civ : getCiv('china');
   const methodology = source?.data.meta.methodology;
   if (!methodology) return;
-
-  const { principles, confidenceLevels } = methodology;
-  $('#methodology-list').innerHTML = principles.map((p) => `<li>${p}</li>`).join('');
-  $('#confidence-dl').innerHTML = Object.entries(confidenceLevels)
-    .map(([k, v]) => `<dt>${civ.data.confidenceLabels[k]}</dt><dd>${v}</dd>`)
-    .join('');
-
+  $('#methodology-list').innerHTML = methodology.principles.map((p) => `<li>${p}</li>`).join('');
+  $('#confidence-dl').innerHTML = Object.entries(methodology.confidenceLevels)
+    .map(([k, v]) => `<dt>${civ.data.confidenceLabels[k]}</dt><dd>${v}</dd>`).join('');
   const rejected = civ.data.meta.rejectedHypotheses || getCiv('china')?.data.meta.rejectedHypotheses;
-  const existing = $('.rejected-card');
-  if (existing) existing.remove();
+  $('.rejected-card')?.remove();
   if (rejected?.length) {
     const card = document.createElement('div');
     card.className = 'info-card rejected-card';
-    card.innerHTML = `
-      <h3>已反驳假说（国家级）</h3>
-      <ul class="rejected-list">${rejected.map(renderRejectedItem).join('')}</ul>`;
+    card.innerHTML = `<h3>已反驳假说（国家级）</h3><ul class="rejected-list">${rejected.map(renderRejectedItem).join('')}</ul>`;
     $('.sidebar').appendChild(card);
   }
 }
 
 function bindEvents() {
-  $('#year-slider').addEventListener('input', (e) => {
-    state.currentYear = Number(e.target.value);
-    render();
-  });
+  $('#year-slider').addEventListener('input', (e) => { state.currentYear = Number(e.target.value); render(); });
   $('#btn-prev').addEventListener('click', () => stepYear(-1));
   $('#btn-next').addEventListener('click', () => stepYear(1));
 
-  $('#toggle-average').addEventListener('change', (e) => {
-    state.showAverage = e.target.checked;
-    if (state.showAverage && state.compareMode) {
-      state.compareMode = false;
+  $('#view-tabs').addEventListener('click', (e) => {
+    const btn = e.target.closest('.view-tab');
+    if (!btn) return;
+    const view = btn.dataset.view;
+    if (view === state.viewTab) return;
+    state.viewTab = view;
+    state.highlightedId = null;
+    state.expandedCards.clear();
+    if (view === 'profile') {
       state.selectedCivIds = [state.primaryCivId];
-      $('#toggle-compare').checked = false;
-      buildCivSelector();
+      state.showAverage = false;
+      $('#toggle-average').checked = false;
+      $('#profile-toggles').hidden = false;
+      $('#compare-toggles').hidden = true;
+    } else {
+      $('#profile-toggles').hidden = true;
+      $('#compare-toggles').hidden = false;
     }
+    $$('.view-tab').forEach((t) => t.classList.toggle('active', t.dataset.view === view));
+    buildCivSelector();
     render();
   });
 
-  $('#toggle-compare').addEventListener('change', (e) => {
-    state.compareMode = e.target.checked;
-    if (state.compareMode) {
-      state.showAverage = false;
-      $('#toggle-average').checked = false;
-      if (state.selectedCivIds.length < 2) {
-        state.selectedCivIds = [state.primaryCivId];
-      }
-    } else {
-      state.selectedCivIds = [state.primaryCivId];
-    }
-    buildCivSelector();
+  $('#toggle-speculative').addEventListener('change', (e) => {
+    state.showSpeculative = e.target.checked;
+    render();
+  });
+
+  $('#toggle-average').addEventListener('change', (e) => {
+    state.showAverage = e.target.checked;
     render();
   });
 
@@ -177,20 +156,14 @@ function bindEvents() {
     const target = e.target;
     if (!target.matches('input[name="civ-select"]')) return;
 
-    if (state.compareMode) {
-      const checked = Array.from(
-        document.querySelectorAll('input[name="civ-select"]:checked')
-      ).map((el) => el.value);
-
+    if (state.viewTab === 'compare') {
+      const checked = [...document.querySelectorAll('input[name="civ-select"]:checked')].map((el) => el.value);
       if (checked.length > MAX_COMPARE) {
         target.checked = false;
-        flashHint(`对比模式最多选择 ${MAX_COMPARE} 个文明`);
+        flashHint(`对比视图最多选择 ${MAX_COMPARE} 个文明`);
         return;
       }
-      if (checked.length === 0) {
-        target.checked = true;
-        return;
-      }
+      if (checked.length === 0) { target.checked = true; return; }
       state.selectedCivIds = checked;
       state.primaryCivId = checked[0];
     } else {
@@ -208,24 +181,20 @@ function bindEvents() {
   const canvas = $('#radar-canvas');
   canvas.addEventListener('mousemove', onRadarMouseMove);
   canvas.addEventListener('mouseleave', () => {
-    state.highlightedDimId = null;
+    state.highlightedId = null;
     updateCardHighlights();
     drawRadar();
   });
 
   window.addEventListener('resize', () => {
-    resizeRadarCanvas();
+    CivRadar.resizeCanvas($('#radar-canvas'));
     render();
   });
 }
 
 function flashHint(msg) {
-  let el = $('.mode-hint');
-  if (!el) {
-    el = document.createElement('p');
-    el.className = 'mode-hint';
-    $('#viz-controls').appendChild(el);
-  }
+  let el = $('.mode-hint') || Object.assign(document.createElement('p'), { className: 'mode-hint' });
+  if (!el.parentElement) $('#viz-controls').appendChild(el);
   el.textContent = msg;
   clearTimeout(el._timer);
   el._timer = setTimeout(() => { el.textContent = ''; }, 2500);
@@ -254,47 +223,22 @@ function isSnapInRange(snap, year) {
   return snap && Math.abs(snap.year - year) <= SNAP_TOLERANCE;
 }
 
-function getDimLevel(dim) {
-  if (!dim || dim.confidence === 'absent' || dim.level == null) return 0;
-  return dim.level;
-}
-
 function renderRejectedItem(item) {
-  const civ = getPrimaryCiv();
-  const conf = civ.data.confidenceLabels[item.confidence] || item.confidence;
-  return `<li><span class="rejected-claim">${item.claim}</span>
-    <span class="rejected-refute">反驳：${item.refutedBy}</span>
-    <span class="dim-badge badge-${item.confidence}">${conf}</span></li>`;
+  const conf = getPrimaryCiv().data.confidenceLabels[item.confidence] || item.confidence;
+  return `<li><span class="rejected-claim">${item.claim}</span><span class="rejected-refute">反驳：${item.refutedBy}</span><span class="dim-badge badge-${item.confidence}">${conf}</span></li>`;
 }
 
 function renderEvidenceTypes(types) {
-  const civ = getPrimaryCiv();
-  const labels = civ.data.meta.evidenceTypeLabels || {};
+  const labels = getPrimaryCiv().data.meta.evidenceTypeLabels || {};
   if (!types?.length) return '';
-  return `
-    <div class="evidence-types">
-      <strong>史料类型</strong>
-      <div class="tag-row">
-        ${types.map((t) => `<span class="tag tag-${t}">${labels[t] || t}</span>`).join('')}
-      </div>
-    </div>`;
+  return `<div class="evidence-types"><strong>史料类型</strong><div class="tag-row">${types.map((t) => `<span class="tag tag-${t}">${labels[t] || t}</span>`).join('')}</div></div>`;
 }
 
 function renderSourceItem(src) {
-  const civ = getPrimaryCiv();
   if (typeof src === 'string') return `<li>${src}</li>`;
-  const typeLabel = civ.data.meta.sourceTypeLabels?.[src.type] || src.type;
+  const typeLabel = getPrimaryCiv().data.meta.sourceTypeLabels?.[src.type] || src.type;
   const note = src.note ? ` <span class="source-note">— ${src.note}</span>` : '';
   return `<li><span class="source-type">[${typeLabel}]</span> ${src.ref}${note}</li>`;
-}
-
-function renderListSection(title, items, className = '') {
-  if (!items?.length) return '';
-  return `
-    <div class="info-section ${className}">
-      <strong>${title}</strong>
-      <ul>${items.map((item) => typeof item === 'string' ? `<li>${item}</li>` : renderRejectedItem(item)).join('')}</ul>
-    </div>`;
 }
 
 function render() {
@@ -308,145 +252,120 @@ function render() {
     ? `世界背景：${snap.worldContext}`
     : `当前选择 ${formatYear(state.currentYear)}，最近快照为 ${formatYear(snap.year)}（${snap.eraLabel}），点击时间轴圆点可跳转。`;
 
+  const isProfile = state.viewTab === 'profile';
+  $('#radar-legend-profile').hidden = !isProfile;
+  $('#radar-legend-compare').hidden = isProfile;
+  $('#cards-title').textContent = isProfile ? '维度详情' : '派生指标';
+  $('#cards-hint').textContent = isProfile ? '悬停联动 · 点击展开摘要' : '悬停联动 · 点击展开构成';
+
   updateAverageToggle();
   renderSnapshotInfo(snap, inRange);
-  renderDimensionGrid(inRange);
+  renderCards(inRange);
   drawRadar();
   updateMarkerHighlight(snap);
-  renderCompareLegend();
+  renderAuxLabels();
 }
 
 function updateAverageToggle() {
-  const avgInfo = calcAverageInfo(state.currentYear);
+  if (state.viewTab !== 'compare') return;
+  const avgInfo = CivStats.periodAverageAllStats(
+    state.currentYear, state.civilizations, SNAP_TOLERANCE, findNearestSnapshot, isSnapInRange
+  );
   const wrap = $('#avg-toggle-wrap');
   const checkbox = $('#toggle-average');
-
   if (!avgInfo) {
     wrap.classList.add('disabled');
     checkbox.disabled = true;
-    if (state.showAverage) {
-      state.showAverage = false;
-      checkbox.checked = false;
-    }
+    if (state.showAverage) { state.showAverage = false; checkbox.checked = false; }
   } else {
     wrap.classList.remove('disabled');
     checkbox.disabled = false;
   }
 }
 
-function calcAverageInfo(year) {
+function calcProfileAverage() {
   const civCount = state.civilizations.filter((civ) => {
-    const snap = findNearestSnapshot(civ.data.snapshots, year);
-    return isSnapInRange(snap, year);
+    const snap = findNearestSnapshot(civ.data.snapshots, state.currentYear);
+    return isSnapInRange(snap, state.currentYear);
   }).length;
-
   if (civCount < 2) return null;
 
   const primary = getPrimaryCiv();
   const levelsByDim = {};
-
   primary.data.dimensions.forEach((dim) => {
     const levels = [];
     state.civilizations.forEach((civ) => {
-      const snap = findNearestSnapshot(civ.data.snapshots, year);
-      if (!isSnapInRange(snap, year)) return;
+      const snap = findNearestSnapshot(civ.data.snapshots, state.currentYear);
+      if (!isSnapInRange(snap, state.currentYear)) return;
       const d = snap.dimensions[dim.id];
-      const level = getDimLevel(d);
-      if (level > 0) levels.push(level);
+      if (d && d.confidence !== 'absent' && d.level != null) levels.push(d.level);
     });
-    levelsByDim[dim.id] = levels.length >= 2
-      ? levels.reduce((a, b) => a + b, 0) / levels.length
-      : null;
+    levelsByDim[dim.id] = levels.length >= 2 ? levels.reduce((a, b) => a + b, 0) / levels.length : null;
   });
-
   return { civCount, levelsByDim };
-}
-
-function updateMarkerHighlight(snap) {
-  document.querySelectorAll('.snap-marker').forEach((m) => {
-    m.classList.toggle('active', Number(m.dataset.year) === snap.year);
-  });
 }
 
 function renderSnapshotInfo(snap, inRange) {
   const el = $('#snapshot-info');
   const civ = getPrimaryCiv();
-
   if (!inRange) {
-    el.innerHTML = `
-      <h3>暂无精确快照</h3>
-      <p class="muted">请拖动滑块至时间轴圆点（●）附近，或点击圆点跳转至有记录的朝代。</p>
-      <p class="muted">最近记录：<strong>${snap.eraLabel}</strong>（${formatYear(snap.year)}）</p>`;
+    el.innerHTML = `<h3>暂无精确快照</h3><p class="muted">请拖动滑块至时间轴圆点附近。</p><p class="muted">最近记录：<strong>${snap.eraLabel}</strong>（${formatYear(snap.year)}）</p>`;
     return;
   }
 
-  const evidenceTypes = renderEvidenceTypes(snap.evidenceTypes);
-  const sources = snap.sources?.length
-    ? `<div class="sources"><strong>参考来源</strong><ul>${snap.sources.map(renderSourceItem).join('')}</ul></div>`
-    : '';
-  const controversies = renderListSection('学术争议', snap.controversies, 'controversies');
-  const rejected = snap.rejectedHypotheses?.length
-    ? `<div class="info-section rejected-snap"><strong>已反驳假说</strong><ul class="rejected-list">${snap.rejectedHypotheses.map(renderRejectedItem).join('')}</ul></div>`
-    : '';
+  const compareNote = state.viewTab === 'compare' && state.selectedCivIds.length > 1
+    ? `<p class="compare-note muted">对比中：${getSelectedCivs().map((c) => c.name).join('、')}</p>` : '';
 
-  const compareNote = state.compareMode && state.selectedCivIds.length > 1
-    ? `<p class="compare-note muted">对比中：${getSelectedCivs().map((c) => c.name).join('、')}</p>`
-    : '';
+  const statsBlock = state.viewTab === 'compare' ? renderStatsSummary(snap) : '';
 
   el.innerHTML = `
     <h3 style="color:${civ.color}">${civ.data.meta.country}</h3>
     <p class="era-badge">${snap.eraLabel}</p>
     ${compareNote}
-    ${evidenceTypes}
+    ${statsBlock}
+    ${renderEvidenceTypes(snap.evidenceTypes)}
     <p class="evidence-note"><strong>证据说明：</strong>${snap.evidenceNote}</p>
-    ${sources}
-    ${controversies}
-    ${rejected}
-    <p class="snap-diff muted">快照年份 ${formatYear(snap.year)}，与滑块位置相差 ${Math.abs(snap.year - state.currentYear)} 年</p>`;
+    ${snap.sources?.length ? `<div class="sources"><strong>参考来源</strong><ul>${snap.sources.map(renderSourceItem).join('')}</ul></div>` : ''}
+    <p class="snap-diff muted">快照 ${formatYear(snap.year)}</p>`;
 }
 
-function renderDimensionGrid(inRange) {
-  const grid = $('#dimension-grid');
-  grid.classList.toggle('compare-layout', state.compareMode && state.selectedCivIds.length > 1);
+function renderStatsSummary(snap) {
+  const stats = CivStats.computeAllStats(snap);
+  const items = CivStats.STAT_DEFINITIONS.map((s) => {
+    const v = stats[s.id];
+    const grade = CivStats.getGrade(v);
+    return `<span class="stat-pill">${s.short} ${v ?? '—'} <em>${grade}</em></span>`;
+  }).join('');
+  return `<div class="stats-summary">${items}</div>`;
+}
 
+function renderCards(inRange) {
+  const grid = $('#dimension-grid');
+  grid.className = 'dimension-grid';
   if (!inRange) {
-    grid.innerHTML = '<p class="no-data">该时段无维度记录，请跳转至有快照的年代。</p>';
+    grid.innerHTML = '<p class="no-data">该时段无记录，请跳转至有快照的年代。</p>';
     return;
   }
 
-  const primary = getPrimaryCiv();
-  const dimensions = primary.data.dimensions;
-
-  if (state.compareMode && state.selectedCivIds.length > 1) {
-    grid.innerHTML = dimensions.map((dim) => renderCompareRow(dim)).join('');
+  if (state.viewTab === 'profile') {
+    grid.classList.add('profile-grid');
+    const snap = findNearestSnapshot(getPrimaryCiv().data.snapshots, state.currentYear);
+    grid.innerHTML = getPrimaryCiv().data.dimensions.map((dim) => renderProfileCard(dim, snap)).join('');
   } else {
-    const snap = findNearestSnapshot(primary.data.snapshots, state.currentYear);
-    grid.innerHTML = dimensions.map((dim) => renderSoloCard(dim, snap)).join('');
+    grid.classList.add('compare-grid');
+    const multi = state.selectedCivIds.length > 1;
+    if (multi) {
+      grid.innerHTML = CivStats.STAT_DEFINITIONS.map((stat) => renderStatCompareRow(stat)).join('');
+    } else {
+      const snap = findNearestSnapshot(getPrimaryCiv().data.snapshots, state.currentYear);
+      grid.innerHTML = CivStats.STAT_DEFINITIONS.map((stat) => renderStatCard(stat, snap, getPrimaryCiv())).join('');
+    }
   }
 
-  grid.querySelectorAll('[data-dim-id]').forEach((card) => {
-    const dimId = card.dataset.dimId;
-    card.addEventListener('mouseenter', () => {
-      state.highlightedDimId = dimId;
-      updateCardHighlights();
-      drawRadar();
-    });
-    card.addEventListener('mouseleave', () => {
-      state.highlightedDimId = null;
-      updateCardHighlights();
-      drawRadar();
-    });
-    card.addEventListener('click', () => {
-      if (state.expandedCards.has(dimId)) state.expandedCards.delete(dimId);
-      else state.expandedCards.add(dimId);
-      card.classList.toggle('expanded');
-    });
-  });
-
-  updateCardHighlights();
+  bindCardEvents(grid);
 }
 
-function renderSoloCard(dim, snap) {
+function renderProfileCard(dim, snap) {
   const civ = getPrimaryCiv();
   const d = snap.dimensions[dim.id] || { confidence: 'absent', summary: '', level: null };
   const conf = d.confidence || 'absent';
@@ -455,255 +374,181 @@ function renderSoloCard(dim, snap) {
   const noteHtml = d.note ? `<p class="dim-note">${d.note}</p>` : '';
 
   if (conf === 'absent') {
-    return `
-      <div class="dim-card confidence-absent" data-dim-id="${dim.id}">
-        <div class="dim-header">
-          <span class="dim-label">${dim.label}</span>
-          <span class="dim-badge badge-absent">${label}</span>
-        </div>
-        <p class="dim-summary">—</p>
-      </div>`;
+    return `<div class="dim-card confidence-absent" data-card-id="${dim.id}"><div class="dim-header"><span class="dim-label">${dim.label}</span><span class="dim-badge badge-absent">${label}</span></div><p class="dim-summary">—</p></div>`;
   }
 
   const barWidth = d.level ? (d.level / 5) * 100 : 0;
-
   return `
-    <div class="dim-card confidence-${conf} ${expanded ? 'expanded' : ''}" data-dim-id="${dim.id}">
-      <div class="dim-header">
-        <span class="dim-label">${dim.label}</span>
-        <span class="dim-badge badge-${conf}">${label}</span>
-      </div>
-      ${d.level ? `<div class="dim-level-bar"><span class="dim-level-fill" style="width:${barWidth}%"></span><span class="dim-level-text">${d.level}/5</span></div>` : ''}
-      <p class="dim-summary">${d.summary}</p>
-      ${noteHtml}
+    <div class="dim-card confidence-${conf} ${expanded ? 'expanded' : ''}" data-card-id="${dim.id}">
+      <div class="dim-header"><span class="dim-label">${dim.label}</span><span class="dim-badge badge-${conf}">${label}</span></div>
+      <div class="dim-level-bar"><span class="dim-level-fill" style="width:${barWidth}%"></span><span class="dim-level-text">${d.level}/5</span></div>
+      <p class="dim-summary">${d.summary}</p>${noteHtml}
     </div>`;
 }
 
-function renderCompareRow(dim) {
+function renderStatCard(stat, snap, civ) {
+  const stats = CivStats.computeAllStats(snap);
+  const value = stats[stat.id];
+  const grade = CivStats.getGrade(value);
+  const expanded = state.expandedCards.has(stat.id);
+  const dimMap = getDimensionMap(civ);
+  const breakdown = CivStats.getStatBreakdown(snap, stat.id, dimMap);
+  const formula = CivStats.formatBreakdown(breakdown);
+  const heavy = CivStats.isSpeculativeHeavy(snap, stat.id);
+  const barWidth = value ?? 0;
+
+  return `
+    <div class="stat-card ${expanded ? 'expanded' : ''} ${value == null ? 'stat-na' : ''}" data-card-id="${stat.id}">
+      <div class="stat-card-header">
+        <span class="stat-name">${stat.label}</span>
+        <span class="stat-short">${stat.short}</span>
+        <span class="stat-grade grade-${grade}">${grade}</span>
+        <span class="stat-value">${value ?? 'N/A'}</span>
+      </div>
+      <div class="stat-bar"><span class="stat-bar-fill" style="width:${barWidth}%"></span></div>
+      ${heavy ? '<span class="stat-warn">?</span>' : ''}
+      <p class="stat-formula ${expanded ? '' : 'clamped'}">${formula}</p>
+    </div>`;
+}
+
+function renderStatCompareRow(stat) {
+  const expanded = state.expandedCards.has(stat.id);
   const entries = getSelectedCivs().map((civ) => {
     const snap = findNearestSnapshot(civ.data.snapshots, state.currentYear);
-    const inRange = isSnapInRange(snap, state.currentYear);
-    if (!inRange) {
-      return `<div class="compare-entry" style="--civ-color:${civ.color}"><span class="compare-civ">${civ.name}</span><span class="muted">该时段无快照</span></div>`;
+    if (!isSnapInRange(snap, state.currentYear)) {
+      return `<div class="compare-entry" style="--civ-color:${civ.color}"><span class="compare-civ">${civ.name}</span><span class="muted">无快照</span></div>`;
     }
-    const d = snap.dimensions[dim.id] || { confidence: 'absent', summary: '—', level: null };
-    const conf = d.confidence || 'absent';
-    const confLabel = civ.data.confidenceLabels[conf] || conf;
-    const levelText = d.level ? `${d.level}/5` : '—';
+    const stats = CivStats.computeAllStats(snap);
+    const value = stats[stat.id];
+    const grade = CivStats.getGrade(value);
+    const dimMap = getDimensionMap(civ);
+    const formula = CivStats.formatBreakdown(CivStats.getStatBreakdown(snap, stat.id, dimMap));
     return `
       <div class="compare-entry" style="--civ-color:${civ.color}">
         <span class="compare-civ">${civ.name}</span>
-        <span class="compare-meta">${levelText} <span class="dim-badge badge-${conf}">${confLabel}</span></span>
-        <span class="compare-summary">${d.summary}</span>
+        <span class="compare-meta"><span class="stat-value-inline">${value ?? 'N/A'}</span> <span class="stat-grade grade-${grade}">${grade}</span></span>
+        ${expanded ? `<span class="stat-formula">${formula}</span>` : ''}
       </div>`;
   }).join('');
 
   return `
-    <div class="dim-compare-row ${state.highlightedDimId === dim.id ? 'highlighted' : ''}" data-dim-id="${dim.id}">
-      <h4 class="compare-dim-title">${dim.label}</h4>
+    <div class="stat-compare-row ${expanded ? 'expanded' : ''} ${state.highlightedId === stat.id ? 'highlighted' : ''}" data-card-id="${stat.id}">
+      <h4 class="compare-dim-title">${stat.label} <span class="stat-short">${stat.short}</span></h4>
       <div class="compare-entries">${entries}</div>
     </div>`;
 }
 
+function bindCardEvents(grid) {
+  grid.querySelectorAll('[data-card-id]').forEach((card) => {
+    const id = card.dataset.cardId;
+    card.addEventListener('mouseenter', () => { state.highlightedId = id; updateCardHighlights(); drawRadar(); });
+    card.addEventListener('mouseleave', () => { state.highlightedId = null; updateCardHighlights(); drawRadar(); });
+    card.addEventListener('click', () => {
+      if (state.expandedCards.has(id)) state.expandedCards.delete(id);
+      else state.expandedCards.add(id);
+      card.classList.toggle('expanded');
+    });
+  });
+  updateCardHighlights();
+}
+
 function updateCardHighlights() {
-  document.querySelectorAll('[data-dim-id]').forEach((el) => {
-    el.classList.toggle('highlighted', el.dataset.dimId === state.highlightedDimId);
+  $$('[data-card-id]').forEach((el) => {
+    el.classList.toggle('highlighted', el.dataset.cardId === state.highlightedId);
   });
 }
 
-function renderCompareLegend() {
-  const el = $('#compare-legend');
+function renderAuxLabels() {
   const aux = $('#radar-aux-label');
+  const legend = $('#compare-legend');
 
-  if (state.compareMode && state.selectedCivIds.length > 1) {
-    el.hidden = false;
-    el.innerHTML = getSelectedCivs().map((civ, i) => {
+  if (state.viewTab === 'compare' && state.selectedCivIds.length > 1) {
+    legend.hidden = false;
+    legend.innerHTML = getSelectedCivs().map((civ, i) => {
       const snap = findNearestSnapshot(civ.data.snapshots, state.currentYear);
       const era = isSnapInRange(snap, state.currentYear) ? snap.eraLabel : '无快照';
-      const style = i === 0 ? 'solid' : 'dashed';
-      return `<span class="legend-item legend-${style}"><span class="civ-dot" style="background:${civ.color}"></span>${civ.name} · ${era}</span>`;
+      return `<span class="legend-item"><span class="civ-dot" style="background:${civ.color}"></span>${civ.name} · ${era}${i === 0 ? '（主）' : ''}</span>`;
     }).join('');
-    aux.hidden = true;
-    return;
+  } else {
+    legend.hidden = true;
   }
 
-  el.hidden = true;
-
-  if (state.showAverage) {
-    const info = calcAverageInfo(state.currentYear);
-    if (info) {
+  if (state.viewTab === 'compare' && state.showAverage) {
+    const avg = CivStats.periodAverageAllStats(state.currentYear, state.civilizations, SNAP_TOLERANCE, findNearestSnapshot, isSnapInRange);
+    if (avg) {
       aux.hidden = false;
-      aux.textContent = `同期均值（n=${info.civCount} 文明，非加权算术平均）`;
+      aux.textContent = `同期派生均值（n=${avg.civCount} 文明，非加权）`;
       return;
     }
+  }
+
+  if (state.viewTab === 'profile' && state.showSpeculative) {
+    aux.hidden = false;
+    aux.textContent = '实线：有据+推断 · 虚线：含猜测';
+    return;
   }
 
   aux.hidden = true;
 }
 
-function resizeRadarCanvas() {
-  const canvas = $('#radar-canvas');
-  const size = window.innerWidth <= 600 ? 220 : window.innerWidth <= 900 ? 240 : 280;
-  canvas.width = size;
-  canvas.height = size;
-  canvas.style.width = `${size}px`;
-  canvas.style.height = `${size}px`;
-}
-
-function getRadarLayout() {
-  const canvas = $('#radar-canvas');
-  const w = canvas.width;
-  const h = canvas.height;
-  const cx = w / 2;
-  const cy = h / 2;
-  const maxR = Math.min(w, h) * 0.34;
-  const dims = getPrimaryCiv().data.dimensions;
-  const n = dims.length;
-
-  const axes = dims.map((dim, i) => {
-    const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
-    return {
-      dim,
-      angle,
-      x2: cx + maxR * Math.cos(angle),
-      y2: cy + maxR * Math.sin(angle),
-      lx: cx + (maxR + 18) * Math.cos(angle),
-      ly: cy + (maxR + 18) * Math.sin(angle),
-    };
-  });
-
-  return { w, h, cx, cy, maxR, dims, n, axes };
-}
-
 function drawRadar() {
   const canvas = $('#radar-canvas');
   const ctx = canvas.getContext('2d');
-  const layout = getRadarLayout();
-  state.radarLayout = layout;
-  const { w, h, cx, cy, maxR, n, axes } = layout;
   const primary = getPrimaryCiv();
-  const primarySnap = findNearestSnapshot(primary.data.snapshots, state.currentYear);
-  const inRange = isSnapInRange(primarySnap, state.currentYear);
+  const snap = findNearestSnapshot(primary.data.snapshots, state.currentYear);
+  const inRange = isSnapInRange(snap, state.currentYear);
 
-  ctx.clearRect(0, 0, w, h);
+  if (state.viewTab === 'profile') {
+    const axes = primary.data.dimensions.map((d) => ({ id: d.id, short: d.short }));
+    const layout = CivRadar.buildLayout(canvas, axes, 5);
+    state.radarLayout = layout;
 
-  for (let ring = 1; ring <= 5; ring++) {
-    ctx.beginPath();
-    const r = (maxR * ring) / 5;
-    for (let i = 0; i < n; i++) {
-      const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
-      const x = cx + r * Math.cos(angle);
-      const y = cy + r * Math.sin(angle);
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    }
-    ctx.closePath();
-    ctx.strokeStyle = '#2e3344';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-  }
+    CivRadar.drawProfileRadar(ctx, layout, {
+      snapshot: inRange ? snap : null,
+      color: primary.color,
+      showSpeculative: state.showSpeculative,
+      showAverage: false,
+      highlightedId: state.highlightedId,
+    });
+  } else {
+    const axes = CivStats.STAT_DEFINITIONS.map((s) => ({
+      id: s.id,
+      short: s.short,
+      nullLabel: false,
+    }));
+    const layout = CivRadar.buildLayout(canvas, axes, 100);
+    state.radarLayout = layout;
 
-  axes.forEach((axis, i) => {
-    const highlighted = axis.dim.id === state.highlightedDimId;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(axis.x2, axis.y2);
-    ctx.strokeStyle = highlighted ? '#9aa3b5' : '#2e3344';
-    ctx.lineWidth = highlighted ? 2 : 1;
-    ctx.stroke();
-
-    ctx.font = '11px sans-serif';
-    ctx.fillStyle = highlighted ? '#e8eaef' : '#9aa3b5';
-    ctx.textAlign = Math.abs(Math.cos(axis.angle)) < 0.1 ? 'center' : Math.cos(axis.angle) > 0 ? 'left' : 'right';
-    ctx.textBaseline = Math.abs(Math.sin(axis.angle)) < 0.1 ? 'middle' : Math.sin(axis.angle) > 0 ? 'top' : 'bottom';
-    ctx.fillText(axis.dim.short, axis.lx, axis.ly);
-  });
-
-  if (!inRange) return;
-
-  if (state.showAverage && !state.compareMode) {
-    const avgInfo = calcAverageInfo(state.currentYear);
-    if (avgInfo) {
-      drawPolygon(ctx, layout, (dimId) => avgInfo.levelsByDim[dimId], {
-        stroke: '#6b7280',
-        fill: 'rgba(107, 114, 128, 0.15)',
-        lineWidth: 1.5,
-        dash: COMPARE_DASH,
-      });
-    }
-  }
-
-  if (state.compareMode && state.selectedCivIds.length > 1) {
     const civs = getSelectedCivs();
-    for (let i = civs.length - 1; i >= 1; i--) {
-      const civ = civs[i];
-      const snap = findNearestSnapshot(civ.data.snapshots, state.currentYear);
-      if (!isSnapInRange(snap, state.currentYear)) continue;
-      drawPolygon(ctx, layout, (dimId) => getDimLevel(snap.dimensions[dimId]), {
-        stroke: civ.color,
-        fill: null,
-        lineWidth: 1.5,
-        dash: COMPARE_DASH,
-      });
-    }
-  }
+    const statsList = [];
+    const colors = [];
 
-  const mainCiv = state.compareMode ? getSelectedCivs()[0] : primary;
-  const mainSnap = findNearestSnapshot(mainCiv.data.snapshots, state.currentYear);
-  if (isSnapInRange(mainSnap, state.currentYear)) {
-    const showDots = !state.compareMode || state.selectedCivIds.length === 1;
-    drawPolygon(ctx, layout, (dimId) => getDimLevel(mainSnap.dimensions[dimId]), {
-      stroke: mainCiv.color,
-      fill: mainCiv.color + '33',
-      lineWidth: 2,
-      dash: null,
-      dots: showDots ? mainSnap.dimensions : null,
+    civs.forEach((civ) => {
+      const s = findNearestSnapshot(civ.data.snapshots, state.currentYear);
+      if (isSnapInRange(s, state.currentYear)) {
+        statsList.push(CivStats.computeAllStats(s));
+        colors.push(civ.color);
+      }
+    });
+
+    let avgStats = null;
+    if (state.showAverage) {
+      const avg = CivStats.periodAverageAllStats(state.currentYear, state.civilizations, SNAP_TOLERANCE, findNearestSnapshot, isSnapInRange);
+      avgStats = avg?.stats;
+    }
+
+    CivRadar.drawCompareRadar(ctx, layout, {
+      statsList,
+      colors,
+      showAverage: state.showAverage,
+      avgStats,
+      highlightedId: state.highlightedId,
     });
   }
 }
 
-function drawPolygon(ctx, layout, levelFn, style) {
-  const { cx, cy, maxR, n, dims } = layout;
-  const points = dims.map((dim, i) => {
-    const level = levelFn(dim.id) || 0;
-    const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
-    const r = (maxR * level) / 5;
-    return {
-      x: cx + r * Math.cos(angle),
-      y: cy + r * Math.sin(angle),
-      level,
-      dim,
-      d: style.dots?.[dim.id],
-    };
-  });
-
-  const hasShape = points.some((p) => p.level > 0);
-  if (!hasShape) return;
-
-  ctx.beginPath();
-  points.forEach((p, i) => { i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); });
-  ctx.closePath();
-
-  if (style.fill) {
-    ctx.fillStyle = style.fill;
-    ctx.fill();
-  }
-
-  ctx.strokeStyle = style.stroke;
-  ctx.lineWidth = style.lineWidth;
-  if (style.dash) ctx.setLineDash(style.dash);
-  else ctx.setLineDash([]);
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  if (style.dots) {
-    points.forEach((p) => {
-      if (p.level <= 0) return;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
-      ctx.fillStyle = CONFIDENCE_COLORS[p.d?.confidence] || CONFIDENCE_COLORS.absent;
-      ctx.fill();
-    });
-  }
+function updateMarkerHighlight(snap) {
+  $$('.snap-marker').forEach((m) => m.classList.toggle('active', Number(m.dataset.year) === snap.year));
 }
 
 function onRadarMouseMove(e) {
@@ -711,29 +556,12 @@ function onRadarMouseMove(e) {
   const rect = canvas.getBoundingClientRect();
   const x = (e.clientX - rect.left) * (canvas.width / rect.width);
   const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-  const layout = state.radarLayout || getRadarLayout();
-  const { cx, cy } = layout;
+  const layout = state.radarLayout;
+  if (!layout) return;
 
-  const angle = Math.atan2(y - cy, x - cx);
-  const n = layout.n;
-  let bestIdx = 0;
-  let bestDiff = Infinity;
-
-  layout.axes.forEach((axis, i) => {
-    let diff = Math.abs(angle - axis.angle);
-    if (diff > Math.PI) diff = Math.PI * 2 - diff;
-    if (diff < bestDiff) {
-      bestDiff = diff;
-      bestIdx = i;
-    }
-  });
-
-  const dist = Math.hypot(x - cx, y - cy);
-  const wedgeThreshold = Math.PI / n + 0.15;
-  const newDim = dist > 20 && bestDiff < wedgeThreshold ? layout.dims[bestIdx].id : null;
-
-  if (newDim !== state.highlightedDimId) {
-    state.highlightedDimId = newDim;
+  const newId = CivRadar.hitTest(layout, x, y);
+  if (newId !== state.highlightedId) {
+    state.highlightedId = newId;
     updateCardHighlights();
     drawRadar();
   }
