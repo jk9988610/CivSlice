@@ -12,7 +12,7 @@
       "principles": [
         "以考古发现与文献记载为首要依据，推断须标注并说明逻辑链",
         "禁止以现代发展水平反推古代等级（避免「以今证古」）",
-        "承认断裂与不确定性：亡國、改朝、殖民、灾害造成的非连续性",
+        "承认断裂与不确定性：亡国、改朝、殖民、灾害造成的非连续性",
         "等级 1–5 为同一文明内部的相对概括，非跨文明精确排名",
         "无充分证据的维度标记为 absent，不强行填充"
       ],
@@ -22,7 +22,34 @@
         "speculative": "猜测 — 假说性判断，待新证据检验",
         "absent": "未记录 — 证据不足，本快照不做判断"
       }
-    }
+    },
+    "evidenceTypeLabels": {
+      "archaeology": "考古遗存",
+      "literature": "后世文献",
+      "mythology": "神话传说"
+    },
+    "sourceTypeLabels": {
+      "archaeology": "考古",
+      "literature": "文献",
+      "mythology": "传说"
+    },
+    "rejectedHypotheses": [
+      {
+        "claim": "中国文明整体源自古巴比伦",
+        "refutedBy": "仰韶—龙山—二里头本土连续考古序列",
+        "confidence": "documented"
+      },
+      {
+        "claim": "仰韶彩陶技术自中亚传入",
+        "refutedBy": "后岗地层叠压证明本土发展",
+        "confidence": "documented"
+      },
+      {
+        "claim": "二里头遗址等于整个夏王朝",
+        "refutedBy": "学界多认为不能简单等同，年代与文献夏代仍有差距",
+        "confidence": "documented"
+      }
+    ]
   },
   "dimensions": [
     { "id": "geography", "label": "地理气候", "short": "地理" },
@@ -45,10 +72,25 @@
   "snapshots": [
     {
       "year": -2000,
-      "eraLabel": "青铜时代早期 · 二里头文化",
+      "eraLabel": "二里头文化",
+      "evidenceTypes": ["archaeology"],
       "worldContext": "与古埃及中王国、两河巴比伦同期；中原青铜礼器体系萌芽",
-      "evidenceNote": "主要依据二里头遗址考古与陶器、青铜器类型学",
-      "sources": ["二里头遗址发掘报告", "《中国考古学·夏商卷》"],
+      "evidenceNote": "主要依据二里头遗址考古与陶器、青铜器类型学；无 contemporaneous 文字史书",
+      "sources": [
+        { "type": "archaeology", "ref": "二里头遗址发掘报告", "note": "都邑性聚落、青铜礼器" },
+        { "type": "archaeology", "ref": "《中国考古学·夏商卷》", "note": "类型学与分期研究" }
+      ],
+      "controversies": [
+        "二里头遗址与文献中的「夏」是否对应，学界尚无定论",
+        "是否可称「王朝」仍存争议"
+      ],
+      "rejectedHypotheses": [
+        {
+          "claim": "二里头 = 整个夏朝都城",
+          "refutedBy": "遗址年代范围与文献夏代纪年不完全吻合，不能简单等同",
+          "confidence": "documented"
+        }
+      ],
       "dimensions": {
         "geography": { "level": 3, "summary": "黄河中游洛阳盆地，伊洛河冲积平原，暖湿气候较今略暖", "confidence": "documented" },
         "resources": { "level": 3, "summary": "黄土、黄河水、铜锡矿料来源尚在厘清，农业用地扩张", "confidence": "inferred" },
@@ -59,15 +101,29 @@
         "military": { "level": 2, "summary": "青铜兵器已有，组织化战争证据有限", "confidence": "inferred" },
         "culture": { "level": 3, "summary": "礼器组合暗示祭祀等级秩序，祖先崇拜迹象", "confidence": "documented" },
         "daily_life": { "level": 2, "summary": "粟黍为主粮，陶器炊饮；医药体系尚无文献可考", "confidence": "inferred" },
-        "historical_memory": { "level": 1, "summary": "无 contemporaneous 文字史书；后世夏代叙述为追溯性建构", "confidence": "documented" }
+        "historical_memory": {
+          "level": 1,
+          "summary": "无 contemporaneous 文字史书",
+          "confidence": "documented",
+          "note": "后世夏代叙述为追溯性建构，记录的是后世历史意识而非当时信史"
+        }
       }
     },
     {
       "year": -1000,
       "eraLabel": "西周早期",
+      "evidenceTypes": ["archaeology", "literature"],
       "worldContext": "周人克商；地中海腓尼基人活跃；亚述帝国崛起",
-      "evidenceNote": "甲骨文后段、金文、考古丰镐遗址、《尚书》部分篇章",
-      "sources": ["殷周金文集成", "丰镐遗址考古", "《史记·周本纪》需审慎使用"],
+      "evidenceNote": "金文、丰镐遗址考古、《尚书》部分篇章；甲骨文后段",
+      "sources": [
+        { "type": "archaeology", "ref": "丰镐遗址考古", "note": "周人政治中心遗迹" },
+        { "type": "literature", "ref": "殷周金文集成", "note": "contemporaneous 铭文" },
+        { "type": "literature", "ref": "《尚书》部分篇章", "note": "周初政治话语，成书年代有争议" },
+        { "type": "literature", "ref": "《史记·周本纪》", "note": "后世追述，须审慎使用" }
+      ],
+      "controversies": [
+        "《尚书》部分篇章成书年代与作者仍有学术讨论"
+      ],
       "dimensions": {
         "geography": { "level": 4, "summary": "关中平原为政治核心，分封诸侯遍布黄河中下游", "confidence": "documented" },
         "resources": { "level": 3, "summary": "关中农业、王畿林矿；诸侯国各自资源禀赋差异大", "confidence": "documented" },
@@ -78,15 +134,30 @@
         "military": { "level": 4, "summary": "车战为核心，王师与诸侯军，牧野之战奠定周政", "confidence": "documented" },
         "culture": { "level": 4, "summary": "礼乐文明、诗经源头、天命观与德治思想", "confidence": "documented" },
         "daily_life": { "level": 3, "summary": "黍稷稻麦、饮酒礼俗；已有简单医药与针灸传说（证据薄弱）", "confidence": "inferred" },
-        "historical_memory": { "level": 3, "summary": "口述与早期文献并用，《尚书》部分篇章保存周初政治话语", "confidence": "documented" }
+        "historical_memory": {
+          "level": 3,
+          "summary": "口述与早期文献并用，《尚书》部分篇章保存周初政治话语",
+          "confidence": "documented",
+          "note": "记录的是当时及稍后的历史意识，不等于完全信史"
+        }
       }
     },
     {
       "year": -500,
       "eraLabel": "春秋末期",
+      "evidenceTypes": ["literature", "archaeology"],
       "worldContext": "孔子活跃；波斯帝国、希腊城邦战争；印度十六国时代",
       "evidenceNote": "《左传》《论语》、诸侯墓葬考古、铁器普及考古证据",
-      "sources": ["《左传》", "曾侯乙墓考古", "侯马盟书"],
+      "sources": [
+        { "type": "literature", "ref": "《左传》", "note": "contemporaneous 编年史" },
+        { "type": "literature", "ref": "《论语》", "note": "弟子记述，反映春秋末期思想" },
+        { "type": "archaeology", "ref": "曾侯乙墓考古", "note": "战国早期墓葬，可旁证春秋技术" },
+        { "type": "archaeology", "ref": "侯马盟书", "note": "春秋晚期盟誓文献" }
+      ],
+      "controversies": [
+        "战国时代起点有前475年、前403年等不同划分",
+        "孔子生卒年份学界略有出入"
+      ],
       "dimensions": {
         "geography": { "level": 4, "summary": "华夏核心在黄河中下游，向江淮扩展，吴越纳入华夏文化圈", "confidence": "documented" },
         "resources": { "level": 4, "summary": "铁料、盐、铜、水利资源开发加剧，土地兼并开始", "confidence": "documented" },
@@ -97,15 +168,29 @@
         "military": { "level": 4, "summary": "步兵与骑兵重要性上升，连年争霸战争，兵法思想成熟", "confidence": "documented" },
         "culture": { "level": 5, "summary": "诸子百家酝酿，礼乐崩坏与思想争鸣，私学兴盛", "confidence": "documented" },
         "daily_life": { "level": 3, "summary": "五谷饮食、醪酒、针灸与草药疗法，《黄帝内经》传统形成期", "confidence": "inferred" },
-        "historical_memory": { "level": 4, "summary": "《春秋》编年体史书，史官传统，尊王攘夷话语", "confidence": "documented" }
+        "historical_memory": {
+          "level": 4,
+          "summary": "《春秋》编年体史书，史官传统，尊王攘夷话语",
+          "confidence": "documented",
+          "note": "记录的是当时人的历史意识与政治立场，不等于信史全貌"
+        }
       }
     },
     {
       "year": -221,
       "eraLabel": "秦统一",
+      "evidenceTypes": ["archaeology", "literature"],
       "worldContext": "秦始皇统一六国；罗马共和国扩张；印度孔雀王朝",
       "evidenceNote": "秦简、兵马俑、度量衡实物、统一道路遗迹",
-      "sources": ["睡虎地秦简", "兵马俑考古", "《史记·秦始皇本纪》"],
+      "sources": [
+        { "type": "archaeology", "ref": "睡虎地秦简", "note": "秦代法律与社会生活" },
+        { "type": "archaeology", "ref": "兵马俑考古", "note": "秦军编制与兵器" },
+        { "type": "archaeology", "ref": "统一度量衡器物", "note": "标准化实物证据" },
+        { "type": "literature", "ref": "《史记·秦始皇本纪》", "note": "汉代追述，须与考古互证" }
+      ],
+      "controversies": [
+        "焚书坑儒规模与范围学界仍有讨论"
+      ],
       "dimensions": {
         "geography": { "level": 5, "summary": "首次统一中原与岭南部分区域，南北方气候带差异显著", "confidence": "documented" },
         "resources": { "level": 4, "summary": "全国征发劳役开发驰道、灵渠、长城；盐铁官营", "confidence": "documented" },
@@ -116,15 +201,28 @@
         "military": { "level": 5, "summary": "横扫六国后北击匈奴、南征百越，常备军与长城防御", "confidence": "documented" },
         "culture": { "level": 3, "summary": "焚书坑儒，法家主导，文化统制严厉", "confidence": "documented" },
         "daily_life": { "level": 3, "summary": "赋役沉重，民间饮食因地域差异大；秦律涉及医疗与卫生条款", "confidence": "documented" },
-        "historical_memory": { "level": 4, "summary": "以法家功业观记录统一，后世儒生对秦多有批判性叙述", "confidence": "documented" }
+        "historical_memory": {
+          "level": 4,
+          "summary": "以法家功业观记录统一，后世儒生对秦多有批判性叙述",
+          "confidence": "documented",
+          "note": "秦代自我叙述与汉代以降儒家史学评价存在显著偏差"
+        }
       }
     },
     {
       "year": 100,
       "eraLabel": "东汉中期",
+      "evidenceTypes": ["literature", "archaeology"],
       "worldContext": "罗马帝国图拉真时代；丝绸之路贸易繁荣",
       "evidenceNote": "汉简、画像石、考古遗址、班固《汉书》",
-      "sources": ["居延汉简", "《汉书》", "汉代画像石考古"],
+      "sources": [
+        { "type": "archaeology", "ref": "居延汉简", "note": "边郡行政与军事记录" },
+        { "type": "literature", "ref": "《汉书》", "note": "东汉初年成书，追述西汉" },
+        { "type": "archaeology", "ref": "汉代画像石考古", "note": "社会生活与信仰图像" }
+      ],
+      "controversies": [
+        "东汉中期人口估算（约六千万）学界仍有分歧"
+      ],
       "dimensions": {
         "geography": { "level": 5, "summary": "西域都护府开通，河西走廊为丝路枢纽，南方开发加速", "confidence": "documented" },
         "resources": { "level": 4, "summary": "铁、盐、铜、水利灌区；人口约六千万（估算有争议）", "confidence": "inferred" },
@@ -135,15 +233,29 @@
         "military": { "level": 4, "summary": "北击匈奴后边防压力转向羌乱与西域，骑兵与边防体系", "confidence": "documented" },
         "culture": { "level": 4, "summary": "儒学独尊后经学化，佛教开始传入，神仙方术流行", "confidence": "documented" },
         "daily_life": { "level": 4, "summary": "面食推广、豆腐传说、张仲景《伤寒杂病论》成书前后", "confidence": "documented" },
-        "historical_memory": { "level": 5, "summary": "纪传体史书成熟，《汉书》确立正统史学范式", "confidence": "documented" }
+        "historical_memory": {
+          "level": 5,
+          "summary": "纪传体史书成熟，《汉书》确立正统史学范式",
+          "confidence": "documented",
+          "note": "记录的是汉代士人的历史意识与正统观念"
+        }
       }
     },
     {
       "year": 1000,
       "eraLabel": "北宋中期",
+      "evidenceTypes": ["literature", "archaeology"],
       "worldContext": "伊斯兰黄金时代；拜占庭；日本平安时代晚期",
       "evidenceNote": "《宋史》、清明上河图、考古窑址、科举档案",
-      "sources": ["《宋史》", "开封考古", "敦煌文献"],
+      "sources": [
+        { "type": "literature", "ref": "《宋史》", "note": "元代修纂，追述北宋" },
+        { "type": "archaeology", "ref": "开封考古", "note": "都城布局与市井遗迹" },
+        { "type": "literature", "ref": "《清明上河图》", "note": "北宋风俗画，反映城市生活" },
+        { "type": "literature", "ref": "敦煌文献", "note": "边疆社会与经济记录" }
+      ],
+      "controversies": [
+        "北宋「中期」具体年份界定因研究视角而异"
+      ],
       "dimensions": {
         "geography": { "level": 4, "summary": "疆域较唐缩小，中原与江南为经济核心，北方边防压力大", "confidence": "documented" },
         "resources": { "level": 4, "summary": "煤炭开采、铁器产量世界领先，江南水稻主产区", "confidence": "documented" },
@@ -154,15 +266,28 @@
         "military": { "level": 2, "summary": "对辽夏战争屡有失利，岁币换和平，军力偏弱", "confidence": "documented" },
         "culture": { "level": 5, "summary": "理学兴起、词赋繁荣、市民文化、书院教育", "confidence": "documented" },
         "daily_life": { "level": 4, "summary": "茶馆酒肆、外卖与夜市，《太平圣惠方》等医学方书", "confidence": "documented" },
-        "historical_memory": { "level": 5, "summary": "正史与类书体系完备，士大夫自觉的历史编纂传统", "confidence": "documented" }
+        "historical_memory": {
+          "level": 5,
+          "summary": "正史与类书体系完备，士大夫自觉的历史编纂传统",
+          "confidence": "documented",
+          "note": "记录的是宋代士大夫的历史意识与正统叙事"
+        }
       }
     },
     {
       "year": 1800,
-      "eraLabel": "清嘉庆年间",
+      "eraLabel": "清嘉庆",
+      "evidenceTypes": ["literature"],
       "worldContext": "工业革命进行中；拿破仑战争；英国殖民扩张",
       "evidenceNote": "清宫档案、地方志、传教士记载、人口学研究成果",
-      "sources": ["《清实录》", "何炳棣人口研究", "马戛尔尼使团记录"],
+      "sources": [
+        { "type": "literature", "ref": "《清实录》", "note": "官方编年史" },
+        { "type": "literature", "ref": "何炳棣《1368—1953年的中国人口》", "note": "人口学专题研究" },
+        { "type": "literature", "ref": "马戛尔尼使团记录", "note": "外来观察者视角，须辨立场" }
+      ],
+      "controversies": [
+        "嘉庆年间人口是否已突破三亿，学界估算有分歧"
+      ],
       "dimensions": {
         "geography": { "level": 5, "summary": "版图达传统帝国巅峰，囊括满洲、蒙古、新疆、西藏", "confidence": "documented" },
         "resources": { "level": 4, "summary": "人口突破三亿压力显现，耕地接近生态上限，银铜经济", "confidence": "documented" },
@@ -173,15 +298,25 @@
         "military": { "level": 2, "summary": "平定白莲教耗损国力，海防薄弱，火器落后于欧洲列强", "confidence": "documented" },
         "culture": { "level": 4, "summary": "考据学兴盛、理学僵化、民间宗教与秘密会社", "confidence": "documented" },
         "daily_life": { "level": 4, "summary": "玉米番薯普及救荒，《本草纲目》传统医学体系成熟", "confidence": "documented" },
-        "historical_memory": { "level": 5, "summary": "官方修纂正史与方略，同时出现考据学对经典的重新审视", "confidence": "documented" }
+        "historical_memory": {
+          "level": 5,
+          "summary": "官方修纂正史与方略，同时出现考据学对经典的重新审视",
+          "confidence": "documented",
+          "note": "记录的是清代官方与士人的历史叙述，含满汉正统话语"
+        }
       }
     },
     {
       "year": 1950,
-      "eraLabel": "中华人民共和国初期",
+      "eraLabel": "共和国初期",
+      "evidenceTypes": ["literature"],
       "worldContext": "冷战格局形成；二战结束；殖民地独立浪潮",
       "evidenceNote": "建国档案、统计年鉴、考古与史学当代研究（非倒推）",
-      "sources": ["第一次全国人口普查", "土地改革档案", "当代史学共识"],
+      "sources": [
+        { "type": "literature", "ref": "第一次全国人口普查（1953）", "note": "统计档案，反映建国初期人口" },
+        { "type": "literature", "ref": "土地改革档案", "note": "生产组织变革记录" },
+        { "type": "literature", "ref": "当代史学共识", "note": "唯物史观主导叙述体系" }
+      ],
       "dimensions": {
         "geography": { "level": 5, "summary": "现代主权国家版图确立，西部与边疆治理纳入国家体系", "confidence": "documented" },
         "resources": { "level": 3, "summary": "战后恢复，工业基础薄弱，煤炭铁矿开发起步", "confidence": "documented" },
@@ -192,7 +327,12 @@
         "military": { "level": 4, "summary": "解放军现代化，抗美援朝前夕，国防工业重建", "confidence": "documented" },
         "culture": { "level": 4, "summary": "思想改造运动、扫盲、新旧文化交替剧烈", "confidence": "documented" },
         "daily_life": { "level": 3, "summary": "人均寿命约35岁提升至改善中，公共卫生运动开展", "confidence": "documented" },
-        "historical_memory": { "level": 4, "summary": "唯物史观主导的历史叙述体系正在建立", "confidence": "documented" }
+        "historical_memory": {
+          "level": 4,
+          "summary": "唯物史观主导的历史叙述体系正在建立",
+          "confidence": "documented",
+          "note": "记录的是建国初期的官方历史意识与叙事框架"
+        }
       }
     }
   ]

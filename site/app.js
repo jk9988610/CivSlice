@@ -61,6 +61,17 @@ function buildMethodology() {
   $('#confidence-dl').innerHTML = Object.entries(confidenceLevels)
     .map(([k, v]) => `<dt>${data.confidenceLabels[k]}</dt><dd>${v}</dd>`)
     .join('');
+
+  const rejected = data.meta.rejectedHypotheses;
+  if (rejected?.length) {
+    const card = document.createElement('div');
+    card.className = 'info-card rejected-card';
+    card.innerHTML = `
+      <h3>已反驳假说（国家级）</h3>
+      <ul class="rejected-list">${rejected.map(renderRejectedItem).join('')}</ul>
+    `;
+    $('.sidebar').appendChild(card);
+  }
 }
 
 function bindEvents() {
@@ -89,6 +100,41 @@ function findNearestSnapshot(year) {
   return data.snapshots.reduce((best, snap) =>
     Math.abs(snap.year - year) < Math.abs(best.year - year) ? snap : best
   );
+}
+
+function renderEvidenceTypes(types) {
+  if (!types?.length) return '';
+  const labels = data.meta.evidenceTypeLabels || {};
+  return `
+    <div class="evidence-types">
+      <strong>史料类型</strong>
+      <div class="tag-row">
+        ${types.map((t) => `<span class="tag tag-${t}">${labels[t] || t}</span>`).join('')}
+      </div>
+    </div>`;
+}
+
+function renderSourceItem(src) {
+  if (typeof src === 'string') return `<li>${src}</li>`;
+  const typeLabel = data.meta.sourceTypeLabels?.[src.type] || src.type;
+  const note = src.note ? ` <span class="source-note">— ${src.note}</span>` : '';
+  return `<li><span class="source-type">[${typeLabel}]</span> ${src.ref}${note}</li>`;
+}
+
+function renderRejectedItem(item) {
+  const conf = data.confidenceLabels[item.confidence] || item.confidence;
+  return `<li><span class="rejected-claim">${item.claim}</span>
+    <span class="rejected-refute">反驳：${item.refutedBy}</span>
+    <span class="dim-badge badge-${item.confidence}">${conf}</span></li>`;
+}
+
+function renderListSection(title, items, className = '') {
+  if (!items?.length) return '';
+  return `
+    <div class="info-section ${className}">
+      <strong>${title}</strong>
+      <ul>${items.map((item) => typeof item === 'string' ? `<li>${item}</li>` : renderRejectedItem(item)).join('')}</ul>
+    </div>`;
 }
 
 function render() {
@@ -124,15 +170,23 @@ function renderSnapshotInfo(snap, inRange) {
     return;
   }
 
+  const evidenceTypes = renderEvidenceTypes(snap.evidenceTypes);
   const sources = snap.sources?.length
-    ? `<div class="sources"><strong>参考来源</strong><ul>${snap.sources.map((s) => `<li>${s}</li>`).join('')}</ul></div>`
+    ? `<div class="sources"><strong>参考来源</strong><ul>${snap.sources.map(renderSourceItem).join('')}</ul></div>`
+    : '';
+  const controversies = renderListSection('学术争议', snap.controversies, 'controversies');
+  const rejected = snap.rejectedHypotheses?.length
+    ? `<div class="info-section rejected-snap"><strong>已反驳假说</strong><ul class="rejected-list">${snap.rejectedHypotheses.map(renderRejectedItem).join('')}</ul></div>`
     : '';
 
   el.innerHTML = `
     <h3 style="color:${data.meta.color}">${data.meta.country}</h3>
     <p class="era-badge">${snap.eraLabel}</p>
+    ${evidenceTypes}
     <p class="evidence-note"><strong>证据说明：</strong>${snap.evidenceNote}</p>
     ${sources}
+    ${controversies}
+    ${rejected}
     <p class="snap-diff muted">快照年份 ${formatYear(snap.year)}，与滑块位置相差 ${Math.abs(snap.year - currentYear)} 年</p>
   `;
 }
@@ -148,6 +202,7 @@ function renderDimensionGrid(snap, inRange) {
     const d = snap.dimensions[dim.id] || { confidence: 'absent', summary: '', level: null };
     const conf = d.confidence || 'absent';
     const label = data.confidenceLabels[conf] || conf;
+    const noteHtml = d.note ? `<p class="dim-note">${d.note}</p>` : '';
 
     if (conf === 'absent') {
       return `
@@ -168,6 +223,7 @@ function renderDimensionGrid(snap, inRange) {
         </div>
         ${d.level ? `<div class="dim-level">相对等级 ${d.level}/5</div>` : ''}
         <p class="dim-summary">${d.summary}</p>
+        ${noteHtml}
       </div>`;
   }).join('');
 }
