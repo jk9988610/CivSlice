@@ -93,7 +93,8 @@
           "ref": "李维《罗马史》",
           "note": "后世追述，须审慎",
           "grade": "C",
-          "relation": "later_retrospect"
+          "relation": "later_retrospect",
+          "locator": "Perseus Digital Library · Livy, Ab Urbe Condita"
         },
         {
           "id": "src-罗马广场考古-1",
@@ -101,7 +102,8 @@
           "ref": "罗马广场考古",
           "note": "早期城市遗迹",
           "grade": "A",
-          "relation": "contemporaneous"
+          "relation": "contemporaneous",
+          "locator": "意大利考古遗产门户 / 遗址报告（待补编号）"
         }
       ],
       "spatialScope": "共和国早期",
@@ -110,12 +112,11 @@
           "confidence": "documented",
           "summary": "台伯河沿岸拉丁聚落，意大利半岛中部",
           "sourceRefs": [
-            "src-李维-罗马史--0",
             "src-罗马广场考古-1"
           ],
           "level": null
         },
-        "resources": {
+        "subsistence": {
           "confidence": "inferred",
           "summary": "农业用地扩张，盐场与铁矿",
           "sourceRefs": [
@@ -123,25 +124,23 @@
           ],
           "level": null
         },
-        "technology": {
+        "knowledge": {
           "confidence": "documented",
           "summary": "铁器、筑城、吸收伊特鲁里亚技术",
           "sourceRefs": [
-            "src-李维-罗马史--0",
             "src-罗马广场考古-1"
           ],
           "level": null
         },
-        "production": {
+        "organization": {
           "confidence": "documented",
           "summary": "小农与贵族庄园并存，手工业发展",
           "sourceRefs": [
-            "src-李维-罗马史--0",
             "src-罗马广场考古-1"
           ],
           "level": null
         },
-        "economy": {
+        "commerce": {
           "confidence": "inferred",
           "summary": "农业为主，区域贸易与铸币萌芽",
           "sourceRefs": [
@@ -149,20 +148,10 @@
           ],
           "level": null
         },
-        "politics": {
-          "confidence": "documented",
-          "summary": "共和制雏形，元老院与执政官",
-          "sourceRefs": [
-            "src-李维-罗马史--0",
-            "src-罗马广场考古-1"
-          ],
-          "level": null
-        },
         "military": {
           "confidence": "documented",
           "summary": "公民兵制，与周边部族战争",
           "sourceRefs": [
-            "src-李维-罗马史--0",
             "src-罗马广场考古-1"
           ],
           "level": null
@@ -171,20 +160,11 @@
           "confidence": "documented",
           "summary": "吸收希腊文化影响，宗教与氏族传统",
           "sourceRefs": [
-            "src-李维-罗马史--0",
             "src-罗马广场考古-1"
           ],
           "level": null
         },
-        "daily_life": {
-          "confidence": "inferred",
-          "summary": "谷物与橄榄油饮食，医药知识有限",
-          "sourceRefs": [
-            "src-李维-罗马史--0"
-          ],
-          "level": null
-        },
-        "historical_memory": {
+        "historiography": {
           "confidence": "inferred",
           "summary": "口述与早期编年史，罗慕路斯传说",
           "sourceRefs": [
@@ -193,7 +173,8 @@
           "level": null,
           "note": "后世史学建构成分较多"
         }
-      }
+      },
+      "comparisonBundle": "iron_imperial"
     },
     {
       "year": -221,
@@ -211,7 +192,8 @@
           "ref": "波利比乌斯《历史》",
           "note": "希腊裔史家 contemporaneous 记录",
           "grade": "B",
-          "relation": "contemporaneous"
+          "relation": "contemporaneous",
+          "locator": "Perseus Digital Library · Polybius, Histories"
         },
         {
           "id": "src-意大利半岛考古-1",
@@ -219,7 +201,8 @@
           "ref": "意大利半岛考古",
           "note": "道路与聚落",
           "grade": "A",
-          "relation": "contemporaneous"
+          "relation": "contemporaneous",
+          "locator": "意大利考古遗产门户 / 遗址报告（待补编号）"
         }
       ],
       "spatialScope": "布匿战争前",
@@ -233,7 +216,7 @@
           ],
           "level": null
         },
-        "resources": {
+        "subsistence": {
           "confidence": "documented",
           "summary": "农业、铁矿、人力动员能力强",
           "sourceRefs": [
@@ -242,7 +225,7 @@
           ],
           "level": null
         },
-        "technology": {
+        "knowledge": {
           "confidence": "documented",
           "summary": "工程与筑路，海军建设加强",
           "sourceRefs": [
@@ -251,7 +234,7 @@
           ],
           "level": null
         },
-        "production": {
+        "organization": {
           "confidence": "documented",
           "summary": "大地产与奴隶劳动扩张",
           "sourceRefs": [
@@ -260,18 +243,9 @@
           ],
           "level": null
         },
-        "economy": {
+        "commerce": {
           "confidence": "documented",
           "summary": "银币流通，地中海贸易网络",
-          "sourceRefs": [
-            "src-波利比乌斯-历史--0",
-            "src-意大利半岛考古-1"
-          ],
-          "level": null
-        },
-        "politics": {
-          "confidence": "documented",
-          "summary": "共和制成熟，元老院与公民大会",
           "sourceRefs": [
             "src-波利比乌斯-历史--0",
             "src-意大利半岛考古-1"
@@ -296,15 +270,7 @@
           ],
           "level": null
         },
-        "daily_life": {
-          "confidence": "inferred",
-          "summary": "城乡差异，公共浴场与市集",
-          "sourceRefs": [
-            "src-波利比乌斯-历史--0"
-          ],
-          "level": null
-        },
-        "historical_memory": {
+        "historiography": {
           "confidence": "documented",
           "summary": "编年史与家族史，强调罗马美德",
           "sourceRefs": [
@@ -314,7 +280,8 @@
           "level": null,
           "note": "政治叙事色彩浓厚"
         }
-      }
+      },
+      "comparisonBundle": "iron_imperial"
     },
     {
       "year": 100,
@@ -332,7 +299,8 @@
           "ref": "塔西佗《编年史》",
           "note": "帝国初期史学",
           "grade": "B",
-          "relation": "near_contemporaneous"
+          "relation": "near_contemporaneous",
+          "locator": "LacusCurtius · Tacitus, Annals"
         },
         {
           "id": "src-罗马道路与公共建筑-1",
@@ -340,7 +308,8 @@
           "ref": "罗马道路与公共建筑",
           "note": "工程遗迹",
           "grade": "A",
-          "relation": "contemporaneous"
+          "relation": "contemporaneous",
+          "locator": "意大利考古遗产门户 / 遗址报告（待补编号）"
         },
         {
           "id": "src-庞贝遗址-2",
@@ -348,7 +317,8 @@
           "ref": "庞贝遗址",
           "note": "城市生活考古",
           "grade": "A",
-          "relation": "contemporaneous"
+          "relation": "contemporaneous",
+          "locator": "意大利考古遗产门户 / 遗址报告（待补编号）"
         }
       ],
       "spatialScope": "图拉真时代",
@@ -363,7 +333,7 @@
           ],
           "level": null
         },
-        "resources": {
+        "subsistence": {
           "confidence": "documented",
           "summary": "各行省资源汇聚，粮食与矿产",
           "sourceRefs": [
@@ -373,7 +343,7 @@
           ],
           "level": null
         },
-        "technology": {
+        "knowledge": {
           "confidence": "documented",
           "summary": "道路、水道、拱券建筑、工程技术",
           "sourceRefs": [
@@ -383,7 +353,7 @@
           ],
           "level": null
         },
-        "production": {
+        "organization": {
           "confidence": "documented",
           "summary": "大地产奴隶制与自由民手工业并存",
           "sourceRefs": [
@@ -393,19 +363,9 @@
           ],
           "level": null
         },
-        "economy": {
+        "commerce": {
           "confidence": "documented",
           "summary": "统一货币、长途贸易、城市商业",
-          "sourceRefs": [
-            "src-塔西佗-编年史--0",
-            "src-罗马道路与公共建筑-1",
-            "src-庞贝遗址-2"
-          ],
-          "level": null
-        },
-        "politics": {
-          "confidence": "documented",
-          "summary": "帝制成熟，元老院与皇帝共治名义",
           "sourceRefs": [
             "src-塔西佗-编年史--0",
             "src-罗马道路与公共建筑-1",
@@ -433,17 +393,7 @@
           ],
           "level": null
         },
-        "daily_life": {
-          "confidence": "documented",
-          "summary": "浴场、面包配给、城市公共设施",
-          "sourceRefs": [
-            "src-塔西佗-编年史--0",
-            "src-罗马道路与公共建筑-1",
-            "src-庞贝遗址-2"
-          ],
-          "level": null
-        },
-        "historical_memory": {
+        "historiography": {
           "confidence": "documented",
           "summary": "官方史学与凯旋式纪念，共和怀旧",
           "sourceRefs": [
@@ -454,7 +404,8 @@
           "level": null,
           "note": "帝国叙事与共和传统并存"
         }
-      }
+      },
+      "comparisonBundle": "iron_imperial"
     },
     {
       "year": 1000,
@@ -472,7 +423,8 @@
           "ref": "教会编年史",
           "note": "中世纪史学",
           "grade": "C",
-          "relation": "later_retrospect"
+          "relation": "later_retrospect",
+          "locator": "中世纪教会编年史版本（待补卷次）"
         },
         {
           "id": "src-罗马古城考古-1",
@@ -480,7 +432,8 @@
           "ref": "罗马古城考古",
           "note": "古代遗迹在中世纪的使用",
           "grade": "A",
-          "relation": "contemporaneous"
+          "relation": "contemporaneous",
+          "locator": "考古发掘简报 / 遗址报告（待补编号与页码）"
         }
       ],
       "controversies": [
@@ -492,12 +445,11 @@
           "confidence": "documented",
           "summary": "古罗马城及周边，意大利半岛分裂",
           "sourceRefs": [
-            "src-教会编年史-0",
             "src-罗马古城考古-1"
           ],
           "level": null
         },
-        "resources": {
+        "subsistence": {
           "confidence": "inferred",
           "summary": "农业为主，古代工程遗产闲置",
           "sourceRefs": [
@@ -505,25 +457,23 @@
           ],
           "level": null
         },
-        "technology": {
+        "knowledge": {
           "confidence": "documented",
           "summary": "古代技术大量失传，中世纪技术缓慢恢复",
           "sourceRefs": [
-            "src-教会编年史-0",
             "src-罗马古城考古-1"
           ],
           "level": null
         },
-        "production": {
+        "organization": {
           "confidence": "documented",
           "summary": "封建庄园经济，城市商业初兴",
           "sourceRefs": [
-            "src-教会编年史-0",
             "src-罗马古城考古-1"
           ],
           "level": null
         },
-        "economy": {
+        "commerce": {
           "confidence": "inferred",
           "summary": "以物易物与货币并用，长途贸易萎缩",
           "sourceRefs": [
@@ -531,20 +481,10 @@
           ],
           "level": null
         },
-        "politics": {
-          "confidence": "documented",
-          "summary": "教皇国与地方贵族，神圣罗马帝国名义",
-          "sourceRefs": [
-            "src-教会编年史-0",
-            "src-罗马古城考古-1"
-          ],
-          "level": null
-        },
         "military": {
           "confidence": "documented",
           "summary": "骑士封建军，防御性城堡",
           "sourceRefs": [
-            "src-教会编年史-0",
             "src-罗马古城考古-1"
           ],
           "level": null
@@ -553,30 +493,21 @@
           "confidence": "documented",
           "summary": "基督教主导，古典传统通过教会保存",
           "sourceRefs": [
-            "src-教会编年史-0",
             "src-罗马古城考古-1"
           ],
           "level": null
         },
-        "daily_life": {
-          "confidence": "inferred",
-          "summary": "农业饮食为主，医疗倚重教会与草药",
-          "sourceRefs": [
-            "src-教会编年史-0"
-          ],
-          "level": null
-        },
-        "historical_memory": {
+        "historiography": {
           "confidence": "documented",
           "summary": "「罗马」作为帝国记忆与教皇合法性来源",
           "sourceRefs": [
-            "src-教会编年史-0",
             "src-罗马古城考古-1"
           ],
           "level": null,
           "note": "断裂：古代罗马帝国与中世纪罗马城非同一政治实体"
         }
-      }
+      },
+      "comparisonBundle": "iron_imperial"
     }
   ]
 }
