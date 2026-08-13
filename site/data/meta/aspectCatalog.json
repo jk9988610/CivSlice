@@ -1,0 +1,32 @@
+{
+  "version": "2026-08-13",
+  "aspects": {
+    "geography": { "label": "地理气候", "group": "core" },
+    "resources": { "label": "资源能源", "group": "core" },
+    "technology": { "label": "技术能力", "group": "core" },
+    "production": { "label": "生产组织", "group": "core" },
+    "economy": { "label": "经济交换", "group": "core" },
+    "politics": { "label": "政治制度", "group": "core" },
+    "military": { "label": "军事国力", "group": "core" },
+    "culture": { "label": "社会文化", "group": "core" },
+    "daily_life": { "label": "日常生活", "group": "core" },
+    "historical_memory": { "label": "历史记忆", "group": "core" },
+    "subsistence": { "label": "生计资源", "group": "bronze" },
+    "organization": { "label": "社会组织", "group": "bronze" },
+    "knowledge": { "label": "知识传承", "group": "bronze" },
+    "metallurgy": { "label": "冶金技术", "group": "bronze" },
+    "writing": { "label": "文字记录", "group": "bronze" },
+    "state_formation": { "label": "国家形成", "group": "bronze" },
+    "ritual_order": { "label": "礼仪秩序", "group": "bronze" },
+    "trade": { "label": "交换贸易", "group": "bronze" },
+    "iron_tech": { "label": "铁器技术", "group": "iron" },
+    "bureaucracy": { "label": "官僚体系", "group": "iron" },
+    "commerce": { "label": "商业贸易", "group": "iron" },
+    "historiography": { "label": "史学编纂", "group": "iron" },
+    "industrial_capacity": { "label": "工业能力", "group": "contemporary" },
+    "education": { "label": "教育体系", "group": "contemporary" },
+    "healthcare": { "label": "医疗卫生", "group": "contemporary" },
+    "information": { "label": "信息传播", "group": "contemporary" },
+    "global_integration": { "label": "全球整合", "group": "contemporary" }
+  }
+}
