@@ -147,13 +147,17 @@
           "id": "src-二里头遗址发掘报告-0",
           "type": "archaeology",
           "ref": "二里头遗址发掘报告",
-          "note": "都邑性聚落、青铜礼器"
+          "note": "都邑性聚落、青铜礼器",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src--中国考古学-夏商卷--1",
           "type": "archaeology",
           "ref": "《中国考古学·夏商卷》",
-          "note": "类型学与分期研究"
+          "note": "类型学与分期研究",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "controversies": [
@@ -257,25 +261,33 @@
           "id": "src-丰镐遗址考古-0",
           "type": "archaeology",
           "ref": "丰镐遗址考古",
-          "note": "周人政治中心遗迹"
+          "note": "周人政治中心遗迹",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-殷周金文集成-1",
           "type": "literature",
           "ref": "殷周金文集成",
-          "note": "contemporaneous 铭文"
+          "note": "contemporaneous 铭文",
+          "grade": "B",
+          "relation": "contemporaneous"
         },
         {
           "id": "src--尚书-部分篇章-2",
           "type": "literature",
           "ref": "《尚书》部分篇章",
-          "note": "周初政治话语，成书年代有争议"
+          "note": "周初政治话语，成书年代有争议",
+          "grade": "B",
+          "relation": "contemporaneous"
         },
         {
           "id": "src--史记-周本纪--3",
           "type": "literature",
           "ref": "《史记·周本纪》",
-          "note": "后世追述，须审慎使用"
+          "note": "后世追述，须审慎使用",
+          "grade": "C",
+          "relation": "later_retrospect"
         }
       ],
       "controversies": [
@@ -404,25 +416,33 @@
           "id": "src--左传--0",
           "type": "literature",
           "ref": "《左传》",
-          "note": "contemporaneous 编年史"
+          "note": "contemporaneous 编年史",
+          "grade": "B",
+          "relation": "contemporaneous"
         },
         {
           "id": "src--论语--1",
           "type": "literature",
           "ref": "《论语》",
-          "note": "弟子记述，反映春秋末期思想"
+          "note": "弟子记述，反映春秋末期思想",
+          "grade": "B",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-曾侯乙墓考古-2",
           "type": "archaeology",
           "ref": "曾侯乙墓考古",
-          "note": "战国早期墓葬，可旁证春秋技术"
+          "note": "战国早期墓葬，可旁证春秋技术",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-侯马盟书-3",
           "type": "archaeology",
           "ref": "侯马盟书",
-          "note": "春秋晚期盟誓文献"
+          "note": "春秋晚期盟誓文献",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "controversies": [
@@ -558,25 +578,33 @@
           "id": "src-睡虎地秦简-0",
           "type": "archaeology",
           "ref": "睡虎地秦简",
-          "note": "秦代法律与社会生活"
+          "note": "秦代法律与社会生活",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-兵马俑考古-1",
           "type": "archaeology",
           "ref": "兵马俑考古",
-          "note": "秦军编制与兵器"
+          "note": "秦军编制与兵器",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-统一度量衡器物-2",
           "type": "archaeology",
           "ref": "统一度量衡器物",
-          "note": "标准化实物证据"
+          "note": "标准化实物证据",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src--史记-秦始皇本纪--3",
           "type": "literature",
           "ref": "《史记·秦始皇本纪》",
-          "note": "汉代追述，须与考古互证"
+          "note": "汉代追述，须与考古互证",
+          "grade": "C",
+          "relation": "later_retrospect"
         }
       ],
       "controversies": [
@@ -711,19 +739,25 @@
           "id": "src-居延汉简-0",
           "type": "archaeology",
           "ref": "居延汉简",
-          "note": "边郡行政与军事记录"
+          "note": "边郡行政与军事记录",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src--汉书--1",
           "type": "literature",
           "ref": "《汉书》",
-          "note": "东汉初年成书，追述西汉"
+          "note": "东汉初年成书，追述西汉",
+          "grade": "C",
+          "relation": "later_retrospect"
         },
         {
           "id": "src-汉代画像石考古-2",
           "type": "archaeology",
           "ref": "汉代画像石考古",
-          "note": "社会生活与信仰图像"
+          "note": "社会生活与信仰图像",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "controversies": [
@@ -846,25 +880,33 @@
           "id": "src--宋史--0",
           "type": "literature",
           "ref": "《宋史》",
-          "note": "元代修纂，追述北宋"
+          "note": "元代修纂，追述北宋",
+          "grade": "C",
+          "relation": "later_retrospect"
         },
         {
           "id": "src-开封考古-1",
           "type": "archaeology",
           "ref": "开封考古",
-          "note": "都城布局与市井遗迹"
+          "note": "都城布局与市井遗迹",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src--清明上河图--2",
           "type": "literature",
           "ref": "《清明上河图》",
-          "note": "北宋风俗画，反映城市生活"
+          "note": "北宋风俗画，反映城市生活",
+          "grade": "B",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-敦煌文献-3",
           "type": "literature",
           "ref": "敦煌文献",
-          "note": "边疆社会与经济记录"
+          "note": "边疆社会与经济记录",
+          "grade": "B",
+          "relation": "contemporaneous"
         }
       ],
       "controversies": [
@@ -998,19 +1040,25 @@
           "id": "src--清实录--0",
           "type": "literature",
           "ref": "《清实录》",
-          "note": "官方编年史"
+          "note": "官方编年史",
+          "grade": "C",
+          "relation": "later_retrospect"
         },
         {
           "id": "src-何炳棣-1368-1953年的中国人口--1",
           "type": "literature",
           "ref": "何炳棣《1368—1953年的中国人口》",
-          "note": "人口学专题研究"
+          "note": "人口学专题研究",
+          "grade": "D",
+          "relation": "later_retrospect"
         },
         {
           "id": "src-马戛尔尼使团记录-2",
           "type": "literature",
           "ref": "马戛尔尼使团记录",
-          "note": "外来观察者视角，须辨立场"
+          "note": "外来观察者视角，须辨立场",
+          "grade": "B",
+          "relation": "near_contemporaneous"
         }
       ],
       "controversies": [
@@ -1134,19 +1182,17 @@
           "id": "src-第一次全国人口普查-1953--0",
           "type": "literature",
           "ref": "第一次全国人口普查（1953）",
-          "note": "统计档案，反映建国初期人口"
+          "note": "统计档案，反映建国初期人口",
+          "grade": "B",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-土地改革档案-1",
           "type": "literature",
           "ref": "土地改革档案",
-          "note": "生产组织变革记录"
-        },
-        {
-          "id": "src-当代史学共识-2",
-          "type": "literature",
-          "ref": "当代史学共识",
-          "note": "唯物史观主导叙述体系"
+          "note": "生产组织变革记录",
+          "grade": "B",
+          "relation": "contemporaneous"
         }
       ],
       "spatialScope": "共和国初期",
@@ -1156,8 +1202,7 @@
           "summary": "现代主权国家版图确立，边疆治理纳入国家体系",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         },
@@ -1166,8 +1211,7 @@
           "summary": "土地改革后农业恢复，人均寿命改善中",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         },
@@ -1176,8 +1220,7 @@
           "summary": "人民共和国成立，政协体制、土改",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         },
@@ -1186,8 +1229,7 @@
           "summary": "工业化起步，苏联援助156项",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         },
@@ -1196,8 +1238,7 @@
           "summary": "思想改造运动、扫盲、新旧文化交替",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         },
@@ -1206,8 +1247,7 @@
           "summary": "战后工业基础薄弱，煤炭铁矿开发起步",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         },
@@ -1216,8 +1256,7 @@
           "summary": "扫盲运动开展，教育体系重建",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         },
@@ -1226,8 +1265,7 @@
           "summary": "公共卫生运动开展，基层医疗建设",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         },
@@ -1236,8 +1274,7 @@
           "summary": "信息化尚未起步，广播为主",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         },
@@ -1246,8 +1283,7 @@
           "summary": "冷战格局下有限国际参与，苏联阵营",
           "sourceRefs": [
             "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1",
-            "src-当代史学共识-2"
+            "src-土地改革档案-1"
           ],
           "level": null
         }

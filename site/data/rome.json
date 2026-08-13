@@ -91,13 +91,17 @@
           "id": "src-李维-罗马史--0",
           "type": "literature",
           "ref": "李维《罗马史》",
-          "note": "后世追述，须审慎"
+          "note": "后世追述，须审慎",
+          "grade": "C",
+          "relation": "later_retrospect"
         },
         {
           "id": "src-罗马广场考古-1",
           "type": "archaeology",
           "ref": "罗马广场考古",
-          "note": "早期城市遗迹"
+          "note": "早期城市遗迹",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "spatialScope": "共和国早期",
@@ -205,13 +209,17 @@
           "id": "src-波利比乌斯-历史--0",
           "type": "literature",
           "ref": "波利比乌斯《历史》",
-          "note": "希腊裔史家 contemporaneous 记录"
+          "note": "希腊裔史家 contemporaneous 记录",
+          "grade": "B",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-意大利半岛考古-1",
           "type": "archaeology",
           "ref": "意大利半岛考古",
-          "note": "道路与聚落"
+          "note": "道路与聚落",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "spatialScope": "布匿战争前",
@@ -322,19 +330,25 @@
           "id": "src-塔西佗-编年史--0",
           "type": "literature",
           "ref": "塔西佗《编年史》",
-          "note": "帝国初期史学"
+          "note": "帝国初期史学",
+          "grade": "B",
+          "relation": "near_contemporaneous"
         },
         {
           "id": "src-罗马道路与公共建筑-1",
           "type": "archaeology",
           "ref": "罗马道路与公共建筑",
-          "note": "工程遗迹"
+          "note": "工程遗迹",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-庞贝遗址-2",
           "type": "archaeology",
           "ref": "庞贝遗址",
-          "note": "城市生活考古"
+          "note": "城市生活考古",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "spatialScope": "图拉真时代",
@@ -456,13 +470,17 @@
           "id": "src-教会编年史-0",
           "type": "literature",
           "ref": "教会编年史",
-          "note": "中世纪史学"
+          "note": "中世纪史学",
+          "grade": "C",
+          "relation": "later_retrospect"
         },
         {
           "id": "src-罗马古城考古-1",
           "type": "archaeology",
           "ref": "罗马古城考古",
-          "note": "古代遗迹在中世纪的使用"
+          "note": "古代遗迹在中世纪的使用",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "controversies": [

@@ -91,13 +91,17 @@
           "id": "src-中王国墓葬与神庙遗址-0",
           "type": "archaeology",
           "ref": "中王国墓葬与神庙遗址",
-          "note": "建筑与器物"
+          "note": "建筑与器物",
+          "grade": "A",
+          "relation": "contemporaneous"
         },
         {
           "id": "src--辛努亥记-等文学作品-1",
           "type": "literature",
           "ref": "《辛努亥记》等文学作品",
-          "note": "后世抄本，反映中王国叙事"
+          "note": "后世抄本，反映中王国叙事",
+          "grade": "C",
+          "relation": "later_retrospect"
         }
       ],
       "spatialScope": "中王国",
@@ -207,13 +211,17 @@
           "id": "src-希罗多德-历史--0",
           "type": "literature",
           "ref": "希罗多德《历史》",
-          "note": "外来观察者，须辨立场"
+          "note": "外来观察者，须辨立场",
+          "grade": "B",
+          "relation": "near_contemporaneous"
         },
         {
           "id": "src-萨卡拉等地考古-1",
           "type": "archaeology",
           "ref": "萨卡拉等地考古",
-          "note": "晚期王朝墓葬"
+          "note": "晚期王朝墓葬",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "spatialScope": "晚期王朝",
@@ -323,13 +331,17 @@
           "id": "src-托勒密时期纸草文书-0",
           "type": "literature",
           "ref": "托勒密时期纸草文书",
-          "note": "行政与经济记录"
+          "note": "行政与经济记录",
+          "grade": "B",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-亚历山大城遗址-1",
           "type": "archaeology",
           "ref": "亚历山大城遗址",
-          "note": "希腊化城市规划"
+          "note": "希腊化城市规划",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "spatialScope": "托勒密王朝",
@@ -440,13 +452,17 @@
           "id": "src-罗马行省行政纸草-0",
           "type": "literature",
           "ref": "罗马行省行政纸草",
-          "note": "税收与土地记录"
+          "note": "税收与土地记录",
+          "grade": "B",
+          "relation": "contemporaneous"
         },
         {
           "id": "src-罗马时期埃及遗址-1",
           "type": "archaeology",
           "ref": "罗马时期埃及遗址",
-          "note": "神庙与城镇"
+          "note": "神庙与城镇",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "spatialScope": "罗马统治",
@@ -557,13 +573,17 @@
           "id": "src-阿拉伯编年史-0",
           "type": "literature",
           "ref": "阿拉伯编年史",
-          "note": "伊斯兰史学传统"
+          "note": "伊斯兰史学传统",
+          "grade": "C",
+          "relation": "later_retrospect"
         },
         {
           "id": "src-开罗法蒂玛遗址-1",
           "type": "archaeology",
           "ref": "开罗法蒂玛遗址",
-          "note": "城市与建筑"
+          "note": "城市与建筑",
+          "grade": "A",
+          "relation": "contemporaneous"
         }
       ],
       "spatialScope": "法蒂玛王朝",

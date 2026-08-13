@@ -572,7 +572,9 @@ function renderSourceItem(src, sourceMap) {
   const typeLabel = renderSourceTypeLabel(src.type);
   const locator = src.locator ? `<p class="source-locator">${src.locator}</p>` : '';
   const url = src.url ? `<p class="source-url"><a href="${src.url}" target="_blank" rel="noopener">${src.url}</a></p>` : '';
-  const grade = src.grade ? `<span class="source-grade">[${src.grade}]</span>` : '';
+  const gradeLabel = src.grade ? (CivEvidence.GRADE_LABELS[src.grade] || src.grade) : '';
+  const relationLabel = src.relation ? (CivEvidence.RELATION_LABELS[src.relation] || src.relation) : '';
+  const grade = gradeLabel ? `<span class="source-grade" title="${relationLabel}">[${src.grade} ${gradeLabel}]</span>` : '';
   const note = src.note ? `<p class="source-note">${src.note}</p>` : '';
   return `
     <li class="source-item ${expanded ? 'expanded' : ''}">
