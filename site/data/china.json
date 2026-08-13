@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "中国历史 · 十维探索",
-    "subtitle": "科学方法驱动的定性历史重建",
+    "title": "中国历史 · 证据驱动",
+    "subtitle": "以考古与 contemporaneous 文献为先的快照重建",
     "country": "中国",
     "countryId": "china",
     "color": "#b22222",
@@ -10,18 +10,18 @@
     "yearStep": 50,
     "methodology": {
       "principles": [
-        "以考古发现与文献记载为首要依据，推断须标注并说明逻辑链",
-        "禁止以现代发展水平反推古代等级（避免「以今证古」）",
-        "承认断裂与不确定性：亡国、改朝、殖民、灾害造成的非连续性",
-        "等级 1–5 为同一文明内部的相对概括，非跨文明精确排名",
-        "无充分证据的维度标记为 absent，不强行填充"
+        "先写 sources[]，再写 aspects；禁止以 AI 通史记忆标 documented",
+        "正式快照仅用 documented / inferred / absent；推测写入假说库",
+        "不固定十维：有证据才建 aspect key；已检索无材料须显式 absent",
+        "level 仅在有书面 rubric 时填写，否则省略或 null",
+        "documented 须来自考古报告或 contemporaneous 文献/铭文（A/B 级）"
       ],
       "confidenceLevels": {
         "documented": "有据 — 考古实物或 contemporaneous 文献支持",
         "inferred": "推断 — 基于相邻证据的合理推论，存在其他解释",
-        "speculative": "猜测 — 假说性判断，待新证据检验",
-        "absent": "未记录 — 证据不足，本快照不做判断"
-      }
+        "absent": "未记录 — 已检索，证据不足，本快照不做判断"
+      },
+      "version": "3.0"
     },
     "evidenceTypeLabels": {
       "archaeology": "考古遗存",
@@ -100,65 +100,38 @@
         "yearMax": 2024,
         "eraTemplate": "contemporary"
       }
+    ],
+    "hypotheses": [
+      {
+        "claim": "二里头 = 整个夏朝都城",
+        "refutedBy": "遗址年代范围与文献夏代纪年不完全吻合，不能简单等同",
+        "confidence": "documented",
+        "status": "rejected",
+        "relatedSnapshots": [
+          "china:-2000"
+        ]
+      },
+      {
+        "id": "hyp--2000-organization",
+        "claim": "中心聚落等级分化，手工业分工；是否属王朝仍有争议",
+        "status": "pending",
+        "relatedAspect": "organization",
+        "relatedSnapshots": [
+          "china:-2000"
+        ],
+        "note": "由 v3 迁移自 speculative 维度"
+      },
+      {
+        "id": "hyp--2000-state_formation",
+        "claim": "都邑性聚落，等级分化明显，王朝性质有争议",
+        "status": "pending",
+        "relatedAspect": "state_formation",
+        "relatedSnapshots": [
+          "china:-2000"
+        ],
+        "note": "由 v3 迁移自 speculative 维度"
+      }
     ]
-  },
-  "dimensions": [
-    {
-      "id": "geography",
-      "label": "地理气候",
-      "short": "地理"
-    },
-    {
-      "id": "resources",
-      "label": "资源能源",
-      "short": "资源"
-    },
-    {
-      "id": "technology",
-      "label": "技术能力",
-      "short": "技术"
-    },
-    {
-      "id": "production",
-      "label": "生产组织",
-      "short": "生产"
-    },
-    {
-      "id": "economy",
-      "label": "经济交换",
-      "short": "经济"
-    },
-    {
-      "id": "politics",
-      "label": "政治制度",
-      "short": "政治"
-    },
-    {
-      "id": "military",
-      "label": "军事国力",
-      "short": "军事"
-    },
-    {
-      "id": "culture",
-      "label": "社会文化",
-      "short": "文化"
-    },
-    {
-      "id": "daily_life",
-      "label": "日常生活",
-      "short": "日常"
-    },
-    {
-      "id": "historical_memory",
-      "label": "历史记忆",
-      "short": "记忆"
-    }
-  ],
-  "confidenceLabels": {
-    "documented": "有据",
-    "inferred": "推断",
-    "speculative": "猜测",
-    "absent": "未记录"
   },
   "snapshots": [
     {
@@ -171,11 +144,13 @@
       "evidenceNote": "主要依据二里头遗址考古与陶器、青铜器类型学；无 contemporaneous 文字史书",
       "sources": [
         {
+          "id": "src-二里头遗址发掘报告-0",
           "type": "archaeology",
           "ref": "二里头遗址发掘报告",
           "note": "都邑性聚落、青铜礼器"
         },
         {
+          "id": "src--中国考古学-夏商卷--1",
           "type": "archaeology",
           "ref": "《中国考古学·夏商卷》",
           "note": "类型学与分期研究"
@@ -192,64 +167,81 @@
           "confidence": "documented"
         }
       ],
-      "dimensions": {
+      "spatialScope": "二里头",
+      "aspects": {
         "geography": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "黄河中游洛阳盆地，伊洛河冲积平原，暖湿气候较今略暖",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-二里头遗址发掘报告-0",
+            "src--中国考古学-夏商卷--1"
+          ],
+          "level": null
         },
         "subsistence": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "粟黍农业、家畜饲养；黄土与黄河水资源",
-          "confidence": "documented"
-        },
-        "organization": {
-          "level": 3,
-          "summary": "中心聚落等级分化，手工业分工；是否属王朝仍有争议",
-          "confidence": "speculative"
+          "sourceRefs": [
+            "src-二里头遗址发掘报告-0",
+            "src--中国考古学-夏商卷--1"
+          ],
+          "level": null
         },
         "knowledge": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "青铜礼器与工具、陶鬲，可能已有早期文字符号",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-二里头遗址发掘报告-0",
+            "src--中国考古学-夏商卷--1"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "礼器组合暗示祭祀等级秩序，祖先崇拜迹象",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-二里头遗址发掘报告-0",
+            "src--中国考古学-夏商卷--1"
+          ],
+          "level": null
         },
         "metallurgy": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "青铜礼器与兵器铸造，类型学成熟",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-二里头遗址发掘报告-0",
+            "src--中国考古学-夏商卷--1"
+          ],
+          "level": null
         },
         "writing": {
-          "level": 1,
-          "summary": "无 contemporaneous 文字记录",
           "confidence": "documented",
+          "summary": "无 contemporaneous 文字记录",
+          "sourceRefs": [
+            "src-二里头遗址发掘报告-0",
+            "src--中国考古学-夏商卷--1"
+          ],
+          "level": null,
           "note": "后世夏代叙述为追溯性建构"
         },
-        "state_formation": {
-          "level": 3,
-          "summary": "都邑性聚落，等级分化明显，王朝性质有争议",
-          "confidence": "speculative"
-        },
         "ritual_order": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "青铜礼器组合体现祭祀等级",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-二里头遗址发掘报告-0",
+            "src--中国考古学-夏商卷--1"
+          ],
+          "level": null
         },
         "trade": {
-          "level": 2,
+          "confidence": "inferred",
           "summary": "区域交换网络初现，尚未见成熟货币",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-二里头遗址发掘报告-0"
+          ],
+          "level": null
         }
-      },
-      "eraTemplate": "bronze",
-      "_migrated": true,
-      "dynasty": "夏商",
-      "group": "二里头",
-      "periodId": "bronze"
+      }
     },
     {
       "year": -1000,
@@ -262,21 +254,25 @@
       "evidenceNote": "金文、丰镐遗址考古、《尚书》部分篇章；甲骨文后段",
       "sources": [
         {
+          "id": "src-丰镐遗址考古-0",
           "type": "archaeology",
           "ref": "丰镐遗址考古",
           "note": "周人政治中心遗迹"
         },
         {
+          "id": "src-殷周金文集成-1",
           "type": "literature",
           "ref": "殷周金文集成",
           "note": "contemporaneous 铭文"
         },
         {
+          "id": "src--尚书-部分篇章-2",
           "type": "literature",
           "ref": "《尚书》部分篇章",
           "note": "周初政治话语，成书年代有争议"
         },
         {
+          "id": "src--史记-周本纪--3",
           "type": "literature",
           "ref": "《史记·周本纪》",
           "note": "后世追述，须审慎使用"
@@ -285,63 +281,114 @@
       "controversies": [
         "《尚书》部分篇章成书年代与作者仍有学术讨论"
       ],
-      "dimensions": {
+      "spatialScope": "西周",
+      "aspects": {
         "geography": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "关中平原为政治核心，分封诸侯遍布黄河中下游",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-丰镐遗址考古-0",
+            "src-殷周金文集成-1",
+            "src--尚书-部分篇章-2",
+            "src--史记-周本纪--3"
+          ],
+          "level": null
         },
         "resources": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "关中农业、王畿林矿；诸侯国各自资源禀赋差异大",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-丰镐遗址考古-0",
+            "src-殷周金文集成-1",
+            "src--尚书-部分篇章-2",
+            "src--史记-周本纪--3"
+          ],
+          "level": null
         },
         "technology": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "青铜礼乐体系成熟，战车作战，甲骨文后发展为金文",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-丰镐遗址考古-0",
+            "src-殷周金文集成-1",
+            "src--尚书-部分篇章-2",
+            "src--史记-周本纪--3"
+          ],
+          "level": null
         },
         "production": {
-          "level": 3,
+          "confidence": "inferred",
           "summary": "井田制传说反映土地集体与贵族占有，手工业由「百工」管理",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-丰镐遗址考古-0"
+          ],
+          "level": null
         },
         "economy": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "贡赋体系、海贝作货币痕迹，诸侯间物资交换",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-丰镐遗址考古-0",
+            "src-殷周金文集成-1",
+            "src--尚书-部分篇章-2",
+            "src--史记-周本纪--3"
+          ],
+          "level": null
         },
         "politics": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "分封制、宗法制、礼乐秩序，天子—诸侯—卿大夫等级森严",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-丰镐遗址考古-0",
+            "src-殷周金文集成-1",
+            "src--尚书-部分篇章-2",
+            "src--史记-周本纪--3"
+          ],
+          "level": null
         },
         "military": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "车战为核心，王师与诸侯军，牧野之战奠定周政",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-丰镐遗址考古-0",
+            "src-殷周金文集成-1",
+            "src--尚书-部分篇章-2",
+            "src--史记-周本纪--3"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "礼乐文明、诗经源头、天命观与德治思想",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-丰镐遗址考古-0",
+            "src-殷周金文集成-1",
+            "src--尚书-部分篇章-2",
+            "src--史记-周本纪--3"
+          ],
+          "level": null
         },
         "daily_life": {
-          "level": 3,
+          "confidence": "inferred",
           "summary": "黍稷稻麦、饮酒礼俗；已有简单医药与针灸传说（证据薄弱）",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-丰镐遗址考古-0"
+          ],
+          "level": null
         },
         "historical_memory": {
-          "level": 3,
-          "summary": "口述与早期文献并用，《尚书》部分篇章保存周初政治话语",
           "confidence": "documented",
+          "summary": "口述与早期文献并用，《尚书》部分篇章保存周初政治话语",
+          "sourceRefs": [
+            "src-丰镐遗址考古-0",
+            "src-殷周金文集成-1",
+            "src--尚书-部分篇章-2",
+            "src--史记-周本纪--3"
+          ],
+          "level": null,
           "note": "记录的是当时及稍后的历史意识，不等于完全信史"
         }
-      },
-      "eraTemplate": "bronze",
-      "dynasty": "周",
-      "group": "西周",
-      "periodId": "bronze"
+      }
     },
     {
       "year": -500,
@@ -354,21 +401,25 @@
       "evidenceNote": "《左传》《论语》、诸侯墓葬考古、铁器普及考古证据",
       "sources": [
         {
+          "id": "src--左传--0",
           "type": "literature",
           "ref": "《左传》",
           "note": "contemporaneous 编年史"
         },
         {
+          "id": "src--论语--1",
           "type": "literature",
           "ref": "《论语》",
           "note": "弟子记述，反映春秋末期思想"
         },
         {
+          "id": "src-曾侯乙墓考古-2",
           "type": "archaeology",
           "ref": "曾侯乙墓考古",
           "note": "战国早期墓葬，可旁证春秋技术"
         },
         {
+          "id": "src-侯马盟书-3",
           "type": "archaeology",
           "ref": "侯马盟书",
           "note": "春秋晚期盟誓文献"
@@ -378,64 +429,120 @@
         "战国时代起点有前475年、前403年等不同划分",
         "孔子生卒年份学界略有出入"
       ],
-      "dimensions": {
+      "spatialScope": "春秋战国",
+      "aspects": {
         "geography": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "华夏核心在黄河中下游，向江淮扩展",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null
         },
         "subsistence": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "铁器牛耕推广，五谷饮食，水利开发",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null
         },
         "organization": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "诸侯争霸，卿大夫专权，变法酝酿",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null
         },
         "knowledge": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "铁器与牛耕、筑城、弩、舟车交通",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "诸子百家酝酿，礼乐崩坏与思想争鸣",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null
         },
         "iron_tech": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "铁器开始推广，青铜礼乐仍盛",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null
         },
         "bureaucracy": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "诸侯国官僚体系发展，卿大夫专权",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null
         },
         "military": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "步兵骑兵重要性上升，连年争霸战争",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null
         },
         "commerce": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "金属货币流通、商贾活跃、市场管理",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null
         },
         "historiography": {
-          "level": 4,
-          "summary": "《春秋》编年体史书，史官传统",
           "confidence": "documented",
+          "summary": "《春秋》编年体史书，史官传统",
+          "sourceRefs": [
+            "src--左传--0",
+            "src--论语--1",
+            "src-曾侯乙墓考古-2",
+            "src-侯马盟书-3"
+          ],
+          "level": null,
           "note": "记录当时人的历史意识与政治立场"
         }
-      },
-      "eraTemplate": "iron_imperial",
-      "_migrated": true,
-      "dynasty": "东周",
-      "group": "春秋战国",
-      "periodId": "iron_imperial"
+      }
     },
     {
       "year": -221,
@@ -448,21 +555,25 @@
       "evidenceNote": "秦简、兵马俑、度量衡实物、统一道路遗迹",
       "sources": [
         {
+          "id": "src-睡虎地秦简-0",
           "type": "archaeology",
           "ref": "睡虎地秦简",
           "note": "秦代法律与社会生活"
         },
         {
+          "id": "src-兵马俑考古-1",
           "type": "archaeology",
           "ref": "兵马俑考古",
           "note": "秦军编制与兵器"
         },
         {
+          "id": "src-统一度量衡器物-2",
           "type": "archaeology",
           "ref": "统一度量衡器物",
           "note": "标准化实物证据"
         },
         {
+          "id": "src--史记-秦始皇本纪--3",
           "type": "literature",
           "ref": "《史记·秦始皇本纪》",
           "note": "汉代追述，须与考古互证"
@@ -471,64 +582,120 @@
       "controversies": [
         "焚书坑儒规模与范围学界仍有讨论"
       ],
-      "dimensions": {
+      "spatialScope": "秦",
+      "aspects": {
         "geography": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "首次统一中原与岭南部分区域",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null
         },
         "subsistence": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "赋役沉重，小农为税收基础",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null
         },
         "organization": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "皇帝制度、郡县制，三公九卿中央集权",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null
         },
         "knowledge": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "标准化度量衡、车轨、兵器；大型土木工程",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "焚书坑儒，法家主导，文化统制严厉",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null
         },
         "iron_tech": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "铁器推广，水利与大型工程",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null
         },
         "bureaucracy": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "郡县官僚体系，统一法令",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null
         },
         "military": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "横扫六国，北击匈奴、南征百越",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null
         },
         "commerce": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "统一货币与度量衡，全国性市场雏形",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null
         },
         "historiography": {
-          "level": 4,
-          "summary": "法家功业观记录统一，后世儒家批判性叙述",
           "confidence": "documented",
+          "summary": "法家功业观记录统一，后世儒家批判性叙述",
+          "sourceRefs": [
+            "src-睡虎地秦简-0",
+            "src-兵马俑考古-1",
+            "src-统一度量衡器物-2",
+            "src--史记-秦始皇本纪--3"
+          ],
+          "level": null,
           "note": "秦代自我叙述与汉代史学评价有偏差"
         }
-      },
-      "eraTemplate": "iron_imperial",
-      "_migrated": true,
-      "dynasty": "秦",
-      "group": "秦",
-      "periodId": "iron_imperial"
+      }
     },
     {
       "year": 100,
@@ -541,16 +708,19 @@
       "evidenceNote": "汉简、画像石、考古遗址、班固《汉书》",
       "sources": [
         {
+          "id": "src-居延汉简-0",
           "type": "archaeology",
           "ref": "居延汉简",
           "note": "边郡行政与军事记录"
         },
         {
+          "id": "src--汉书--1",
           "type": "literature",
           "ref": "《汉书》",
           "note": "东汉初年成书，追述西汉"
         },
         {
+          "id": "src-汉代画像石考古-2",
           "type": "archaeology",
           "ref": "汉代画像石考古",
           "note": "社会生活与信仰图像"
@@ -559,63 +729,108 @@
       "controversies": [
         "东汉中期人口估算（约六千万）学界仍有分歧"
       ],
-      "dimensions": {
+      "spatialScope": "东汉",
+      "aspects": {
         "geography": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "西域都护府开通，河西走廊为丝路枢纽，南方开发加速",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-居延汉简-0",
+            "src--汉书--1",
+            "src-汉代画像石考古-2"
+          ],
+          "level": null
         },
         "resources": {
-          "level": 4,
+          "confidence": "inferred",
           "summary": "铁、盐、铜、水利灌区；人口约六千万（估算有争议）",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-居延汉简-0"
+          ],
+          "level": null
         },
         "technology": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "造纸术改进、冶铁鼓风、水排、天文历法精密化",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-居延汉简-0",
+            "src--汉书--1",
+            "src-汉代画像石考古-2"
+          ],
+          "level": null
         },
         "production": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "豪强庄园与佃农并存，手工业作坊与官营并存",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-居延汉简-0",
+            "src--汉书--1",
+            "src-汉代画像石考古-2"
+          ],
+          "level": null
         },
         "economy": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "铜钱经济、市集繁荣、丝路国际贸易",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-居延汉简-0",
+            "src--汉书--1",
+            "src-汉代画像石考古-2"
+          ],
+          "level": null
         },
         "politics": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "外戚宦官交替专权，察举制选官，中央权威时强时弱",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-居延汉简-0",
+            "src--汉书--1",
+            "src-汉代画像石考古-2"
+          ],
+          "level": null
         },
         "military": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "北击匈奴后边防压力转向羌乱与西域，骑兵与边防体系",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-居延汉简-0",
+            "src--汉书--1",
+            "src-汉代画像石考古-2"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "儒学独尊后经学化，佛教开始传入，神仙方术流行",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-居延汉简-0",
+            "src--汉书--1",
+            "src-汉代画像石考古-2"
+          ],
+          "level": null
         },
         "daily_life": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "面食推广、豆腐传说、张仲景《伤寒杂病论》成书前后",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-居延汉简-0",
+            "src--汉书--1",
+            "src-汉代画像石考古-2"
+          ],
+          "level": null
         },
         "historical_memory": {
-          "level": 5,
-          "summary": "纪传体史书成熟，《汉书》确立正统史学范式",
           "confidence": "documented",
+          "summary": "纪传体史书成熟，《汉书》确立正统史学范式",
+          "sourceRefs": [
+            "src-居延汉简-0",
+            "src--汉书--1",
+            "src-汉代画像石考古-2"
+          ],
+          "level": null,
           "note": "记录的是汉代士人的历史意识与正统观念"
         }
-      },
-      "eraTemplate": "iron_imperial",
-      "dynasty": "汉",
-      "group": "东汉",
-      "periodId": "iron_imperial"
+      }
     },
     {
       "year": 1000,
@@ -628,21 +843,25 @@
       "evidenceNote": "《宋史》、清明上河图、考古窑址、科举档案",
       "sources": [
         {
+          "id": "src--宋史--0",
           "type": "literature",
           "ref": "《宋史》",
           "note": "元代修纂，追述北宋"
         },
         {
+          "id": "src-开封考古-1",
           "type": "archaeology",
           "ref": "开封考古",
           "note": "都城布局与市井遗迹"
         },
         {
+          "id": "src--清明上河图--2",
           "type": "literature",
           "ref": "《清明上河图》",
           "note": "北宋风俗画，反映城市生活"
         },
         {
+          "id": "src-敦煌文献-3",
           "type": "literature",
           "ref": "敦煌文献",
           "note": "边疆社会与经济记录"
@@ -651,63 +870,120 @@
       "controversies": [
         "北宋「中期」具体年份界定因研究视角而异"
       ],
-      "dimensions": {
+      "spatialScope": "北宋",
+      "aspects": {
         "geography": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "疆域较唐缩小，中原与江南为经济核心，北方边防压力大",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null
         },
         "resources": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "煤炭开采、铁器产量世界领先，江南水稻主产区",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null
         },
         "technology": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "活字印刷、指南针、火药应用、水运仪象台、瓷器名窑",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null
         },
         "production": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "商品化农业、手工业市镇、雇佣劳动萌芽",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null
         },
         "economy": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "纸币交子、商业革命、海上贸易与市舶司",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null
         },
         "politics": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "重文轻武、科举取士、枢密院与三衙分权",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null
         },
         "military": {
-          "level": 2,
+          "confidence": "documented",
           "summary": "对辽夏战争屡有失利，岁币换和平，军力偏弱",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "理学兴起、词赋繁荣、市民文化、书院教育",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null
         },
         "daily_life": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "茶馆酒肆、外卖与夜市，《太平圣惠方》等医学方书",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null
         },
         "historical_memory": {
-          "level": 5,
-          "summary": "正史与类书体系完备，士大夫自觉的历史编纂传统",
           "confidence": "documented",
+          "summary": "正史与类书体系完备，士大夫自觉的历史编纂传统",
+          "sourceRefs": [
+            "src--宋史--0",
+            "src-开封考古-1",
+            "src--清明上河图--2",
+            "src-敦煌文献-3"
+          ],
+          "level": null,
           "note": "记录的是宋代士大夫的历史意识与正统叙事"
         }
-      },
-      "eraTemplate": "iron_imperial",
-      "dynasty": "宋",
-      "group": "北宋",
-      "periodId": "iron_imperial"
+      }
     },
     {
       "year": 1800,
@@ -719,16 +995,19 @@
       "evidenceNote": "清宫档案、地方志、传教士记载、人口学研究成果",
       "sources": [
         {
+          "id": "src--清实录--0",
           "type": "literature",
           "ref": "《清实录》",
           "note": "官方编年史"
         },
         {
+          "id": "src-何炳棣-1368-1953年的中国人口--1",
           "type": "literature",
           "ref": "何炳棣《1368—1953年的中国人口》",
           "note": "人口学专题研究"
         },
         {
+          "id": "src-马戛尔尼使团记录-2",
           "type": "literature",
           "ref": "马戛尔尼使团记录",
           "note": "外来观察者视角，须辨立场"
@@ -737,63 +1016,110 @@
       "controversies": [
         "嘉庆年间人口是否已突破三亿，学界估算有分歧"
       ],
-      "dimensions": {
+      "spatialScope": "清嘉庆",
+      "aspects": {
         "geography": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "版图达传统帝国巅峰，囊括满洲、蒙古、新疆、西藏",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null
         },
         "resources": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "人口突破三亿压力显现，耕地接近生态上限，银铜经济",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null
         },
         "technology": {
-          "level": 2,
+          "confidence": "documented",
           "summary": "传统农业技术精耕细作达峰，与西方工业技术差距拉大",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null
         },
         "production": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "小农经济为主，手工业发达但未工业化，行会组织",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null
         },
         "economy": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "白银流入减少，土地兼并严重，商品经济活跃但缺乏工业资本",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null
         },
         "politics": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "皇帝集权、军机处、八旗制度衰落，官僚腐败加剧",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null
         },
         "military": {
-          "level": 2,
+          "confidence": "documented",
           "summary": "平定白莲教耗损国力，海防薄弱，火器落后于欧洲列强",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "考据学兴盛、理学僵化、民间宗教与秘密会社",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null
         },
         "daily_life": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "玉米番薯普及救荒，《本草纲目》传统医学体系成熟",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null
         },
         "historical_memory": {
-          "level": 5,
-          "summary": "官方修纂正史与方略，同时出现考据学对经典的重新审视",
           "confidence": "documented",
+          "summary": "官方修纂正史与方略，同时出现考据学对经典的重新审视",
+          "sourceRefs": [
+            "src--清实录--0",
+            "src-何炳棣-1368-1953年的中国人口--1",
+            "src-马戛尔尼使团记录-2"
+          ],
+          "level": null,
           "note": "记录的是清代官方与士人的历史叙述，含满汉正统话语"
         }
-      },
-      "eraTemplate": "early_modern",
-      "dynasty": "清",
-      "group": "清嘉庆",
-      "periodId": "early_modern"
+      }
     },
     {
       "year": 1950,
@@ -805,78 +1131,127 @@
       "evidenceNote": "建国档案、统计年鉴、考古与史学当代研究（非倒推）",
       "sources": [
         {
+          "id": "src-第一次全国人口普查-1953--0",
           "type": "literature",
           "ref": "第一次全国人口普查（1953）",
           "note": "统计档案，反映建国初期人口"
         },
         {
+          "id": "src-土地改革档案-1",
           "type": "literature",
           "ref": "土地改革档案",
           "note": "生产组织变革记录"
         },
         {
+          "id": "src-当代史学共识-2",
           "type": "literature",
           "ref": "当代史学共识",
           "note": "唯物史观主导叙述体系"
         }
       ],
-      "dimensions": {
+      "spatialScope": "共和国初期",
+      "aspects": {
         "geography": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "现代主权国家版图确立，边疆治理纳入国家体系",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         },
         "subsistence": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "土地改革后农业恢复，人均寿命改善中",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         },
         "organization": {
-          "level": 5,
+          "confidence": "documented",
           "summary": "人民共和国成立，政协体制、土改",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         },
         "knowledge": {
-          "level": 2,
+          "confidence": "documented",
           "summary": "工业化起步，苏联援助156项",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "思想改造运动、扫盲、新旧文化交替",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         },
         "industrial_capacity": {
-          "level": 2,
+          "confidence": "documented",
           "summary": "战后工业基础薄弱，煤炭铁矿开发起步",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         },
         "education": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "扫盲运动开展，教育体系重建",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         },
         "healthcare": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "公共卫生运动开展，基层医疗建设",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         },
         "information": {
-          "level": 1,
+          "confidence": "documented",
           "summary": "信息化尚未起步，广播为主",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         },
         "global_integration": {
-          "level": 2,
+          "confidence": "documented",
           "summary": "冷战格局下有限国际参与，苏联阵营",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-第一次全国人口普查-1953--0",
+            "src-土地改革档案-1",
+            "src-当代史学共识-2"
+          ],
+          "level": null
         }
-      },
-      "eraTemplate": "contemporary",
-      "_migrated": true,
-      "dynasty": "中华人民共和国",
-      "group": "共和国初期",
-      "periodId": "contemporary"
+      }
     }
   ]
 }

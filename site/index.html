@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>文明历史 · 十维探索 · CivSlice</title>
+  <title>文明历史 · 证据驱动 · CivSlice</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <div class="header-inner">
       <div>
         <p class="eyebrow">CivSlice · 文明切片</p>
-        <h1 id="page-title">文明历史 · 十维探索</h1>
+        <h1 id="page-title">文明历史 · 证据驱动</h1>
         <p class="subtitle" id="page-subtitle"></p>
       </div>
       <div class="header-meta">
@@ -62,8 +62,8 @@
   </section>
 
   <nav class="view-tabs" id="view-tabs">
-    <button class="view-tab active" data-view="profile">剖面</button>
-    <button class="view-tab" data-view="compare">对比</button>
+    <button class="view-tab active" data-view="detail">快照详情</button>
+    <button class="view-tab" data-view="compare">同时代对照</button>
   </nav>
 
   <section class="comparison-panel" id="comparison-panel">
@@ -77,70 +77,31 @@
     <div class="comparison-toggles" id="comparison-toggles"></div>
   </section>
 
-  <div class="template-banner" id="template-banner" hidden></div>
-
-  <section class="viz-controls" id="viz-controls">
-    <div class="mode-toggles" id="profile-toggles">
-      <label class="toggle-label">
-        <input type="checkbox" id="toggle-speculative">
-        <span>含猜测轮廓</span>
-      </label>
-    </div>
-    <div class="mode-toggles" id="compare-toggles" hidden>
-      <label class="toggle-label" id="avg-toggle-wrap">
-        <input type="checkbox" id="toggle-average">
-        <span>显示同期均值</span>
-      </label>
-    </div>
-  </section>
-
-  <main class="main-layout">
-    <section class="viz-section">
-      <div class="viz-core">
-        <div class="radar-wrap">
-          <canvas id="radar-canvas" width="280" height="280" aria-label="雷达图"></canvas>
-          <p class="radar-legend-mini" id="radar-legend-profile">
-            <span class="dot documented"></span>有据
-            <span class="dot inferred"></span>推断
-            <span class="dot speculative"></span>猜测
-          </p>
-          <p class="radar-legend-mini" id="radar-legend-compare" hidden>
-            <span class="grade-sample">S–E</span> 档位 · 0–100
-          </p>
-          <p class="radar-aux-label" id="radar-aux-label" hidden></p>
-          <div class="compare-legend" id="compare-legend" hidden></div>
-        </div>
-        <div class="cards-wrap">
-          <div class="cards-header">
-            <h2 class="panel-title" id="cards-title">维度详情</h2>
-            <p class="cards-hint muted" id="cards-hint">悬停联动 · 点击展开</p>
-          </div>
-          <div class="dimension-grid" id="dimension-grid"></div>
-        </div>
-      </div>
-    </section>
-
+  <main class="main-layout evidence-layout">
+    <section class="evidence-main" id="evidence-main"></section>
     <aside class="sidebar">
       <div class="info-card" id="snapshot-info"></div>
       <div class="info-card methodology-card">
-        <h3>科学方法原则</h3>
+        <h3>证据原则</h3>
         <ul id="methodology-list"></ul>
         <details class="confidence-details">
           <summary>可信度分级说明</summary>
           <dl id="confidence-dl"></dl>
         </details>
       </div>
+      <div class="info-card" id="hypothesis-card" hidden>
+        <h3>假说库</h3>
+        <ul id="hypothesis-list" class="hypothesis-list"></ul>
+      </div>
     </aside>
   </main>
 
   <footer class="footer">
-    <p>剖面为十维史料层；对比为派生指标（运行时计算，非 JSON 存储）。详见 <a href="https://github.com/jk9988610/CivSlice">CivSlice</a>。</p>
+    <p>v3 证据驱动标准：先 sources[] 后 aspects[]；正式快照仅用 documented / inferred / absent。详见 <a href="https://github.com/jk9988610/CivSlice">CivSlice</a>。</p>
   </footer>
 
-  <script src="js/templates.js"></script>
   <script src="js/navigation.js"></script>
-  <script src="js/stats.js"></script>
-  <script src="js/radar.js"></script>
+  <script src="js/evidence.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
