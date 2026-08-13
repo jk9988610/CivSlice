@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "title": "美国历史 · 十维探索",
+    "subtitle": "科学方法驱动的定性历史重建",
+    "country": "美国",
+    "countryId": "usa",
+    "color": "#3c3b6e"
+  },
+  "dimensions": [
+    {
+      "id": "geography",
+      "label": "地理气候",
+      "short": "地理"
+    },
+    {
+      "id": "resources",
+      "label": "资源能源",
+      "short": "资源"
+    },
+    {
+      "id": "technology",
+      "label": "技术能力",
+      "short": "技术"
+    },
+    {
+      "id": "production",
+      "label": "生产组织",
+      "short": "生产"
+    },
+    {
+      "id": "economy",
+      "label": "经济交换",
+      "short": "经济"
+    },
+    {
+      "id": "politics",
+      "label": "政治制度",
+      "short": "政治"
+    },
+    {
+      "id": "military",
+      "label": "军事国力",
+      "short": "军事"
+    },
+    {
+      "id": "culture",
+      "label": "社会文化",
+      "short": "文化"
+    },
+    {
+      "id": "daily_life",
+      "label": "日常生活",
+      "short": "日常"
+    },
+    {
+      "id": "historical_memory",
+      "label": "历史记忆",
+      "short": "记忆"
+    }
+  ],
+  "confidenceLabels": {
+    "documented": "有据",
+    "inferred": "推断",
+    "speculative": "猜测",
+    "absent": "未记录"
+  },
+  "snapshots": [
+    {
+      "year": 1776,
+      "eraLabel": "独立宣言时期",
+      "eraTemplate": "early_modern",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "美国革命；与清乾隆年间同期",
+      "evidenceNote": "独立宣言、大陆会议记录、殖民档案",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "《独立宣言》",
+          "note": "政治文献"
+        },
+        {
+          "type": "literature",
+          "ref": "大陆会议记录",
+          "note": "contemporaneous 档案"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 4,
+          "summary": "大西洋沿岸十三州，向西扩张前夜",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 4,
+          "summary": "农业、木材、渔业",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 3,
+          "summary": "欧洲技术移植，印刷与火器",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 3,
+          "summary": "种植园奴隶制与北方手工业",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 3,
+          "summary": "殖民经济向独立过渡",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 4,
+          "summary": "共和革命，联邦制萌芽",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 3,
+          "summary": "大陆军，独立战争",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 3,
+          "summary": "启蒙思想，宗教多元",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "边疆与沿海差异",
+          "confidence": "inferred"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "革命与自由叙事",
+          "confidence": "documented"
+        }
+      },
+      "dynasty": "合众国",
+      "group": "独立战争",
+      "periodId": "early_modern"
+    },
+    {
+      "year": 1865,
+      "eraLabel": "内战结束重建初期",
+      "eraTemplate": "industrial",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "内战结束；奴隶制废除；与清同治年间同期",
+      "evidenceNote": "宪法修正案、重建档案、工业统计",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "第十三修正案",
+          "note": "法律文献"
+        },
+        {
+          "type": "literature",
+          "ref": "重建时期国会记录",
+          "note": "政治档案"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 5,
+          "summary": "横贯大陆，太平洋铁路",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 5,
+          "summary": "农业、矿产、石油萌芽",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 4,
+          "summary": "铁路、电报、军工",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 4,
+          "summary": "工业化与南方农业",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 4,
+          "summary": "统一市场，绿背钞",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 3,
+          "summary": "联邦重建，种族政治",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 4,
+          "summary": "内战胜利，西部扩张",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 3,
+          "summary": "多元移民，种族张力",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "城乡差异，西部拓荒",
+          "confidence": "inferred"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "内战记忆与联邦统一叙事",
+          "confidence": "documented",
+          "note": "断裂：奴隶制废除与种族不平等延续"
+        }
+      },
+      "dynasty": "合众国",
+      "group": "重建时代",
+      "periodId": "industrial",
+      "controversies": [
+        "种族平等承诺与南方种族隔离现实存在巨大差距"
+      ]
+    },
+    {
+      "year": 1950,
+      "eraLabel": "战后超级大国崛起",
+      "eraTemplate": "contemporary",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "冷战；朝鲜战争；战后经济繁荣",
+      "evidenceNote": "政府档案、经济统计、报刊",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "NSC-68 等冷战政策文件",
+          "note": "当代档案"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 5,
+          "summary": "两洋大国，全球基地网络",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 5,
+          "summary": "工业、石油、农业",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 5,
+          "summary": "核技术、电子、航天起步",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 5,
+          "summary": "大规模工业生产",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 5,
+          "summary": "美元霸权，消费社会",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 5,
+          "summary": "总统制民主，冷战外交",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 5,
+          "summary": "核威慑，全球驻军",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 5,
+          "summary": "好莱坞、爵士与电视文化",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 4,
+          "summary": "郊区化、汽车文化",
+          "confidence": "documented"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "二战胜利与「美国世纪」叙事",
+          "confidence": "documented"
+        }
+      },
+      "dynasty": "合众国",
+      "group": "冷战美国",
+      "periodId": "contemporary"
+    }
+  ]
+}

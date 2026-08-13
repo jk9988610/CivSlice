@@ -1,0 +1,225 @@
+{
+  "meta": {
+    "title": "拜占庭历史 · 十维探索",
+    "subtitle": "科学方法驱动的定性历史重建",
+    "country": "拜占庭",
+    "countryId": "byzantium",
+    "color": "#8b4513"
+  },
+  "dimensions": [
+    {
+      "id": "geography",
+      "label": "地理气候",
+      "short": "地理"
+    },
+    {
+      "id": "resources",
+      "label": "资源能源",
+      "short": "资源"
+    },
+    {
+      "id": "technology",
+      "label": "技术能力",
+      "short": "技术"
+    },
+    {
+      "id": "production",
+      "label": "生产组织",
+      "short": "生产"
+    },
+    {
+      "id": "economy",
+      "label": "经济交换",
+      "short": "经济"
+    },
+    {
+      "id": "politics",
+      "label": "政治制度",
+      "short": "政治"
+    },
+    {
+      "id": "military",
+      "label": "军事国力",
+      "short": "军事"
+    },
+    {
+      "id": "culture",
+      "label": "社会文化",
+      "short": "文化"
+    },
+    {
+      "id": "daily_life",
+      "label": "日常生活",
+      "short": "日常"
+    },
+    {
+      "id": "historical_memory",
+      "label": "历史记忆",
+      "short": "记忆"
+    }
+  ],
+  "confidenceLabels": {
+    "documented": "有据",
+    "inferred": "推断",
+    "speculative": "猜测",
+    "absent": "未记录"
+  },
+  "snapshots": [
+    {
+      "year": 550,
+      "eraLabel": "查士丁尼时代",
+      "eraTemplate": "iron_imperial",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "与南北朝末期中国同期；光复运动与法典编纂",
+      "evidenceNote": "普罗柯比史学、《查士丁尼法典》、圣索菲亚大教堂",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "普罗柯比《战史》",
+          "note": "contemporaneous 记载"
+        },
+        {
+          "type": "archaeology",
+          "ref": "圣索菲亚大教堂",
+          "note": "建筑实物"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 4,
+          "summary": "君士坦丁堡扼守博斯普鲁斯海峡",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 4,
+          "summary": "埃及粮食、安纳托利亚农业",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 4,
+          "summary": "穹顶建筑、希腊火、法典体系",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 4,
+          "summary": "国家工场与行会并存",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 4,
+          "summary": "金币流通，东西方贸易枢纽",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 5,
+          "summary": "皇帝专制，教会与国家合一",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 4,
+          "summary": "重装骑兵与海军，光复意大利战争",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 4,
+          "summary": "希腊语基督教文化，古典传承",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "城市面包配给，教会慈善",
+          "confidence": "inferred"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "罗马帝国延续叙事",
+          "confidence": "documented"
+        }
+      },
+      "dynasty": "东罗马",
+      "group": "查士丁尼",
+      "periodId": "iron_imperial"
+    },
+    {
+      "year": 1000,
+      "eraLabel": "马其顿王朝复兴期",
+      "eraTemplate": "iron_imperial",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "与北宋中期同期；巴塞尔二世征服保加利亚",
+      "evidenceNote": "教会文献、君士坦丁堡考古",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "斯基利察斯《历史》",
+          "note": "拜占庭编年史"
+        },
+        {
+          "type": "archaeology",
+          "ref": "君士坦丁堡城墙与宫殿",
+          "note": "防御工事"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 4,
+          "summary": "控制巴尔干与小亚细亚核心",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 3,
+          "summary": "安纳托利亚农业，贸易税",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 3,
+          "summary": "军事与行政体系成熟",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 3,
+          "summary": "庄园与农民小农并存",
+          "confidence": "inferred"
+        },
+        "economy": {
+          "level": 4,
+          "summary": "丝绸之路西端，威尼斯贸易竞争",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 4,
+          "summary": "文官官僚体系，军区制",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 4,
+          "summary": "重装骑兵与希腊火，东部边防",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 4,
+          "summary": "正教艺术黄金期，希腊学术",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "城市与修道院生活",
+          "confidence": "inferred"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "罗马帝国正统与正教叙事",
+          "confidence": "documented"
+        }
+      },
+      "dynasty": "马其顿",
+      "group": "中世纪盛期",
+      "periodId": "iron_imperial"
+    }
+  ]
+}

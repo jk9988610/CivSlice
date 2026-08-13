@@ -1,0 +1,229 @@
+{
+  "meta": {
+    "title": "印加历史 · 十维探索",
+    "subtitle": "科学方法驱动的定性历史重建",
+    "country": "印加",
+    "countryId": "inca",
+    "color": "#c41e3a"
+  },
+  "dimensions": [
+    {
+      "id": "geography",
+      "label": "地理气候",
+      "short": "地理"
+    },
+    {
+      "id": "resources",
+      "label": "资源能源",
+      "short": "资源"
+    },
+    {
+      "id": "technology",
+      "label": "技术能力",
+      "short": "技术"
+    },
+    {
+      "id": "production",
+      "label": "生产组织",
+      "short": "生产"
+    },
+    {
+      "id": "economy",
+      "label": "经济交换",
+      "short": "经济"
+    },
+    {
+      "id": "politics",
+      "label": "政治制度",
+      "short": "政治"
+    },
+    {
+      "id": "military",
+      "label": "军事国力",
+      "short": "军事"
+    },
+    {
+      "id": "culture",
+      "label": "社会文化",
+      "short": "文化"
+    },
+    {
+      "id": "daily_life",
+      "label": "日常生活",
+      "short": "日常"
+    },
+    {
+      "id": "historical_memory",
+      "label": "历史记忆",
+      "short": "记忆"
+    }
+  ],
+  "confidenceLabels": {
+    "documented": "有据",
+    "inferred": "推断",
+    "speculative": "猜测",
+    "absent": "未记录"
+  },
+  "snapshots": [
+    {
+      "year": 1450,
+      "eraLabel": "帝国扩张盛期",
+      "eraTemplate": "iron_imperial",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "与明景泰年间同期；前哥伦布美洲最大帝国",
+      "evidenceNote": "西班牙编年史（征服后记录）、马丘比丘等考古",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "印加口述史（经加西亚·德·拉·维加整理）",
+          "note": "征服后记录，须审慎"
+        },
+        {
+          "type": "archaeology",
+          "ref": "马丘比丘与库斯科遗址",
+          "note": "帝国建筑与梯田"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 5,
+          "summary": "安第斯山脉，太平洋与亚马逊交界",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 4,
+          "summary": "马铃薯、玉米、 llamas、金矿",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 4,
+          "summary": "梯田农业、石工、道路网",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 4,
+          "summary": "mita 劳役制，国家仓储",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 3,
+          "summary": "无货币，再分配经济",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 5,
+          "summary": "神权帝国，库斯科中心",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 4,
+          "summary": "帝国扩张，道路动员",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 5,
+          "summary": "太阳崇拜，结绳文字 quipu",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "高原农业饮食，社区组织",
+          "confidence": "inferred"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "创世神话与帝王谱系",
+          "confidence": "documented"
+        }
+      },
+      "dynasty": "印加",
+      "group": "帝国盛期",
+      "periodId": "iron_imperial"
+    },
+    {
+      "year": 1533,
+      "eraLabel": "征服后初期（殖民断裂）",
+      "eraTemplate": "early_modern",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "皮萨罗征服库斯科；与明嘉靖年间同期",
+      "evidenceNote": "西班牙征服者编年史、考古文化层",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "佩德罗·萨恩查·德·卡拉皮萨编年史",
+          "note": "征服者视角"
+        },
+        {
+          "type": "archaeology",
+          "ref": "殖民时期文化层",
+          "note": "考古断裂证据"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 4,
+          "summary": "安第斯，西班牙殖民行政",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 4,
+          "summary": "银矿（波托西）、农业",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 2,
+          "summary": "殖民技术输入，本土技术受压",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 3,
+          "summary": "米塔制延续为殖民剥削",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 3,
+          "summary": "纳入西班牙殖民经济",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 1,
+          "summary": "帝国崩溃，殖民总督府",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 2,
+          "summary": "殖民驻军，本土抵抗",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 2,
+          "summary": "基督教化，本土文化压制",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 2,
+          "summary": "瘟疫与劳役，人口锐减",
+          "confidence": "documented"
+        },
+        "historical_memory": {
+          "level": 3,
+          "summary": "帝国衰落与抵抗记忆",
+          "confidence": "documented",
+          "note": "断裂：征服与殖民"
+        }
+      },
+      "dynasty": "殖民",
+      "group": "征服时代",
+      "periodId": "early_modern",
+      "controversies": [
+        "印加帝国灭亡原因与征服叙事存在殖民史学偏见"
+      ]
+    }
+  ]
+}
