@@ -1,0 +1,62 @@
+{
+  "version": "2026-08-13",
+  "description": "比较束注册表 — 同时代对照时的建议 aspect 目录（非必填表）",
+  "bundles": {
+    "paleolithic": {
+      "id": "paleolithic",
+      "label": "石器时代",
+      "yearMin": null,
+      "yearMax": -10000,
+      "core": ["geography", "subsistence", "organization", "knowledge", "culture"],
+      "modules": ["mobility", "toolkit", "foraging", "band_cohesion"]
+    },
+    "neolithic": {
+      "id": "neolithic",
+      "label": "新石器/早期农业",
+      "yearMin": -10000,
+      "yearMax": -4000,
+      "core": ["geography", "subsistence", "organization", "knowledge", "culture"],
+      "modules": ["agriculture", "settlement", "pottery", "ritual"]
+    },
+    "bronze": {
+      "id": "bronze",
+      "label": "青铜时代",
+      "yearMin": -4000,
+      "yearMax": -1000,
+      "core": ["geography", "subsistence", "organization", "knowledge", "culture"],
+      "modules": ["metallurgy", "writing", "state_formation", "ritual_order", "trade"]
+    },
+    "iron_imperial": {
+      "id": "iron_imperial",
+      "label": "铁器与帝国",
+      "yearMin": -1000,
+      "yearMax": 1500,
+      "core": ["geography", "subsistence", "organization", "knowledge", "culture"],
+      "modules": ["iron_tech", "bureaucracy", "military", "commerce", "historiography"]
+    },
+    "early_modern": {
+      "id": "early_modern",
+      "label": "近代早期",
+      "yearMin": 1500,
+      "yearMax": 1800,
+      "core": ["geography", "subsistence", "organization", "knowledge", "culture"],
+      "modules": ["firearms", "maritime", "printing", "fiscal_state", "confession"]
+    },
+    "industrial": {
+      "id": "industrial",
+      "label": "工业时代",
+      "yearMin": 1800,
+      "yearMax": 1945,
+      "core": ["geography", "subsistence", "organization", "knowledge", "culture"],
+      "modules": ["industry", "infrastructure", "urbanization", "public_health", "nationalism"]
+    },
+    "contemporary": {
+      "id": "contemporary",
+      "label": "当代",
+      "yearMin": 1945,
+      "yearMax": null,
+      "core": ["geography", "subsistence", "organization", "knowledge", "culture"],
+      "modules": ["industrial_capacity", "education", "healthcare", "information", "global_integration"]
+    }
+  }
+}

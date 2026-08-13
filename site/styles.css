@@ -1436,7 +1436,29 @@ h1 { font-size: 1.4rem; font-weight: 600; }
   color: var(--text-muted);
 }
 
-.compare-note { font-size: 0.72rem; margin-top: 0.25rem; }
+.bundle-banner {
+  font-size: 0.82rem;
+  margin-bottom: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  background: rgba(96, 165, 250, 0.08);
+  border-radius: 6px;
+  border-left: 3px solid var(--inferred);
+}
+
+.bundle-tag {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: normal;
+}
+
+.compare-row.bundle-missing {
+  border-style: dashed;
+  opacity: 0.85;
+}
+
+.compare-aspect-title .bundle-tag::before {
+  content: '· ';
+}
 
 .no-data {
   padding: 2rem 1rem;

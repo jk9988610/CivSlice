@@ -1172,19 +1172,21 @@
     {
       "year": 1950,
       "eraLabel": "共和国初期",
+      "comparisonBundle": "contemporary",
       "evidenceTypes": [
         "literature"
       ],
       "worldContext": "冷战格局形成；二战结束；殖民地独立浪潮",
-      "evidenceNote": "建国档案、统计年鉴、考古与史学当代研究（非倒推）",
+      "evidenceNote": "1953 人口普查档案、土地改革档案等 contemporaneous 文献",
       "sources": [
         {
           "id": "src-第一次全国人口普查-1953--0",
           "type": "literature",
           "ref": "第一次全国人口普查（1953）",
-          "note": "统计档案，反映建国初期人口",
+          "note": "统计档案，反映建国初期人口与行政区划",
           "grade": "B",
-          "relation": "contemporaneous"
+          "relation": "contemporaneous",
+          "locator": "国家统计局档案；1953年普查公报"
         },
         {
           "id": "src-土地改革档案-1",
@@ -1192,19 +1194,18 @@
           "ref": "土地改革档案",
           "note": "生产组织变革记录",
           "grade": "B",
-          "relation": "contemporaneous"
+          "relation": "contemporaneous",
+          "locator": "中央档案馆土地改革文献"
         }
       ],
-      "spatialScope": "共和国初期",
+      "spatialScope": "中华人民共和国建初期管辖范围",
       "aspects": {
         "geography": {
-          "confidence": "documented",
+          "confidence": "inferred",
           "summary": "现代主权国家版图确立，边疆治理纳入国家体系",
-          "sourceRefs": [
-            "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1"
-          ],
-          "level": null
+          "sourceRefs": ["src-第一次全国人口普查-1953--0"],
+          "level": null,
+          "note": "普查反映行政区划，版图叙述须与地图档案互证"
         },
         "subsistence": {
           "confidence": "documented",
@@ -1218,74 +1219,54 @@
         "organization": {
           "confidence": "documented",
           "summary": "人民共和国成立，政协体制、土改",
-          "sourceRefs": [
-            "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1"
-          ],
+          "sourceRefs": ["src-土地改革档案-1"],
           "level": null
         },
         "knowledge": {
-          "confidence": "documented",
+          "confidence": "inferred",
           "summary": "工业化起步，苏联援助156项",
-          "sourceRefs": [
-            "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1"
-          ],
-          "level": null
+          "sourceRefs": ["src-土地改革档案-1"],
+          "level": null,
+          "note": "苏联援助项目待专项档案核实"
         },
         "culture": {
-          "confidence": "documented",
+          "confidence": "inferred",
           "summary": "思想改造运动、扫盲、新旧文化交替",
-          "sourceRefs": [
-            "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1"
-          ],
-          "level": null
+          "sourceRefs": ["src-土地改革档案-1"],
+          "level": null,
+          "note": "文化政策叙述待报刊档案互证"
         },
         "industrial_capacity": {
-          "confidence": "documented",
+          "confidence": "inferred",
           "summary": "战后工业基础薄弱，煤炭铁矿开发起步",
-          "sourceRefs": [
-            "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1"
-          ],
-          "level": null
+          "sourceRefs": ["src-土地改革档案-1"],
+          "level": null,
+          "note": "工业产能待一五计划档案核实"
         },
         "education": {
-          "confidence": "documented",
+          "confidence": "inferred",
           "summary": "扫盲运动开展，教育体系重建",
-          "sourceRefs": [
-            "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1"
-          ],
-          "level": null
+          "sourceRefs": ["src-第一次全国人口普查-1953--0"],
+          "level": null,
+          "note": "普查含识字率线索，教育政策待专项档案"
         },
         "healthcare": {
-          "confidence": "documented",
+          "confidence": "inferred",
           "summary": "公共卫生运动开展，基层医疗建设",
-          "sourceRefs": [
-            "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1"
-          ],
-          "level": null
+          "sourceRefs": ["src-第一次全国人口普查-1953--0"],
+          "level": null,
+          "note": "医疗体系待卫生档案核实"
         },
         "information": {
-          "confidence": "documented",
-          "summary": "信息化尚未起步，广播为主",
-          "sourceRefs": [
-            "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1"
-          ],
-          "level": null
+          "confidence": "absent",
+          "note": "检索范围：1950年代广播与出版档案；未发现系统化信息化记录"
         },
         "global_integration": {
-          "confidence": "documented",
+          "confidence": "inferred",
           "summary": "冷战格局下有限国际参与，苏联阵营",
-          "sourceRefs": [
-            "src-第一次全国人口普查-1953--0",
-            "src-土地改革档案-1"
-          ],
-          "level": null
+          "sourceRefs": ["src-土地改革档案-1"],
+          "level": null,
+          "note": "外交档案待补充"
         }
       }
     }

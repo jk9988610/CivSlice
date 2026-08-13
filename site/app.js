@@ -66,7 +66,7 @@ function getResolvedSnap(civ, year) {
 }
 
 async function init() {
-  await CivEvidence.loadCatalog();
+  await Promise.all([CivEvidence.loadCatalog(), CivBundles.load()]);
 
   const indexRes = await fetch('data/civilizations.json');
   const index = await indexRes.json();
@@ -674,42 +674,75 @@ function renderCompareView() {
   }
 
   const civSnaps = compareCivs.map((civ) => {
-    const { snap, inRange } = getResolvedSnap(civ, state.focusYear);
-    return { civ, snap, inRange };
+    const resolved = getResolvedSnap(civ, state.focusYear);
+    return { civ, snap: resolved.snap, inRange: resolved.inRange, raw: resolved.raw };
   });
 
-  const rows = CivEvidence.compareAspects(civSnaps);
-  if (!rows.length) {
+  const bundleId = getPeriod()?.eraTemplate;
+  const bundle = CivBundles.getBundle(bundleId);
+  const baseRows = CivEvidence.compareAspects(civSnaps);
+  const rowMap = Object.fromEntries(baseRows.map((r) => [r.id, r]));
+  const { ordered, missing } = CivBundles.orderAspectIds(baseRows.map((r) => r.id), bundleId);
+
+  const renderRow = (row, bundleHint = '') => `
+    <div class="compare-row ${bundleHint}">
+      <h3 class="compare-aspect-title">${row.label}${bundleHint ? ` <span class="bundle-tag">${bundleHint}</span>` : ''}</h3>
+      <div class="compare-cols">
+        ${row.entries.map((entry) => {
+          const conf = entry.confidence
+            ? `<span class="aspect-badge badge-${entry.confidence}">${CivEvidence.CONFIDENCE_LABELS[entry.confidence] || entry.confidence}</span>`
+            : '';
+          return `
+            <div class="compare-col" style="--civ-color:${entry.civ.color}">
+              <div class="compare-col-header">
+                <span class="civ-dot" style="background:${entry.civ.color}"></span>
+                <span>${entry.civ.name}</span>
+                ${conf}
+              </div>
+              <p class="compare-text">${entry.text}</p>
+              ${entry.note ? `<p class="compare-note muted">${entry.note}</p>` : ''}
+            </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+
+  const bundleBanner = bundle
+    ? `<p class="bundle-banner">比较束：<strong>${bundle.label}</strong> — 下列为核心五维 + 时代模块建议主题；虚线行为束内未检索项</p>`
+    : '';
+
+  const rowsHtml = ordered.map((id) => {
+    const row = rowMap[id];
+    if (!row) return '';
+    const isSuggested = bundle && CivBundles.getSuggestedAspectIds(bundleId).includes(id);
+    return renderRow(row, isSuggested ? '' : '束外');
+  }).join('');
+
+  const missingHtml = missing.map((aspectId) => {
+    const row = {
+      id: aspectId,
+      label: CivEvidence.getAspectLabel(aspectId),
+      entries: civSnaps.map(({ civ }) => ({
+        civ,
+        text: '比较束建议主题，本条未检索',
+        confidence: null,
+        sourceRefs: [],
+      })),
+    };
+    return renderRow(row, '待检索');
+  }).join('');
+
+  if (!ordered.length && !missing.length) {
     return '<p class="no-data">所选国家在该年代均无 aspect 记录可对齐。</p>';
   }
 
   return `
     <section class="evidence-section">
       <h2 class="panel-title">同时代对照 <span class="muted">${formatYear(state.focusYear)}</span></h2>
+      ${bundleBanner}
       <p class="section-hint muted">同一 aspect 各国并排文字，不含雷达与综合分</p>
       <div class="compare-table">
-        ${rows.map((row) => `
-          <div class="compare-row">
-            <h3 class="compare-aspect-title">${row.label}</h3>
-            <div class="compare-cols">
-              ${row.entries.map((entry) => {
-                const conf = entry.confidence
-                  ? `<span class="aspect-badge badge-${entry.confidence}">${CivEvidence.CONFIDENCE_LABELS[entry.confidence] || entry.confidence}</span>`
-                  : '';
-                return `
-                  <div class="compare-col" style="--civ-color:${entry.civ.color}">
-                    <div class="compare-col-header">
-                      <span class="civ-dot" style="background:${entry.civ.color}"></span>
-                      <span>${entry.civ.name}</span>
-                      ${conf}
-                    </div>
-                    <p class="compare-text">${entry.text}</p>
-                    ${entry.note ? `<p class="compare-note muted">${entry.note}</p>` : ''}
-                  </div>`;
-              }).join('')}
-            </div>
-          </div>
-        `).join('')}
+        ${rowsHtml}
+        ${missingHtml}
       </div>
     </section>`;
 }
