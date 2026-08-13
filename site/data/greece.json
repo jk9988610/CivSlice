@@ -1,0 +1,304 @@
+{
+  "meta": {
+    "title": "希腊历史 · 十维探索",
+    "subtitle": "科学方法驱动的定性历史重建",
+    "country": "希腊",
+    "countryId": "greece",
+    "color": "#1e6f9f"
+  },
+  "dimensions": [
+    {
+      "id": "geography",
+      "label": "地理气候",
+      "short": "地理"
+    },
+    {
+      "id": "resources",
+      "label": "资源能源",
+      "short": "资源"
+    },
+    {
+      "id": "technology",
+      "label": "技术能力",
+      "short": "技术"
+    },
+    {
+      "id": "production",
+      "label": "生产组织",
+      "short": "生产"
+    },
+    {
+      "id": "economy",
+      "label": "经济交换",
+      "short": "经济"
+    },
+    {
+      "id": "politics",
+      "label": "政治制度",
+      "short": "政治"
+    },
+    {
+      "id": "military",
+      "label": "军事国力",
+      "short": "军事"
+    },
+    {
+      "id": "culture",
+      "label": "社会文化",
+      "short": "文化"
+    },
+    {
+      "id": "daily_life",
+      "label": "日常生活",
+      "short": "日常"
+    },
+    {
+      "id": "historical_memory",
+      "label": "历史记忆",
+      "short": "记忆"
+    }
+  ],
+  "confidenceLabels": {
+    "documented": "有据",
+    "inferred": "推断",
+    "speculative": "猜测",
+    "absent": "未记录"
+  },
+  "snapshots": [
+    {
+      "year": -500,
+      "eraLabel": "古典城邦鼎盛期",
+      "eraTemplate": "iron_imperial",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "与春秋战国中国同期；波斯战争后雅典民主鼎盛",
+      "evidenceNote": "希罗多德、修昔底德史学；雅典卫城考古；铭刻",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "修昔底德《伯罗奔尼撒战争史》",
+          "note": "contemporaneous 史学"
+        },
+        {
+          "type": "archaeology",
+          "ref": "雅典卫城与阿哥拉遗址",
+          "note": "城邦公共建筑"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 4,
+          "summary": "爱琴海岛屿与半岛，地中海贸易节点",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 3,
+          "summary": "橄榄、葡萄、渔业；矿产有限",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 4,
+          "summary": "石构建筑、海军、哲学与数学",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 3,
+          "summary": "奴隶劳动与小农并存，手工业分工",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 4,
+          "summary": "银币流通，殖民与海上贸易",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 4,
+          "summary": "雅典民主与斯巴达寡头并存",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 4,
+          "summary": "重装步兵与海军，希波战争胜利",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 5,
+          "summary": "哲学、戏剧、奥林匹克，西方文明源头",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "橄榄油与葡萄酒饮食，公共浴场与体育馆",
+          "confidence": "inferred"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "荷马史诗与城邦神话，希波战争叙事",
+          "confidence": "documented"
+        }
+      },
+      "dynasty": "城邦",
+      "group": "古典希腊",
+      "periodId": "iron_imperial"
+    },
+    {
+      "year": -323,
+      "eraLabel": "希腊化时代初期",
+      "eraTemplate": "iron_imperial",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "亚历山大刚去世；与战国末期中国同期",
+      "evidenceNote": "狄奥多罗斯史学；亚历山大港考古",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "狄奥多罗斯《历史文库》",
+          "note": "后世汇编"
+        },
+        {
+          "type": "archaeology",
+          "ref": "亚历山大港遗址",
+          "note": "希腊化城市规划"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 4,
+          "summary": "东地中海至中亚通道打开",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 4,
+          "summary": "埃及粮食、东方财富流入",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 4,
+          "summary": "希腊科学东传，工程与军事革新",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 4,
+          "summary": "王室工场与奴隶制大地产",
+          "confidence": "inferred"
+        },
+        "economy": {
+          "level": 4,
+          "summary": "统一货币尝试，长途贸易扩张",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 3,
+          "summary": "继业者王国分裂，王权神化",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 5,
+          "summary": "马其顿方阵与攻城技术",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 5,
+          "summary": "希腊文化与东方传统融合",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "城市希腊化生活方式扩散",
+          "confidence": "inferred"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "亚历山大神话与继业者正统争夺",
+          "confidence": "documented"
+        }
+      },
+      "dynasty": "希腊化",
+      "group": "亚历山大遗产",
+      "periodId": "iron_imperial"
+    },
+    {
+      "year": 100,
+      "eraLabel": "罗马统治下的希腊",
+      "eraTemplate": "iron_imperial",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "罗马帝国图拉真时代；与东汉中期同期",
+      "evidenceNote": "普鲁塔克、考古遗址、希腊铭文",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "普鲁塔克《希腊罗马名人传》",
+          "note": "帝国时期史学"
+        },
+        {
+          "type": "archaeology",
+          "ref": "科林斯、以弗所遗址",
+          "note": "罗马时期城市层"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 3,
+          "summary": "希腊半岛为帝国东部门户",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 2,
+          "summary": "经济地位下降，文化资源仍丰",
+          "confidence": "inferred"
+        },
+        "technology": {
+          "level": 3,
+          "summary": "古典技术传承，罗马工程引入",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 2,
+          "summary": "农业为主，手工业萎缩",
+          "confidence": "inferred"
+        },
+        "economy": {
+          "level": 3,
+          "summary": "纳入帝国货币圈，贸易衰退",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 2,
+          "summary": "罗马行省，地方精英合作",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 2,
+          "summary": "罗马驻军，本地兵源",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 4,
+          "summary": "第二诡辩学派，哲学与修辞仍盛",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "城市公共生活延续",
+          "confidence": "inferred"
+        },
+        "historical_memory": {
+          "level": 5,
+          "summary": "「古典希腊」作为帝国文化正统来源",
+          "confidence": "documented",
+          "note": "断裂：城邦民主已成历史记忆"
+        }
+      },
+      "dynasty": "行省",
+      "group": "罗马希腊",
+      "periodId": "iron_imperial"
+    }
+  ]
+}

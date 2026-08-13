@@ -66,6 +66,27 @@
             "yearMin": 500,
             "yearMax": 1500,
             "eraTemplate": "iron_imperial"
+          },
+          {
+            "id": "europe_early_modern",
+            "label": "近代早期",
+            "yearMin": 1500,
+            "yearMax": 1800,
+            "eraTemplate": "early_modern"
+          },
+          {
+            "id": "europe_industrial",
+            "label": "工业时代",
+            "yearMin": 1800,
+            "yearMax": 1945,
+            "eraTemplate": "industrial"
+          },
+          {
+            "id": "europe_contemporary",
+            "label": "当代",
+            "yearMin": 1945,
+            "yearMax": 2024,
+            "eraTemplate": "contemporary"
           }
         ]
       },
@@ -128,9 +149,16 @@
         "label": "大洋洲",
         "periods": [
           {
+            "id": "oceania_colonial",
+            "label": "殖民时代",
+            "yearMin": 1788,
+            "yearMax": 1900,
+            "eraTemplate": "industrial"
+          },
+          {
             "id": "oceania_modern",
             "label": "近代以来",
-            "yearMin": 1788,
+            "yearMin": 1900,
             "yearMax": 2024,
             "eraTemplate": "contemporary"
           }
@@ -142,10 +170,24 @@
         "periods": [
           {
             "id": "na_colonial",
-            "label": "殖民时代",
+            "label": "殖民与独立",
             "yearMin": 1500,
             "yearMax": 1800,
             "eraTemplate": "early_modern"
+          },
+          {
+            "id": "na_industrial",
+            "label": "工业与内战",
+            "yearMin": 1800,
+            "yearMax": 1900,
+            "eraTemplate": "industrial"
+          },
+          {
+            "id": "na_contemporary",
+            "label": "当代",
+            "yearMin": 1900,
+            "yearMax": 2024,
+            "eraTemplate": "contemporary"
           }
         ]
       },
@@ -155,10 +197,17 @@
         "periods": [
           {
             "id": "sa_precolonial",
-            "label": "前殖民时代",
-            "yearMin": -500,
-            "yearMax": 1500,
+            "label": "前殖民帝国",
+            "yearMin": 1200,
+            "yearMax": 1533,
             "eraTemplate": "iron_imperial"
+          },
+          {
+            "id": "sa_colonial",
+            "label": "殖民征服",
+            "yearMin": 1533,
+            "yearMax": 1800,
+            "eraTemplate": "early_modern"
           }
         ]
       },
@@ -176,9 +225,7 @@
       "name": "中国",
       "color": "#b22222",
       "regions": ["asia"],
-      "presence": [
-        { "start": -2100, "end": 1950, "label": "中华文明连续区" }
-      ]
+      "presence": [{ "start": -2100, "end": 1950, "label": "中华文明连续区" }]
     },
     {
       "id": "egypt",
@@ -201,6 +248,78 @@
         { "start": -753, "end": 476, "label": "古典罗马" },
         { "start": 476, "end": 1453, "label": "东罗马/中世纪影响" }
       ]
+    },
+    {
+      "id": "greece",
+      "file": "greece.json",
+      "name": "希腊",
+      "color": "#1e6f9f",
+      "regions": ["europe"],
+      "presence": [{ "start": -800, "end": 1453, "label": "希腊世界" }]
+    },
+    {
+      "id": "byzantium",
+      "file": "byzantium.json",
+      "name": "拜占庭",
+      "color": "#8b4513",
+      "regions": ["europe"],
+      "presence": [{ "start": 330, "end": 1453, "label": "东罗马帝国" }]
+    },
+    {
+      "id": "france",
+      "file": "france.json",
+      "name": "法国",
+      "color": "#0055a4",
+      "regions": ["europe"],
+      "presence": [{ "start": 843, "end": 2024, "label": "法兰西政治体" }]
+    },
+    {
+      "id": "britain",
+      "file": "britain.json",
+      "name": "英国",
+      "color": "#c8102e",
+      "regions": ["europe"],
+      "presence": [{ "start": 927, "end": 2024, "label": "不列颠王国/联合王国" }]
+    },
+    {
+      "id": "germany",
+      "file": "germany.json",
+      "name": "德国",
+      "color": "#ffcc00",
+      "regions": ["europe"],
+      "presence": [{ "start": 962, "end": 2024, "label": "德意志政治体" }]
+    },
+    {
+      "id": "india",
+      "file": "india.json",
+      "name": "印度",
+      "color": "#ff9933",
+      "regions": ["asia"],
+      "presence": [{ "start": -500, "end": 2024, "label": "南亚文明连续区" }]
+    },
+    {
+      "id": "australia",
+      "file": "australia.json",
+      "name": "澳大利亚",
+      "color": "#00843d",
+      "regions": ["oceania"],
+      "presence": [{ "start": 1788, "end": 2024, "label": "殖民与联邦澳大利亚" }]
+    },
+    {
+      "id": "usa",
+      "file": "usa.json",
+      "name": "美国",
+      "color": "#3c3b6e",
+      "regions": ["north_america"],
+      "presence": [{ "start": 1776, "end": 2024, "label": "美利坚合众国" }]
+    },
+    {
+      "id": "inca",
+      "file": "inca.json",
+      "name": "印加",
+      "color": "#c41e3a",
+      "regions": ["south_america"],
+      "presence": [{ "start": 1200, "end": 1533, "label": "印加帝国" }]
     }
   ]
 }

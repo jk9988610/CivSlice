@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "title": "德国历史 · 十维探索",
+    "subtitle": "科学方法驱动的定性历史重建",
+    "country": "德国",
+    "countryId": "germany",
+    "color": "#ffcc00"
+  },
+  "dimensions": [
+    {
+      "id": "geography",
+      "label": "地理气候",
+      "short": "地理"
+    },
+    {
+      "id": "resources",
+      "label": "资源能源",
+      "short": "资源"
+    },
+    {
+      "id": "technology",
+      "label": "技术能力",
+      "short": "技术"
+    },
+    {
+      "id": "production",
+      "label": "生产组织",
+      "short": "生产"
+    },
+    {
+      "id": "economy",
+      "label": "经济交换",
+      "short": "经济"
+    },
+    {
+      "id": "politics",
+      "label": "政治制度",
+      "short": "政治"
+    },
+    {
+      "id": "military",
+      "label": "军事国力",
+      "short": "军事"
+    },
+    {
+      "id": "culture",
+      "label": "社会文化",
+      "short": "文化"
+    },
+    {
+      "id": "daily_life",
+      "label": "日常生活",
+      "short": "日常"
+    },
+    {
+      "id": "historical_memory",
+      "label": "历史记忆",
+      "short": "记忆"
+    }
+  ],
+  "confidenceLabels": {
+    "documented": "有据",
+    "inferred": "推断",
+    "speculative": "猜测",
+    "absent": "未记录"
+  },
+  "snapshots": [
+    {
+      "year": 1000,
+      "eraLabel": "神圣罗马帝国奥托王朝",
+      "eraTemplate": "iron_imperial",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "与北宋中期同期；中欧封建分裂",
+      "evidenceNote": "教会编年史、城堡考古",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "《德意志通史》所引中世纪编年史",
+          "note": "后世史学"
+        },
+        {
+          "type": "archaeology",
+          "ref": "主教座堂与城堡遗址",
+          "note": "封建建筑"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 4,
+          "summary": "中欧腹地，莱茵河与多瑙河",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 3,
+          "summary": "森林、农业、盐矿",
+          "confidence": "inferred"
+        },
+        "technology": {
+          "level": 2,
+          "summary": "城堡与农业技术",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 2,
+          "summary": "封建庄园",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 2,
+          "summary": "地方市场，汉萨萌芽前",
+          "confidence": "inferred"
+        },
+        "politics": {
+          "level": 3,
+          "summary": "皇帝与诸侯共治，名义统一",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 3,
+          "summary": "骑士封建军",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 3,
+          "summary": "拉丁基督教学术，修道院中心",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 2,
+          "summary": "农村为主",
+          "confidence": "inferred"
+        },
+        "historical_memory": {
+          "level": 3,
+          "summary": "查理曼帝国继承叙事",
+          "confidence": "documented"
+        }
+      },
+      "dynasty": "奥托",
+      "group": "神圣罗马帝国",
+      "periodId": "iron_imperial"
+    },
+    {
+      "year": 1871,
+      "eraLabel": "德意志帝国统一",
+      "eraTemplate": "industrial",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "普法战争后统一；第二次工业革命",
+      "evidenceNote": "帝国宪法、工业统计、外交档案",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "1871 年帝国宪法",
+          "note": "政治文献"
+        },
+        {
+          "type": "literature",
+          "ref": "当代工业统计",
+          "note": "经济史料"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 4,
+          "summary": "中欧心脏，鲁尔工业区",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 5,
+          "summary": "煤炭、钢铁、化学工业",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 5,
+          "summary": "电气、化学、大学科研体系",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 5,
+          "summary": "大企业与行会并存",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 5,
+          "summary": "工业出口，关税同盟传统",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 4,
+          "summary": "君主立宪，宰相集权",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 5,
+          "summary": "总参谋部制度，普法胜利",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 5,
+          "summary": "哲学、音乐、科学传统",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "城市化加速",
+          "confidence": "documented"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "统一与「德意志」民族叙事",
+          "confidence": "documented"
+        }
+      },
+      "dynasty": "霍亨索伦",
+      "group": "帝国统一",
+      "periodId": "industrial"
+    },
+    {
+      "year": 1950,
+      "eraLabel": "分裂德国（联邦德国视角）",
+      "eraTemplate": "contemporary",
+      "evidenceTypes": [
+        "literature",
+        "archaeology"
+      ],
+      "worldContext": "冷战分裂；马歇尔计划；经济奇迹起步",
+      "evidenceNote": "联邦德国档案、占领时期文件",
+      "sources": [
+        {
+          "type": "literature",
+          "ref": "基本法与占领时期文件",
+          "note": "当代政治文献"
+        }
+      ],
+      "dimensions": {
+        "geography": {
+          "level": 4,
+          "summary": "西欧与东欧交界",
+          "confidence": "documented"
+        },
+        "resources": {
+          "level": 4,
+          "summary": "鲁尔重建，进口能源",
+          "confidence": "documented"
+        },
+        "technology": {
+          "level": 4,
+          "summary": "工业技术恢复",
+          "confidence": "documented"
+        },
+        "production": {
+          "level": 4,
+          "summary": "社会市场经济",
+          "confidence": "documented"
+        },
+        "economy": {
+          "level": 4,
+          "summary": "马歇尔计划援助，出口导向",
+          "confidence": "documented"
+        },
+        "politics": {
+          "level": 3,
+          "summary": "议会民主，分裂与主权受限",
+          "confidence": "documented"
+        },
+        "military": {
+          "level": 2,
+          "summary": "占领法规限制重新武装",
+          "confidence": "documented"
+        },
+        "culture": {
+          "level": 4,
+          "summary": "反思纳粹，文化多元重建",
+          "confidence": "documented"
+        },
+        "daily_life": {
+          "level": 3,
+          "summary": "战后配给与重建",
+          "confidence": "documented"
+        },
+        "historical_memory": {
+          "level": 4,
+          "summary": "纳粹罪行与分裂创伤",
+          "confidence": "documented",
+          "note": "断裂：第三帝国崩溃"
+        }
+      },
+      "dynasty": "联邦德国",
+      "group": "战后分裂",
+      "periodId": "contemporary",
+      "controversies": [
+        "东德视角与记忆与西德叙事存在显著差异"
+      ]
+    }
+  ]
+}
