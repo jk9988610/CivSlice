@@ -80,6 +80,15 @@ function validateCiv(filePath) {
   if (data.dimensions) err(`${countryId} 顶层仍含 dimensions`);
   if (!data.meta?.methodology?.version) err(`${countryId} 缺少 methodology.version`);
 
+  try {
+    const bundles = JSON.parse(readFileSync(join(DATA_DIR, 'meta/comparisonBundles.json'), 'utf8'));
+    if (!bundles.bundles || !Object.keys(bundles.bundles).length) {
+      err('comparisonBundles.json 为空或格式错误');
+    }
+  } catch (e) {
+    err(`无法读取 comparisonBundles.json: ${e.message}`);
+  }
+
   (data.snapshots || []).forEach((s) => validateSnapshot(s, countryId));
 }
 
