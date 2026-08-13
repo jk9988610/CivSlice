@@ -1,20 +1,32 @@
 /**
- * CivSlice 三级导航 — 时代段 / 实体 / 段内时间轴
- * 权威来源：Talk/docs/07-projects/2026-08-12-CivSlice-时间轴交互流程.md
+ * CivSlice v2 五级导航 — 区域 / 时段 / 国家泳道 / 主时间轴 / 比较参与
+ * 权威来源：Talk/docs/07-projects/2026-08-13-CivSlice-区域导航与比较选择.md
  */
 const CivNav = (() => {
-  const ERA_PERIODS = [
-    { id: 'paleolithic', label: '石器时代', shortLabel: '石器', yearMin: -12000, yearMax: -10000, eraTemplate: 'paleolithic' },
-    { id: 'neolithic', label: '新石器', shortLabel: '新石器', yearMin: -10000, yearMax: -4000, eraTemplate: 'neolithic' },
-    { id: 'bronze', label: '青铜时代', shortLabel: '青铜', yearMin: -4000, yearMax: -1000, eraTemplate: 'bronze' },
-    { id: 'iron_imperial', label: '铁器与帝国', shortLabel: '铁器帝国', yearMin: -1000, yearMax: 1500, eraTemplate: 'iron_imperial' },
-    { id: 'early_modern', label: '近代早期', shortLabel: '近代早期', yearMin: 1500, yearMax: 1800, eraTemplate: 'early_modern' },
-    { id: 'industrial', label: '工业时代', shortLabel: '工业', yearMin: 1800, yearMax: 1945, eraTemplate: 'industrial' },
-    { id: 'contemporary', label: '当代', shortLabel: '当代', yearMin: 1945, yearMax: 2024, eraTemplate: 'contemporary' },
+  const REGION_ORDER = [
+    'world', 'asia', 'europe', 'africa',
+    'oceania', 'north_america', 'south_america', 'antarctica',
   ];
 
-  function getPeriod(id) {
-    return ERA_PERIODS.find((p) => p.id === id) || null;
+  let regionsMeta = [];
+
+  function init(meta) {
+    regionsMeta = meta?.regions || [];
+  }
+
+  function getRegions() {
+    return REGION_ORDER
+      .map((id) => regionsMeta.find((r) => r.id === id))
+      .filter(Boolean);
+  }
+
+  function getRegion(regionId) {
+    return regionsMeta.find((r) => r.id === regionId) || null;
+  }
+
+  function getPeriod(regionId, periodId) {
+    const region = getRegion(regionId);
+    return region?.periods?.find((p) => p.id === periodId) || null;
   }
 
   function getYearStep(yearMin, yearMax) {
@@ -37,65 +49,17 @@ const CivNav = (() => {
     return snapshots.filter((s) => snapshotInPeriod(s, period));
   }
 
-  function civilizationsInPeriod(civilizations, period) {
-    return civilizations.filter((civ) =>
-      civ.data.snapshots.some((s) => snapshotInPeriod(s, period))
-    );
+  function civInPeriod(civ, period) {
+    return civ.data.snapshots.some((s) => snapshotInPeriod(s, period));
   }
 
-  function getGroupChips(civ, period) {
-    const snaps = snapshotsInPeriod(civ.data.snapshots, period);
-    const seen = new Map();
-    snaps.forEach((s) => {
-      const key = s.group || s.eraLabel;
-      if (!seen.has(key)) seen.set(key, s);
-    });
-    return [...seen.entries()].map(([label, snap]) => ({
-      id: label,
-      label,
-      year: snap.year,
-      dynasty: snap.dynasty || label,
-      eraLabel: snap.eraLabel,
-    }));
-  }
-
-  function findDefaultPeriod(civilizations, civId = 'china') {
-    const civ = civilizations.find((c) => c.id === civId) || civilizations[0];
-    if (!civ) return ERA_PERIODS[2];
-    for (const period of ERA_PERIODS) {
-      if (civ.data.snapshots.some((s) => snapshotInPeriod(s, period))) {
-        return period;
-      }
+  function civilizationsInScope(regionId, period, civilizations) {
+    if (!period) return [];
+    if (regionId === 'world') {
+      return civilizations.filter((civ) => civInPeriod(civ, period));
     }
-    return ERA_PERIODS[2];
-  }
-
-  function defaultYearForPeriod(civ, period, groupId) {
-    const snaps = snapshotsInPeriod(civ.data.snapshots, period);
-    if (!snaps.length) return period.yearMin;
-
-    if (groupId) {
-      const match = snaps.find((s) => (s.group || s.eraLabel) === groupId);
-      if (match) return match.year;
-    }
-
-    const mid = (period.yearMin + period.yearMax) / 2;
-    return snaps.reduce((best, s) =>
-      Math.abs(s.year - mid) < Math.abs(best.year - mid) ? s : best
-    ).year;
-  }
-
-  function formatPeriodRange(period, formatYear) {
-    const min = period.yearMin <= -9999 ? '更早' : formatYear(period.yearMin);
-    const max = period.yearMax >= 9999 ? '至今' : formatYear(period.yearMax);
-    return `${period.label} · ${min} — ${max}`;
-  }
-
-  function periodsWithData(civilizations) {
-    return ERA_PERIODS.filter((period) =>
-      civilizations.some((civ) =>
-        civ.data.snapshots.some((s) => snapshotInPeriod(s, period))
-      )
+    return civilizations.filter(
+      (civ) => civ.regions?.includes(regionId) && civInPeriod(civ, period)
     );
   }
 
@@ -108,79 +72,77 @@ const CivNav = (() => {
     return presenceList.find((p) => overlaps(p, period.yearMin, period.yearMax)) ?? null;
   }
 
-  function timelinesInPeriod(civilizations, period) {
-    return civilizations
+  function swimlanes(period, civilizations, selectedCountryIds) {
+    if (!period) return [];
+    return selectedCountryIds
+      .map((id) => civilizations.find((c) => c.id === id))
+      .filter(Boolean)
       .map((civ) => {
         const markers = snapshotsInPeriod(civ.data.snapshots, period);
-        const presence = getPresenceInPeriod(civ, period);
         return {
           id: civ.id,
           name: civ.name,
           color: civ.color,
           civId: civ.id,
           markers,
-          span: markers.length
-            ? { start: Math.min(...markers.map((m) => m.year)), end: Math.max(...markers.map((m) => m.year)) }
-            : null,
-          presence,
-          isDynasty: false,
+          presence: getPresenceInPeriod(civ, period),
         };
       })
-      .filter((t) => t.markers.length > 0 || t.presence);
+      .filter((lane) => lane.markers.length > 0);
   }
 
-  function timelinesByDynasty(civ, period) {
-    const markers = snapshotsInPeriod(civ.data.snapshots, period);
-    const groups = new Map();
-    for (const m of markers) {
-      const key = m.group || m.dynasty || m.eraLabel;
-      if (!groups.has(key)) groups.set(key, []);
-      groups.get(key).push(m);
-    }
-    return [...groups.entries()].map(([label, ms]) => ({
-      id: `${civ.id}:${label}`,
-      label,
-      name: label,
-      color: civ.color,
-      civId: civ.id,
-      groupId: label,
-      markers: ms.sort((a, b) => a.year - b.year),
-      span: { start: Math.min(...ms.map((m) => m.year)), end: Math.max(...ms.map((m) => m.year)) },
-      presence: null,
-      isDynasty: true,
-    }));
+  function defaultYearForCiv(civ, period) {
+    const snaps = snapshotsInPeriod(civ.data.snapshots, period);
+    if (!snaps.length) return period.yearMin;
+    const mid = (period.yearMin + period.yearMax) / 2;
+    return snaps.reduce((best, s) =>
+      Math.abs(s.year - mid) < Math.abs(best.year - mid) ? s : best
+    ).year;
   }
 
-  function getSwimlaneRows(civilizations, period, { viewTab, primaryCivId }) {
-    if (!period) return [];
+  function findDefaultRegion() {
+    return getRegion('asia') || getRegions()[0];
+  }
 
-    if (viewTab === 'profile') {
-      const primary = civilizations.find((c) => c.id === primaryCivId);
-      if (primary) {
-        const dynastyLanes = timelinesByDynasty(primary, period);
-        if (dynastyLanes.length > 1) return dynastyLanes;
+  function findDefaultPeriod(regionId, civilizations) {
+    const region = getRegion(regionId);
+    if (!region?.periods?.length) return null;
+    for (const period of region.periods) {
+      if (civilizationsInScope(regionId, period, civilizations).length > 0) {
+        return period;
       }
     }
+    return region.periods[0];
+  }
 
-    return timelinesInPeriod(civilizations, period);
+  function formatScopeLabel(region, period, formatYear) {
+    if (!region || !period) return '';
+    const min = period.yearMin <= -9999 ? '更早' : formatYear(period.yearMin);
+    const max = period.yearMax >= 9999 ? '至今' : formatYear(period.yearMax);
+    return `${region.label} · ${period.label} · ${min} — ${max}`;
+  }
+
+  function isAntarcticaEmpty(regionId) {
+    return regionId === 'antarctica';
   }
 
   return {
-    ERA_PERIODS,
+    REGION_ORDER,
+    init,
+    getRegions,
+    getRegion,
     getPeriod,
     getYearStep,
     getSnapTolerance,
     snapshotInPeriod,
     snapshotsInPeriod,
-    civilizationsInPeriod,
-    getGroupChips,
+    civilizationsInScope,
+    swimlanes,
+    defaultYearForCiv,
+    findDefaultRegion,
     findDefaultPeriod,
-    defaultYearForPeriod,
-    formatPeriodRange,
-    periodsWithData,
-    overlaps,
-    timelinesInPeriod,
-    timelinesByDynasty,
-    getSwimlaneRows,
+    formatScopeLabel,
+    isAntarcticaEmpty,
+    getPresenceInPeriod,
   };
 })();

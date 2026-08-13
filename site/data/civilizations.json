@@ -1,10 +1,181 @@
 {
+  "meta": {
+    "regions": [
+      {
+        "id": "world",
+        "label": "世界",
+        "periods": [
+          {
+            "id": "world_bronze",
+            "label": "青铜时代",
+            "yearMin": -4000,
+            "yearMax": -1000,
+            "eraTemplate": "bronze"
+          },
+          {
+            "id": "world_axial",
+            "label": "轴心时代",
+            "yearMin": -800,
+            "yearMax": -200,
+            "eraTemplate": "iron_imperial"
+          },
+          {
+            "id": "world_classical",
+            "label": "古典时代",
+            "yearMin": -500,
+            "yearMax": 500,
+            "eraTemplate": "iron_imperial"
+          },
+          {
+            "id": "world_medieval",
+            "label": "中世纪",
+            "yearMin": 500,
+            "yearMax": 1500,
+            "eraTemplate": "iron_imperial"
+          },
+          {
+            "id": "world_early_modern",
+            "label": "大航海时代",
+            "yearMin": 1400,
+            "yearMax": 1800,
+            "eraTemplate": "early_modern"
+          },
+          {
+            "id": "world_contemporary",
+            "label": "当代",
+            "yearMin": 1945,
+            "yearMax": 2024,
+            "eraTemplate": "contemporary"
+          }
+        ]
+      },
+      {
+        "id": "europe",
+        "label": "欧洲",
+        "periods": [
+          {
+            "id": "europe_classical",
+            "label": "古典时代",
+            "yearMin": -800,
+            "yearMax": 500,
+            "eraTemplate": "iron_imperial"
+          },
+          {
+            "id": "europe_medieval",
+            "label": "中世纪",
+            "yearMin": 500,
+            "yearMax": 1500,
+            "eraTemplate": "iron_imperial"
+          }
+        ]
+      },
+      {
+        "id": "asia",
+        "label": "亚洲",
+        "periods": [
+          {
+            "id": "asia_bronze",
+            "label": "青铜时代",
+            "yearMin": -4000,
+            "yearMax": -1000,
+            "eraTemplate": "bronze"
+          },
+          {
+            "id": "asia_imperial",
+            "label": "帝制时代",
+            "yearMin": -500,
+            "yearMax": 1912,
+            "eraTemplate": "iron_imperial"
+          },
+          {
+            "id": "asia_early_modern",
+            "label": "近代",
+            "yearMin": 1500,
+            "yearMax": 1912,
+            "eraTemplate": "early_modern"
+          },
+          {
+            "id": "asia_contemporary",
+            "label": "当代",
+            "yearMin": 1945,
+            "yearMax": 2024,
+            "eraTemplate": "contemporary"
+          }
+        ]
+      },
+      {
+        "id": "africa",
+        "label": "非洲",
+        "periods": [
+          {
+            "id": "africa_ancient",
+            "label": "古代北非王国",
+            "yearMin": -3500,
+            "yearMax": -500,
+            "eraTemplate": "bronze"
+          },
+          {
+            "id": "africa_classical",
+            "label": "古典与帝国",
+            "yearMin": -500,
+            "yearMax": 1000,
+            "eraTemplate": "iron_imperial"
+          }
+        ]
+      },
+      {
+        "id": "oceania",
+        "label": "大洋洲",
+        "periods": [
+          {
+            "id": "oceania_modern",
+            "label": "近代以来",
+            "yearMin": 1788,
+            "yearMax": 2024,
+            "eraTemplate": "contemporary"
+          }
+        ]
+      },
+      {
+        "id": "north_america",
+        "label": "北美洲",
+        "periods": [
+          {
+            "id": "na_colonial",
+            "label": "殖民时代",
+            "yearMin": 1500,
+            "yearMax": 1800,
+            "eraTemplate": "early_modern"
+          }
+        ]
+      },
+      {
+        "id": "south_america",
+        "label": "南美洲",
+        "periods": [
+          {
+            "id": "sa_precolonial",
+            "label": "前殖民时代",
+            "yearMin": -500,
+            "yearMax": 1500,
+            "eraTemplate": "iron_imperial"
+          }
+        ]
+      },
+      {
+        "id": "antarctica",
+        "label": "南极洲",
+        "periods": []
+      }
+    ]
+  },
   "civilizations": [
     {
       "id": "china",
       "file": "china.json",
       "name": "中国",
       "color": "#b22222",
+      "regions": ["asia"],
       "presence": [
         { "start": -2100, "end": 1950, "label": "中华文明连续区" }
       ]
@@ -14,6 +185,7 @@
       "file": "egypt.json",
       "name": "埃及",
       "color": "#d4a017",
+      "regions": ["africa"],
       "presence": [
         { "start": -3100, "end": -30, "label": "法老时代" },
         { "start": -30, "end": 641, "label": "希腊-罗马-拜占庭统治" }
@@ -24,6 +196,7 @@
       "file": "rome.json",
       "name": "罗马",
       "color": "#7b2d8e",
+      "regions": ["europe"],
       "presence": [
         { "start": -753, "end": 476, "label": "古典罗马" },
         { "start": 476, "end": 1453, "label": "东罗马/中世纪影响" }

@@ -15,6 +15,7 @@
         <p class="subtitle" id="page-subtitle"></p>
       </div>
       <div class="header-meta">
+        <span id="scope-label" class="era-label">—</span>
         <span id="era-label" class="era-label">—</span>
         <span id="year-display" class="year-display">—</span>
       </div>
@@ -22,16 +23,26 @@
   </header>
 
   <section class="nav-section">
-    <div class="era-period-tabs" id="era-period-tabs" role="tablist" aria-label="时代段"></div>
+    <div class="nav-row">
+      <span class="nav-label">区域</span>
+      <div class="region-tabs" id="region-tabs" role="tablist" aria-label="区域"></div>
+    </div>
+    <div class="nav-row" id="period-row">
+      <span class="nav-label">时段</span>
+      <div class="period-tabs" id="period-tabs" role="tablist" aria-label="时间段"></div>
+    </div>
     <p class="period-range" id="period-range"></p>
-    <div class="entity-chips-wrap">
-      <span class="entity-context" id="entity-context"></span>
-      <div class="entity-chips" id="entity-chips"></div>
+    <div class="nav-row" id="country-row">
+      <span class="nav-label">国家</span>
+      <div class="country-checkboxes" id="country-checkboxes"></div>
+    </div>
+    <div class="empty-region-msg" id="empty-region-msg" hidden>
+      <p class="muted">南极洲暂无文明记录</p>
     </div>
     <section class="swimlane-section" id="swimlane-section" hidden>
       <div class="swimlane-header">
-        <h2 class="swimlane-title">各国时间轴（泳道）</h2>
-        <p class="swimlane-hint muted">共时地图 · 点击圆点联动下方主时间轴</p>
+        <h2 class="swimlane-title">泳道总览</h2>
+        <p class="swimlane-hint muted">共时地图 · 点击圆点联动主时间轴</p>
       </div>
       <div class="swimlane-axis" id="swimlane-axis" aria-hidden="true"></div>
       <div class="swimlane-lanes" id="swimlane-lanes"></div>
@@ -39,6 +50,7 @@
   </section>
 
   <section class="timeline-section">
+    <p class="timeline-label muted">主时间轴（聚焦国）</p>
     <div class="timeline-controls">
       <button id="btn-prev" class="btn-icon" title="向前">◀</button>
       <input type="range" id="year-slider" class="year-slider">
@@ -53,6 +65,17 @@
     <button class="view-tab active" data-view="profile">剖面</button>
     <button class="view-tab" data-view="compare">对比</button>
   </nav>
+
+  <section class="comparison-panel" id="comparison-panel">
+    <div class="comparison-panel-header">
+      <span class="nav-label">比较参与</span>
+      <div class="comparison-bulk-btns">
+        <button type="button" class="btn-text" id="compare-select-all">全选</button>
+        <button type="button" class="btn-text" id="compare-select-none">全不选</button>
+      </div>
+    </div>
+    <div class="comparison-toggles" id="comparison-toggles"></div>
+  </section>
 
   <div class="template-banner" id="template-banner" hidden></div>
 

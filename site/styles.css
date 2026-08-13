@@ -61,6 +61,172 @@ h1 { font-size: 1.4rem; font-weight: 600; }
   padding: 0.75rem 1rem 0;
 }
 
+.nav-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.nav-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  min-width: 2.5rem;
+  padding-top: 0.35rem;
+}
+
+.region-tabs,
+.period-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.region-tab,
+.period-tab {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.region-tab:hover,
+.period-tab:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.region-tab.active {
+  border-color: #4a90d9;
+  color: #4a90d9;
+  background: rgba(74, 144, 217, 0.08);
+}
+
+.period-tab.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(212, 160, 23, 0.08);
+}
+
+.country-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.country-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.country-chip input { display: none; }
+
+.country-chip.selected {
+  border-color: var(--text-muted);
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.empty-region-msg {
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.comparison-panel {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.comparison-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.comparison-bulk-btns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+}
+
+.btn-text:hover { text-decoration: underline; }
+
+.comparison-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.comparison-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.15s, border-color 0.15s;
+}
+
+.comparison-toggle input { display: none; }
+
+.comparison-toggle.active {
+  opacity: 1;
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
+.comparison-toggle.focus {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.focus-badge {
+  font-size: 0.62rem;
+  color: var(--accent);
+  margin-left: 0.15rem;
+}
+
+.timeline-label {
+  font-size: 0.72rem;
+  margin: 0 0 0.35rem;
+}
+
 .era-period-tabs {
   display: flex;
   flex-wrap: wrap;
