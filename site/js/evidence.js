@@ -19,6 +19,25 @@ const CivEvidence = (() => {
     mythology: '传说',
   };
 
+  const GRADE_LABELS = {
+    A: '考古/实物',
+    B: '当代文献',
+    C: '后世追述',
+    D: '研究著作',
+    E: '工具书',
+    F: '待核实',
+  };
+
+  const RELATION_LABELS = {
+    contemporaneous: '同时代',
+    near_contemporaneous: '近同时代',
+    later_retrospect: '后世追述',
+  };
+
+  function supportsDocumented(source) {
+    return source && (source.grade === 'A' || source.grade === 'B');
+  }
+
   let aspectCatalog = {};
 
   async function loadCatalog() {
@@ -105,6 +124,13 @@ const CivEvidence = (() => {
         asp.confidence = 'inferred';
         asp.sourceRefs = sources.length ? [sources[0].id] : [];
         asp.note = [asp.note, '原标有据但缺少 sourceRefs，已降级为推断'].filter(Boolean).join('；');
+      }
+      if (asp.confidence === 'documented' && asp.sourceRefs?.length) {
+        const refs = asp.sourceRefs.map((id) => sourceMap[id]).filter(Boolean);
+        if (!refs.some(supportsDocumented)) {
+          asp.confidence = 'inferred';
+          asp.note = [asp.note, '无 A/B 级来源支撑，已降级为推断'].filter(Boolean).join('；');
+        }
       }
       asp.sourceRefs = (asp.sourceRefs || []).filter((id) => sourceMap[id]);
     });
@@ -213,6 +239,9 @@ const CivEvidence = (() => {
   return {
     CONFIDENCE_LABELS,
     SOURCE_TYPE_LABELS,
+    GRADE_LABELS,
+    RELATION_LABELS,
+    supportsDocumented,
     loadCatalog,
     normalizeSnapshot,
     normalizeSources,
