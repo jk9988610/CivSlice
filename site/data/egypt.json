@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "埃及历史 · 十维探索",
-    "subtitle": "科学方法驱动的定性历史重建",
+    "title": "埃及历史 · 证据驱动",
+    "subtitle": "以考古与 contemporaneous 文献为先的快照重建",
     "country": "埃及",
     "countryId": "egypt",
     "color": "#d4a017",
@@ -58,65 +58,23 @@
         "yearMax": 2024,
         "eraTemplate": "contemporary"
       }
-    ]
-  },
-  "dimensions": [
-    {
-      "id": "geography",
-      "label": "地理气候",
-      "short": "地理"
+    ],
+    "methodology": {
+      "version": "3.0",
+      "principles": [
+        "先写 sources[]，再写 aspects；禁止以 AI 通史记忆标 documented",
+        "正式快照仅用 documented / inferred / absent；推测写入假说库",
+        "不固定十维：有证据才建 aspect key；已检索无材料须显式 absent",
+        "level 仅在有书面 rubric 时填写，否则省略或 null",
+        "documented 须来自考古报告或 contemporaneous 文献/铭文（A/B 级）"
+      ],
+      "confidenceLevels": {
+        "documented": "有据 — 考古实物或 contemporaneous 文献支持",
+        "inferred": "推断 — 基于相邻证据的合理推论，存在其他解释",
+        "absent": "未记录 — 已检索，证据不足，本快照不做判断"
+      }
     },
-    {
-      "id": "resources",
-      "label": "资源能源",
-      "short": "资源"
-    },
-    {
-      "id": "technology",
-      "label": "技术能力",
-      "short": "技术"
-    },
-    {
-      "id": "production",
-      "label": "生产组织",
-      "short": "生产"
-    },
-    {
-      "id": "economy",
-      "label": "经济交换",
-      "short": "经济"
-    },
-    {
-      "id": "politics",
-      "label": "政治制度",
-      "short": "政治"
-    },
-    {
-      "id": "military",
-      "label": "军事国力",
-      "short": "军事"
-    },
-    {
-      "id": "culture",
-      "label": "社会文化",
-      "short": "文化"
-    },
-    {
-      "id": "daily_life",
-      "label": "日常生活",
-      "short": "日常"
-    },
-    {
-      "id": "historical_memory",
-      "label": "历史记忆",
-      "short": "记忆"
-    }
-  ],
-  "confidenceLabels": {
-    "documented": "有据",
-    "inferred": "推断",
-    "speculative": "猜测",
-    "absent": "未记录"
+    "hypotheses": []
   },
   "snapshots": [
     {
@@ -130,72 +88,110 @@
       "evidenceNote": "墓葬考古、象形文字铭文、金字塔中王国遗存",
       "sources": [
         {
+          "id": "src-中王国墓葬与神庙遗址-0",
           "type": "archaeology",
           "ref": "中王国墓葬与神庙遗址",
           "note": "建筑与器物"
         },
         {
+          "id": "src--辛努亥记-等文学作品-1",
           "type": "literature",
           "ref": "《辛努亥记》等文学作品",
           "note": "后世抄本，反映中王国叙事"
         }
       ],
-      "dimensions": {
+      "spatialScope": "中王国",
+      "aspects": {
         "geography": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "尼罗河谷狭长绿洲，依赖定期泛滥灌溉",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0",
+            "src--辛努亥记-等文学作品-1"
+          ],
+          "level": null
         },
         "resources": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "尼罗河水、冲积土、铜矿、建筑石材",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0",
+            "src--辛努亥记-等文学作品-1"
+          ],
+          "level": null
         },
         "technology": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "青铜工具、象形文字、金字塔营造技术",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0",
+            "src--辛努亥记-等文学作品-1"
+          ],
+          "level": null
         },
         "production": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "国家组织灌溉与谷物征收，手工业分工",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0",
+            "src--辛努亥记-等文学作品-1"
+          ],
+          "level": null
         },
         "economy": {
-          "level": 3,
+          "confidence": "inferred",
           "summary": "贡赋与物物交换，金属重量标准初现",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0"
+          ],
+          "level": null
         },
         "politics": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "法老中央集权，官僚与地方诺姆管理",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0",
+            "src--辛努亥记-等文学作品-1"
+          ],
+          "level": null
         },
         "military": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "边防与努比亚远征，战车尚未普及",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0",
+            "src--辛努亥记-等文学作品-1"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "多神信仰、墓葬礼仪、书吏教育传统",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0",
+            "src--辛努亥记-等文学作品-1"
+          ],
+          "level": null
         },
         "daily_life": {
-          "level": 3,
+          "confidence": "inferred",
           "summary": "面包啤酒为主食，草药医疗与祭司治疗",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0"
+          ],
+          "level": null
         },
         "historical_memory": {
-          "level": 3,
-          "summary": "王室年鉴与神庙铭文保存过去功绩",
           "confidence": "documented",
+          "summary": "王室年鉴与神庙铭文保存过去功绩",
+          "sourceRefs": [
+            "src-中王国墓葬与神庙遗址-0",
+            "src--辛努亥记-等文学作品-1"
+          ],
+          "level": null,
           "note": "记录法老视角的历史意识"
         }
-      },
-      "dynasty": "中王国",
-      "group": "中王国",
-      "periodId": "bronze"
+      }
     },
     {
       "year": -500,
@@ -208,72 +204,110 @@
       "evidenceNote": "神庙铭文、莎草纸文献、考古遗址",
       "sources": [
         {
+          "id": "src-希罗多德-历史--0",
           "type": "literature",
           "ref": "希罗多德《历史》",
           "note": "外来观察者，须辨立场"
         },
         {
+          "id": "src-萨卡拉等地考古-1",
           "type": "archaeology",
           "ref": "萨卡拉等地考古",
           "note": "晚期王朝墓葬"
         }
       ],
-      "dimensions": {
+      "spatialScope": "晚期王朝",
+      "aspects": {
         "geography": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "尼罗河三角洲与河谷，地中海贸易港兴起",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-希罗多德-历史--0",
+            "src-萨卡拉等地考古-1"
+          ],
+          "level": null
         },
         "resources": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "谷物出口、纸莎草、黄金，土地仍为核心",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-希罗多德-历史--0",
+            "src-萨卡拉等地考古-1"
+          ],
+          "level": null
         },
         "technology": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "铁器开始传入，传统青铜与石工仍盛",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-希罗多德-历史--0",
+            "src-萨卡拉等地考古-1"
+          ],
+          "level": null
         },
         "production": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "神庙经济庞大，农民租税沉重",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-希罗多德-历史--0",
+            "src-萨卡拉等地考古-1"
+          ],
+          "level": null
         },
         "economy": {
-          "level": 3,
+          "confidence": "inferred",
           "summary": "地中海贸易增加，银币流通影响",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-希罗多德-历史--0"
+          ],
+          "level": null
         },
         "politics": {
-          "level": 2,
+          "confidence": "documented",
           "summary": "本土王朝衰弱，波斯统治阴影逼近",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-希罗多德-历史--0",
+            "src-萨卡拉等地考古-1"
+          ],
+          "level": null
         },
         "military": {
-          "level": 2,
+          "confidence": "documented",
           "summary": "雇佣希腊佣兵，本土军力不足以自保",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-希罗多德-历史--0",
+            "src-萨卡拉等地考古-1"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "传统宗教延续，外来文化渗透加剧",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-希罗多德-历史--0",
+            "src-萨卡拉等地考古-1"
+          ],
+          "level": null
         },
         "daily_life": {
-          "level": 3,
+          "confidence": "inferred",
           "summary": "城乡饮食差异，医疗仍倚重祭司与草药",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-希罗多德-历史--0"
+          ],
+          "level": null
         },
         "historical_memory": {
-          "level": 4,
-          "summary": "祭司维护古老王表，强调法老正统",
           "confidence": "documented",
+          "summary": "祭司维护古老王表，强调法老正统",
+          "sourceRefs": [
+            "src-希罗多德-历史--0",
+            "src-萨卡拉等地考古-1"
+          ],
+          "level": null,
           "note": "怀旧性历史叙述增强"
         }
-      },
-      "dynasty": "晚期王朝",
-      "group": "晚期王朝",
-      "periodId": "iron_imperial"
+      }
     },
     {
       "year": -221,
@@ -286,72 +320,111 @@
       "evidenceNote": "希腊文纸草文献、亚历山大城考古",
       "sources": [
         {
+          "id": "src-托勒密时期纸草文书-0",
           "type": "literature",
           "ref": "托勒密时期纸草文书",
           "note": "行政与经济记录"
         },
         {
+          "id": "src-亚历山大城遗址-1",
           "type": "archaeology",
           "ref": "亚历山大城遗址",
           "note": "希腊化城市规划"
         }
       ],
-      "dimensions": {
+      "spatialScope": "托勒密王朝",
+      "aspects": {
         "geography": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "尼罗河粮仓，亚历山大港连接地中海",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0",
+            "src-亚历山大城遗址-1"
+          ],
+          "level": null
         },
         "resources": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "谷物出口帝国粮仓，纸莎草贸易",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0",
+            "src-亚历山大城遗址-1"
+          ],
+          "level": null
         },
         "technology": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "希腊化科学传统，亚历山大图书馆",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0",
+            "src-亚历山大城遗址-1"
+          ],
+          "level": null
         },
         "production": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "希腊裔统治阶层，埃及农民租税体系",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0",
+            "src-亚历山大城遗址-1"
+          ],
+          "level": null
         },
         "economy": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "地中海贸易枢纽，货币经济发达",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0",
+            "src-亚历山大城遗址-1"
+          ],
+          "level": null
         },
         "politics": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "希腊化君主制，法老名义与希腊官僚并存",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0",
+            "src-亚历山大城遗址-1"
+          ],
+          "level": null
         },
         "military": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "希腊化军队，与塞琉古等继业者争霸",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0",
+            "src-亚历山大城遗址-1"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "希腊与埃及传统融合，多语多信仰",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0",
+            "src-亚历山大城遗址-1"
+          ],
+          "level": null
         },
         "daily_life": {
-          "level": 3,
+          "confidence": "inferred",
           "summary": "城乡差异扩大，希腊城市与埃及乡村",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0"
+          ],
+          "level": null
         },
         "historical_memory": {
-          "level": 3,
-          "summary": "双轨叙述：希腊史学与埃及祭司王表",
           "confidence": "documented",
+          "summary": "双轨叙述：希腊史学与埃及祭司王表",
+          "sourceRefs": [
+            "src-托勒密时期纸草文书-0",
+            "src-亚历山大城遗址-1"
+          ],
+          "level": null,
           "note": "两种历史记忆体系并存"
         }
-      },
-      "dynasty": "托勒密",
-      "group": "托勒密王朝",
-      "periodId": "iron_imperial"
+      }
     },
     {
       "year": 100,
@@ -364,72 +437,111 @@
       "evidenceNote": "纸草行政文书、考古遗址、罗马史家记载",
       "sources": [
         {
+          "id": "src-罗马行省行政纸草-0",
           "type": "literature",
           "ref": "罗马行省行政纸草",
           "note": "税收与土地记录"
         },
         {
+          "id": "src-罗马时期埃及遗址-1",
           "type": "archaeology",
           "ref": "罗马时期埃及遗址",
           "note": "神庙与城镇"
         }
       ],
-      "dimensions": {
+      "spatialScope": "罗马统治",
+      "aspects": {
         "geography": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "尼罗河灌溉区，红海与地中海贸易通道",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0",
+            "src-罗马时期埃及遗址-1"
+          ],
+          "level": null
         },
         "resources": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "帝国谷物供应，纸莎草、亚麻出口",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0",
+            "src-罗马时期埃及遗址-1"
+          ],
+          "level": null
         },
         "technology": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "罗马工程技术引入，传统农业技术延续",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0",
+            "src-罗马时期埃及遗址-1"
+          ],
+          "level": null
         },
         "production": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "大地主庄园，国家征粮体系",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0",
+            "src-罗马时期埃及遗址-1"
+          ],
+          "level": null
         },
         "economy": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "纳入罗马帝国货币圈，亚历山大港贸易",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0",
+            "src-罗马时期埃及遗址-1"
+          ],
+          "level": null
         },
         "politics": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "罗马行省，总督统治，本地精英合作",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0",
+            "src-罗马时期埃及遗址-1"
+          ],
+          "level": null
         },
         "military": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "罗马驻军，本地辅助部队",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0",
+            "src-罗马时期埃及遗址-1"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "埃及传统宗教延续，希腊罗马文化并存",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0",
+            "src-罗马时期埃及遗址-1"
+          ],
+          "level": null
         },
         "daily_life": {
-          "level": 3,
+          "confidence": "inferred",
           "summary": "城乡生活差异，希腊语城市与埃及乡村",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0"
+          ],
+          "level": null
         },
         "historical_memory": {
-          "level": 3,
-          "summary": "法老时代怀旧叙事与罗马官方史学并存",
           "confidence": "documented",
+          "summary": "法老时代怀旧叙事与罗马官方史学并存",
+          "sourceRefs": [
+            "src-罗马行省行政纸草-0",
+            "src-罗马时期埃及遗址-1"
+          ],
+          "level": null,
           "note": "断裂：法老埃及已成为历史记忆"
         }
-      },
-      "dynasty": "罗马行省",
-      "group": "罗马统治",
-      "periodId": "iron_imperial"
+      }
     },
     {
       "year": 1000,
@@ -442,72 +554,111 @@
       "evidenceNote": "阿拉伯史籍、考古与钱币",
       "sources": [
         {
+          "id": "src-阿拉伯编年史-0",
           "type": "literature",
           "ref": "阿拉伯编年史",
           "note": "伊斯兰史学传统"
         },
         {
+          "id": "src-开罗法蒂玛遗址-1",
           "type": "archaeology",
           "ref": "开罗法蒂玛遗址",
           "note": "城市与建筑"
         }
       ],
-      "dimensions": {
+      "spatialScope": "法蒂玛王朝",
+      "aspects": {
         "geography": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "尼罗河三角洲与开罗，连接地中海与红海",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-阿拉伯编年史-0",
+            "src-开罗法蒂玛遗址-1"
+          ],
+          "level": null
         },
         "resources": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "农业与贸易，伊克塔土地制度",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-阿拉伯编年史-0",
+            "src-开罗法蒂玛遗址-1"
+          ],
+          "level": null
         },
         "technology": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "伊斯兰科学传承，造纸与航海",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-阿拉伯编年史-0",
+            "src-开罗法蒂玛遗址-1"
+          ],
+          "level": null
         },
         "production": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "灌溉农业，手工业与贸易城市",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-阿拉伯编年史-0",
+            "src-开罗法蒂玛遗址-1"
+          ],
+          "level": null
         },
         "economy": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "地中海—印度洋贸易，开罗商业中心",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-阿拉伯编年史-0",
+            "src-开罗法蒂玛遗址-1"
+          ],
+          "level": null
         },
         "politics": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "什叶派哈里发国，官僚与军事精英",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-阿拉伯编年史-0",
+            "src-开罗法蒂玛遗址-1"
+          ],
+          "level": null
         },
         "military": {
-          "level": 3,
+          "confidence": "documented",
           "summary": "对拜占庭与十字军压力，海军建设",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-阿拉伯编年史-0",
+            "src-开罗法蒂玛遗址-1"
+          ],
+          "level": null
         },
         "culture": {
-          "level": 4,
+          "confidence": "documented",
           "summary": "伊斯兰学术中心，清真寺与大学",
-          "confidence": "documented"
+          "sourceRefs": [
+            "src-阿拉伯编年史-0",
+            "src-开罗法蒂玛遗址-1"
+          ],
+          "level": null
         },
         "daily_life": {
-          "level": 3,
+          "confidence": "inferred",
           "summary": "伊斯兰饮食律，阿拉伯医学传统",
-          "confidence": "inferred"
+          "sourceRefs": [
+            "src-阿拉伯编年史-0"
+          ],
+          "level": null
         },
         "historical_memory": {
-          "level": 4,
-          "summary": "伊斯兰史学记录法老与希腊化过去",
           "confidence": "documented",
+          "summary": "伊斯兰史学记录法老与希腊化过去",
+          "sourceRefs": [
+            "src-阿拉伯编年史-0",
+            "src-开罗法蒂玛遗址-1"
+          ],
+          "level": null,
           "note": "古埃及作为异教古代史被叙述"
         }
-      },
-      "dynasty": "法蒂玛",
-      "group": "法蒂玛王朝",
-      "periodId": "iron_imperial"
+      }
     }
   ]
 }
